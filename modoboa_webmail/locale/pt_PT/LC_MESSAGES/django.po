@@ -1,0 +1,306 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Damien Duponchelle <dduponchelle@gmail.com>, 2013
+# lusitan <lusitan@hushmail.com>, 2013
+# Mike C. <miguelmclara@gmail.com>, 2012
+# Mike C. <miguelmclara@gmail.com>, 2013-2014
+# Sandra Ribeiro <sandrarib@gmail.com>, 2012-2013
+# Sandra Ribeiro <sandrarib@gmail.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Modoboa\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-11 10:32+0100\n"
+"PO-Revision-Date: 2014-12-29 12:51+0000\n"
+"Last-Translator: Mike C. <miguelmclara@gmail.com>\n"
+"Language-Team: Portuguese (Portugal) (http://www.transifex.com/projects/p/"
+"modoboa/language/pt_PT/)\n"
+"Language: pt_PT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: app_settings.py:12
+msgid "General"
+msgstr "Geral"
+#: app_settings.py:15
+msgid "Maximum attachment size"
+msgstr "Tamanho máximo do anexo"
+#: app_settings.py:18
+msgid "Maximum attachment size in bytes (or KB, MB, GB if specified)"
+msgstr "Tamanho máximo do anexo em bytes (ou KB, MB, GB se especificado)"
+#: app_settings.py:21
+msgid "IMAP settings"
+msgstr "Definições IMAP"
+#: app_settings.py:24 app_settings.py:44
+msgid "Server address"
+msgstr "Endereço do Servidor"
+#: app_settings.py:26
+msgid "Address of your IMAP server"
+msgstr "Endereço do servidor IMAP"
+#: app_settings.py:30
+msgid "Use a secured connection"
+msgstr "Utilizar uma ligação segura"
+#: app_settings.py:32
+msgid "Use a secured connection to access IMAP server"
+msgstr "Usar uma ligação segura para aceder ao servidor IMAP"
+#: app_settings.py:36 app_settings.py:60
+msgid "Server port"
+msgstr "Porta do Servidor"
+#: app_settings.py:38
+msgid "Listening port of your IMAP server"
+msgstr "Porta do servidor IMAP"
+#: app_settings.py:41
+msgid "SMTP settings"
+msgstr "Definições SMTP"
+#: app_settings.py:46
+msgid "Address of your SMTP server"
+msgstr "Endereço do servidor IMAP"
+#: app_settings.py:50
+msgid "Secured connection mode"
+msgstr "Modo de ligação segura"
+#: app_settings.py:51
+msgid "None"
+msgstr "Nenhum"
+#: app_settings.py:55
+msgid "Use a secured connection to access SMTP server"
+msgstr "Usar uma ligação segura para aceder ao servidor SMTP"
+#: app_settings.py:62
+msgid "Listening port of your SMTP server"
+msgstr "Porta do servidor SMTP"
+#: app_settings.py:66
+msgid "Authentication required"
+msgstr "Autenticação necessária"
+#: app_settings.py:68
+msgid "Server needs authentication"
+msgstr "O servidor requer autenticação"
+#: app_settings.py:75
+msgid "Display"
+msgstr "Exibir"
+#: app_settings.py:79
+msgid "Default message display mode"
+msgstr "Modo de visualização predefinido"
+#: app_settings.py:81
+msgid "The default mode used when displaying a message"
+msgstr "O modo de visualização de mensagem que será usado por defeito"
+#: app_settings.py:87
+msgid "Enable HTML links display"
+msgstr "Ativar visualização de links HTML"
+#: app_settings.py:88
+msgid "Enable/Disable HTML links display"
+msgstr "Ativar/desativar"
+#: app_settings.py:93
+msgid "Number of displayed emails per page"
+msgstr "Número de e-mails a visíveis por página"
+#: app_settings.py:94
+msgid "Sets the maximum number of messages displayed in a page"
+msgstr "Define o número máximo de mensagens a mostrar por página"
+#: app_settings.py:99
+msgid "Listing refresh rate"
+msgstr "Taxa de actualização da listagem"
+#: app_settings.py:100
+msgid "Automatic folder refresh rate (in seconds)"
+msgstr "Taxa de actualização automática de pastas (em segundos)"
+#: app_settings.py:105
+msgid "Mailboxes container's width"
+msgstr "Largura do caixilho das caixas de correio"
+#: app_settings.py:106
+msgid "The width of the mailbox list container"
+msgstr "Largura do caixilho da lista de caixa de correio"
+#: app_settings.py:109
+msgid "Mailboxes"
+msgstr "Caixas de Correio"
+#: app_settings.py:113
+msgid "Trash folder"
+msgstr "Pasta para Itens Eliminados"
+#: app_settings.py:114
+msgid "Folder where deleted messages go"
+msgstr "Pasta para a qual os itens eliminados são enviados"
+#: app_settings.py:119
+msgid "Sent folder"
+msgstr "Pasta para Itens Enviados"
+#: app_settings.py:120
+msgid "Folder where copies of sent messages go"
+msgstr "Pasta onde as copias das mensagens enviadas são guardadas"
+#: app_settings.py:125
+msgid "Drafts folder"
+msgstr "Pasta para Rascunhos"
+#: app_settings.py:126
+msgid "Folder where drafts go"
+msgstr "Pasta onde ficam guardados os rascunhos"
+#: app_settings.py:129
+msgid "Composing messages"
+msgstr "A criar mensagem"
+#: app_settings.py:133
+msgid "Default editor"
+msgstr "Editor predefinido"
+#: app_settings.py:135
+msgid "The default editor to use when composing a message"
+msgstr "O editor a ser usado por defeito na composição de mensagens"
+#: app_settings.py:141
+msgid "Signature text"
+msgstr "Assinatura"
+#: app_settings.py:142
+msgid "User defined email signature"
+msgstr "Assinatura de email definida pelo utilizador"
+#: app_settings.py:161
+msgid "Value must be a positive integer (> 0)"
+msgstr "O valor tem de ser um inteiro, positivo (> 0)"
+#: exceptions.py:22
+msgid "Server response"
+msgstr "Resposta do servidor"
+#: exceptions.py:37
+msgid "Unknown action"
+msgstr "Acção desconhecida"
+#: forms.py:87 templates/modoboa_webmail/compose.html:9
+msgid "To"
+msgstr "Para"
+#: forms.py:88 templates/modoboa_webmail/compose.html:15
+msgid "Cc"
+msgstr "Cc"
+#: forms.py:89 templates/modoboa_webmail/compose.html:16
+msgid "Cci"
+msgstr "Cci"
+#: forms.py:91 lib/imapemail.py:299
+msgid "Subject"
+msgstr "Assunto"
+#: forms.py:215
+msgid "Select a file"
+msgstr "Escolha um ficheiro"
+#: general_callbacks.py:17
+msgid "Webmail"
+msgstr "Webmail"
+#: lib/imapemail.py:246
+msgid "wrote:"
+msgstr "escreveu:"
+#: lib/imapemail.py:301
+msgid "Date"
+msgstr "Data"
+#: lib/imapemail.py:313 lib/imapemail.py:316
+msgid "Original message"
+msgstr "Mensagem original"
+#: lib/imaputils.py:266
+msgid "Failed to retrieve hierarchy delimiter"
+msgstr "Falha ao recuperar hierarquia delimitador"
+#: lib/imaputils.py:309
+#, python-format
+msgid "Connection to IMAP server failed: %s"
+msgstr "A ligação ao servidor IMAP falhou: %s"
+#: modo_extension.py:14
+msgid "Simple IMAP webmail"
+msgstr "Sistema de Webmail IMAP básico"
+#: templates/modoboa_webmail/attachments.html:8
+msgid "Attach"
+msgstr "Anexar"
+#: templates/modoboa_webmail/attachments.html:12
+msgid "Uploading.."
+msgstr "A carregar..."
+#: templates/modoboa_webmail/compose_menubar.html:9
+#: templates/modoboa_webmail/headers.html:4 views.py:282
+msgid "Attachments"
+msgstr "Anexos"
+#: templates/modoboa_webmail/folder.html:6
+msgid "Parent mailbox"
+msgstr "Caixa de correio principal"
+#: templates/modoboa_webmail/index.html:43
+msgid "Compose"
+msgstr "Escrever"
+#: templatetags/webmail_tags.py:23 templatetags/webmail_tags.py:72
+msgid "Back"
+msgstr "Voltar"
+#: templatetags/webmail_tags.py:28
+msgid "Reply"
+msgstr "Responder"
+#: templatetags/webmail_tags.py:33
+msgid "Reply all"
+msgstr "Responder a todos"
+#: templatetags/webmail_tags.py:37
+msgid "Forward"
+msgstr "Reencaminhar"
+#: templatetags/webmail_tags.py:44 templatetags/webmail_tags.py:91
+msgid "Delete"
+msgstr "Eliminar"
+#: templatetags/webmail_tags.py:47
+msgid "Display options"
+msgstr "Opções de Visualização"
+#: templatetags/webmail_tags.py:51
+msgid "Activate links"
+msgstr "Ativar links"
+#: templatetags/webmail_tags.py:53
+msgid "Disable links"
+msgstr "Desativar links"
+#: templatetags/webmail_tags.py:77
+msgid "Send"
+msgstr "Enviar"
+#: templatetags/webmail_tags.py:97
+msgid "Actions"
+msgstr "Ações"
+#: templatetags/webmail_tags.py:101
+msgid "Mark as read"
+msgstr "Marcar como lida"
+#: templatetags/webmail_tags.py:105
+msgid "Mark as unread"
+msgstr "Marcar como não lida"
+#: templatetags/webmail_tags.py:115
+msgid "Empty folder"
+msgstr "Esvaziar pasta"
+#: templatetags/webmail_tags.py:186 views.py:166
+msgid "Create a new mailbox"
+msgstr "Criar nova caixa de correio"
+#: templatetags/webmail_tags.py:194
+msgid "Edit the selected mailbox"
+msgstr "Editar caixa de correio selecionada"
+#: templatetags/webmail_tags.py:199
+msgid "Remove the selected mailbox"
+msgstr "Eliminar caixa de correio selecionada"
+#: templatetags/webmail_tags.py:203
+msgid "Compress folder"
+msgstr "Comprimir pasta"
+#: views.py:59 views.py:77 views.py:91 views.py:109 views.py:128 views.py:142
+#: views.py:218 views.py:241 views.py:438 views.py:488 views.py:504
+#: views.py:537 views.py:577
+msgid "Invalid request"
+msgstr "Pedido inválido"
+#: views.py:97
+#, python-format
+msgid "%(count)d message deleted"
+msgid_plural "%(count)d messages deleted"
+msgstr[0] "%(count)d mensagens eliminadas"
+msgstr[1] "%(count)d mensagens eliminadas"
+#: views.py:130 views.py:374
+msgid "Empty mailbox"
+msgstr "Caixa de correio vazia"
+#: views.py:160
+msgid "Mailbox created"
+msgstr "Caixa de correio criada"
+#: views.py:169
+msgid "Create"
+msgstr "Criar"
+#: views.py:185 views.py:220
+msgid "Edit mailbox"
+msgstr "Editar caixa de correio"
+#: views.py:188 views.py:223
+msgid "Update"
+msgstr "Actualizar"
+#: views.py:201
+msgid "Mailbox updated"
+msgstr "Caixa de correio actualizada"
+#: views.py:273
+msgid "Failed to save attachment: "
+msgstr "Falha ao salvar o anexo:"
+#: views.py:276
+#, python-format
+msgid "Attachment is too big (limit: %s)"
+msgstr "Anexo demasiado grande (limite %s)"
+#: views.py:299
+msgid "Bad query"
+msgstr "Pesquisa inválida"
+#: views.py:311
+msgid "Failed to remove attachment: "
+msgstr "Falha ao remover os anexos:"
+#: views.py:316
+msgid "Unknown attachment"
+msgstr "Anexo desconhecido"

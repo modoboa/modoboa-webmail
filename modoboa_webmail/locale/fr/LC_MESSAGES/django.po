@@ -1,0 +1,299 @@
+# Modoboa french translation
+# Copyright (C) 2009-2013
+# This file is distributed under the same license as the Modoboa package.
+#
+# Antoine Nguyen <tonio@ngyn.org>, 2009-2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: modoboa-1.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-11 10:32+0100\n"
+"PO-Revision-Date: 2011-01-07 10:00+100\n"
+"Last-Translator: Antoine Nguyen <tonio@ngyn.org>\n"
+"Language-Team: FR <tonio@ngyn.org>\n"
+"Language: Français\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: app_settings.py:12
+msgid "General"
+msgstr "Général"
+#: app_settings.py:15
+msgid "Maximum attachment size"
+msgstr "Taille maximale d'une pièce jointe"
+#: app_settings.py:18
+msgid "Maximum attachment size in bytes (or KB, MB, GB if specified)"
+msgstr "Taille maximum d'une pièce jointe en octets (ou Ko, Mo, Go si précisé)"
+#: app_settings.py:21
+msgid "IMAP settings"
+msgstr "Paramètres IMAP"
+#: app_settings.py:24 app_settings.py:44
+msgid "Server address"
+msgstr "Adresse du serveur"
+#: app_settings.py:26
+msgid "Address of your IMAP server"
+msgstr "Adresse de votre serveur IMAP"
+#: app_settings.py:30
+msgid "Use a secured connection"
+msgstr "Utiliser une connexion sécurisée"
+#: app_settings.py:32
+msgid "Use a secured connection to access IMAP server"
+msgstr "Utiliser une connexion sécurisée pour accéder au serveur IMAP"
+#: app_settings.py:36 app_settings.py:60
+msgid "Server port"
+msgstr "Port utilisé par le serveur"
+#: app_settings.py:38
+msgid "Listening port of your IMAP server"
+msgstr "Port d'écoute de votre serveur IMAP"
+#: app_settings.py:41
+msgid "SMTP settings"
+msgstr "Paramètres SMTP"
+#: app_settings.py:46
+msgid "Address of your SMTP server"
+msgstr "Adresse de votre serveur SMTP"
+#: app_settings.py:50
+msgid "Secured connection mode"
+msgstr "Mode de connexion sécurisé"
+#: app_settings.py:51
+msgid "None"
+msgstr "Aucun"
+#: app_settings.py:55
+msgid "Use a secured connection to access SMTP server"
+msgstr "Utiliser une connexion sécurisée pour accéder au serveur SMTP"
+#: app_settings.py:62
+msgid "Listening port of your SMTP server"
+msgstr "Port d'écoute de votre serveur SMTP"
+#: app_settings.py:66
+msgid "Authentication required"
+msgstr "Authentification requise"
+#: app_settings.py:68
+msgid "Server needs authentication"
+msgstr "Le serveur nécessite une authentification"
+#: app_settings.py:75
+msgid "Display"
+msgstr "Afficher"
+#: app_settings.py:79
+msgid "Default message display mode"
+msgstr "Mode d'affichage par défaut d'un message"
+#: app_settings.py:81
+msgid "The default mode used when displaying a message"
+msgstr "Le mode utilisé par défaut pour afficher un message"
+#: app_settings.py:87
+msgid "Enable HTML links display"
+msgstr "Activer l'affichage des liens HTML"
+#: app_settings.py:88
+msgid "Enable/Disable HTML links display"
+msgstr "Activer/Désactiver l'affichage des liens HTML"
+#: app_settings.py:93
+msgid "Number of displayed emails per page"
+msgstr "Nombre d'emails affichés par page"
+#: app_settings.py:94
+msgid "Sets the maximum number of messages displayed in a page"
+msgstr "Définit le nombre maximal de messages affichés dans une page"
+#: app_settings.py:99
+msgid "Listing refresh rate"
+msgstr "Taux de rafraichissement de la liste"
+#: app_settings.py:100
+msgid "Automatic folder refresh rate (in seconds)"
+msgstr "Taux de rafraichissement automatique du dossier (en secondes)"
+#: app_settings.py:105
+msgid "Mailboxes container's width"
+msgstr "Largeur du conteneur de boites aux lettres"
+#: app_settings.py:106
+msgid "The width of the mailbox list container"
+msgstr "La largeur du conteneur de boites aux lettres"
+#: app_settings.py:109
+msgid "Mailboxes"
+msgstr "Boites"
+#: app_settings.py:113
+msgid "Trash folder"
+msgstr "Dossier 'poubelle'"
+#: app_settings.py:114
+msgid "Folder where deleted messages go"
+msgstr "Dossier de destination des messages supprimés"
+#: app_settings.py:119
+msgid "Sent folder"
+msgstr "Dossier 'envoyé'"
+#: app_settings.py:120
+msgid "Folder where copies of sent messages go"
+msgstr "Dossier de destination des copies de messages envoyés"
+#: app_settings.py:125
+msgid "Drafts folder"
+msgstr "Dossier 'brouillons'"
+#: app_settings.py:126
+msgid "Folder where drafts go"
+msgstr "Dossier de destination des brouillons"
+#: app_settings.py:129
+msgid "Composing messages"
+msgstr "Composer des messages"
+#: app_settings.py:133
+msgid "Default editor"
+msgstr "Editeur par défaut"
+#: app_settings.py:135
+msgid "The default editor to use when composing a message"
+msgstr "L'éditeur a utiliser par défaut pour écrire un message"
+#: app_settings.py:141
+msgid "Signature text"
+msgstr "Texte de signature"
+#: app_settings.py:142
+msgid "User defined email signature"
+msgstr "Signature personnalisée"
+#: app_settings.py:161
+msgid "Value must be a positive integer (> 0)"
+msgstr "La valeur doit être un entier positif (> 0)"
+#: exceptions.py:22
+msgid "Server response"
+msgstr "Réponse du serveur"
+#: exceptions.py:37
+msgid "Unknown action"
+msgstr "Action inconnue"
+#: forms.py:87 templates/modoboa_webmail/compose.html:9
+msgid "To"
+msgstr "A"
+#: forms.py:88 templates/modoboa_webmail/compose.html:15
+msgid "Cc"
+msgstr "Cc"
+#: forms.py:89 templates/modoboa_webmail/compose.html:16
+msgid "Cci"
+msgstr "Cci"
+#: forms.py:91 lib/imapemail.py:299
+msgid "Subject"
+msgstr "Sujet"
+#: forms.py:215
+msgid "Select a file"
+msgstr "Sélectionner un fichier"
+#: general_callbacks.py:17
+msgid "Webmail"
+msgstr "Webmail"
+#: lib/imapemail.py:246
+msgid "wrote:"
+msgstr "a écrit :"
+#: lib/imapemail.py:301
+msgid "Date"
+msgstr "Date"
+#: lib/imapemail.py:313 lib/imapemail.py:316
+msgid "Original message"
+msgstr "Message original"
+#: lib/imaputils.py:266
+msgid "Failed to retrieve hierarchy delimiter"
+msgstr "Impossible de récuperer le séparateur de hiérarchie"
+#: lib/imaputils.py:309
+#, python-format
+msgid "Connection to IMAP server failed: %s"
+msgstr "La connexion au serveur IMAP a échoué : %s"
+#: modo_extension.py:14
+msgid "Simple IMAP webmail"
+msgstr "Webmail IMAP simple"
+#: templates/modoboa_webmail/attachments.html:8
+msgid "Attach"
+msgstr "Joindre"
+#: templates/modoboa_webmail/attachments.html:12
+msgid "Uploading.."
+msgstr "Envoi..."
+#: templates/modoboa_webmail/compose_menubar.html:9
+#: templates/modoboa_webmail/headers.html:4 views.py:282
+msgid "Attachments"
+msgstr "Pièces jointes"
+#: templates/modoboa_webmail/folder.html:6
+msgid "Parent mailbox"
+msgstr "Boite aux lettres parente"
+#: templates/modoboa_webmail/index.html:43
+msgid "Compose"
+msgstr "Ecrire"
+#: templatetags/webmail_tags.py:23 templatetags/webmail_tags.py:72
+msgid "Back"
+msgstr "Retour"
+#: templatetags/webmail_tags.py:28
+msgid "Reply"
+msgstr "Répondre"
+#: templatetags/webmail_tags.py:33
+msgid "Reply all"
+msgstr "Répondre à tous"
+#: templatetags/webmail_tags.py:37
+msgid "Forward"
+msgstr "Transfert"
+#: templatetags/webmail_tags.py:44 templatetags/webmail_tags.py:91
+msgid "Delete"
+msgstr "Supprimer"
+#: templatetags/webmail_tags.py:47
+msgid "Display options"
+msgstr "Afficher les options"
+#: templatetags/webmail_tags.py:51
+msgid "Activate links"
+msgstr "Activer les liens"
+#: templatetags/webmail_tags.py:53
+msgid "Disable links"
+msgstr "Désactiver les liens"
+#: templatetags/webmail_tags.py:77
+msgid "Send"
+msgstr "Envoyer"
+#: templatetags/webmail_tags.py:97
+msgid "Actions"
+msgstr "Actions"
+#: templatetags/webmail_tags.py:101
+msgid "Mark as read"
+msgstr "Marquer comme lu"
+#: templatetags/webmail_tags.py:105
+msgid "Mark as unread"
+msgstr "Marquer comme non lu"
+#: templatetags/webmail_tags.py:115
+msgid "Empty folder"
+msgstr "Vider ce dossier"
+#: templatetags/webmail_tags.py:186 views.py:166
+msgid "Create a new mailbox"
+msgstr "Créer une nouvelle boite aux lettres"
+#: templatetags/webmail_tags.py:194
+msgid "Edit the selected mailbox"
+msgstr "Editer la boite aux lettres sélectionnée"
+#: templatetags/webmail_tags.py:199
+msgid "Remove the selected mailbox"
+msgstr "Supprimer la boite aux lettres sélectionnée"
+#: templatetags/webmail_tags.py:203
+msgid "Compress folder"
+msgstr "Compresser ce dossier"
+#: views.py:59 views.py:77 views.py:91 views.py:109 views.py:128 views.py:142
+#: views.py:218 views.py:241 views.py:438 views.py:488 views.py:504
+#: views.py:537 views.py:577
+msgid "Invalid request"
+msgstr "Requête invalide"
+#: views.py:97
+#, python-format
+msgid "%(count)d message deleted"
+msgid_plural "%(count)d messages deleted"
+msgstr[0] "%(count)d message supprimé"
+msgstr[1] "%(count)d messages supprimés"
+#: views.py:130 views.py:374
+msgid "Empty mailbox"
+msgstr "Boite aux lettre vide"
+#: views.py:160
+msgid "Mailbox created"
+msgstr "Boite aux lettres créée"
+#: views.py:169
+msgid "Create"
+msgstr "Créer"
+#: views.py:185 views.py:220
+msgid "Edit mailbox"
+msgstr "Editer la boite aux lettres"
+#: views.py:188 views.py:223
+msgid "Update"
+msgstr "Mettre à jour"
+#: views.py:201
+msgid "Mailbox updated"
+msgstr "Boite aux lettres mise à jour"
+#: views.py:273
+msgid "Failed to save attachment: "
+msgstr "Impossible d'enregistrer la pièce jointe : "
+#: views.py:276
+#, python-format
+msgid "Attachment is too big (limit: %s)"
+msgstr "Pièce jointe trop grosse (limite : %s)"
+#: views.py:299
+msgid "Bad query"
+msgstr "Mauvaise requête"
+#: views.py:311
+msgid "Failed to remove attachment: "
+msgstr "Impossible de supprimer la pièce jointe :"
+#: views.py:316
+msgid "Unknown attachment"
+msgstr "Pièce jointe inconnue"

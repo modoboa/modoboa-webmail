@@ -1,0 +1,404 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Pedro Gracia <lasarux@neuroomante.com>, 2011-2013
+# Pedro Gracia <pedro.gracia@impulzia.com>, 2010-2011
+msgid ""
+msgstr ""
+"Project-Id-Version: Modoboa\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-11 10:32+0100\n"
+"PO-Revision-Date: 2013-10-01 09:56+0000\n"
+"Last-Translator: Pedro Gracia <lasarux@neuroomante.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/modoboa/language/"
+"es/)\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: app_settings.py:12
+msgid "General"
+msgstr "General"
+#: app_settings.py:15
+msgid "Maximum attachment size"
+msgstr "Máximo tamaño de los adjuntos"
+#: app_settings.py:18
+msgid "Maximum attachment size in bytes (or KB, MB, GB if specified)"
+msgstr "Tamaño máximo del adjunto en bytes (or KB, MB, GB si se especifica)"
+#: app_settings.py:21
+msgid "IMAP settings"
+msgstr "Configuración de IMAP"
+#: app_settings.py:24 app_settings.py:44
+msgid "Server address"
+msgstr "Dirección del servidor"
+#: app_settings.py:26
+msgid "Address of your IMAP server"
+msgstr "Dirección de su servidor IMAP"
+#: app_settings.py:30
+msgid "Use a secured connection"
+msgstr "Usa una conexión segura"
+#: app_settings.py:32
+msgid "Use a secured connection to access IMAP server"
+msgstr "Usar una conexión segura para acceder al servidor IMAP"
+#: app_settings.py:36 app_settings.py:60
+msgid "Server port"
+msgstr "Puerto del servidor"
+#: app_settings.py:38
+msgid "Listening port of your IMAP server"
+msgstr "Puerto de su servidor IMAP"
+#: app_settings.py:41
+msgid "SMTP settings"
+msgstr "Configuración de SMTP"
+#: app_settings.py:46
+msgid "Address of your SMTP server"
+msgstr "Dirección de su servidor SMTP"
+#: app_settings.py:50
+msgid "Secured connection mode"
+msgstr "Modo de conexión seguro"
+#: app_settings.py:51
+msgid "None"
+msgstr "Nada"
+#: app_settings.py:55
+msgid "Use a secured connection to access SMTP server"
+msgstr "Usar una conexión segura para acceder al servidor SMTP"
+#: app_settings.py:62
+msgid "Listening port of your SMTP server"
+msgstr "Puerto de su servidor SMTP"
+#: app_settings.py:66
+msgid "Authentication required"
+msgstr "Autenticación obligatoria"
+#: app_settings.py:68
+msgid "Server needs authentication"
+msgstr "El servidor requiere autenticación"
+#: app_settings.py:75
+msgid "Display"
+msgstr "Mostrar"
+#: app_settings.py:79
+msgid "Default message display mode"
+msgstr "Modo por defecto para mostrar un mensaje"
+#: app_settings.py:81
+msgid "The default mode used when displaying a message"
+msgstr "Modo por defecto usado cuando se muestra un mensaje"
+#: app_settings.py:87
+msgid "Enable HTML links display"
+msgstr "Activar el mostrar enlaces de HTML"
+#: app_settings.py:88
+msgid "Enable/Disable HTML links display"
+msgstr "Activar/Desactivar el mostrar enlaces HTML"
+#: app_settings.py:93
+msgid "Number of displayed emails per page"
+msgstr "Número de emails mostrados por página"
+#: app_settings.py:94
+msgid "Sets the maximum number of messages displayed in a page"
+msgstr "Fija el número máximo de mensajes mostrados en una página"
+#: app_settings.py:99
+msgid "Listing refresh rate"
+msgstr "Tasa de refresco"
+#: app_settings.py:100
+msgid "Automatic folder refresh rate (in seconds)"
+msgstr "Tasa de refresco automática de la carpeta (en segundos)"
+#: app_settings.py:105
+#, fuzzy
+msgid "Mailboxes container's width"
+msgstr "Propietario de los mailboxes"
+#: app_settings.py:106
+msgid "The width of the mailbox list container"
+msgstr ""
+#: app_settings.py:109
+msgid "Mailboxes"
+msgstr "Mailboxes"
+#: app_settings.py:113
+msgid "Trash folder"
+msgstr "Carpeta de basura"
+#: app_settings.py:114
+msgid "Folder where deleted messages go"
+msgstr "Carpeta dónde van los mensajes eliminados"
+#: app_settings.py:119
+msgid "Sent folder"
+msgstr "Carpeta de enviados"
+#: app_settings.py:120
+msgid "Folder where copies of sent messages go"
+msgstr "Carpeta dónde van las copias de los correos enviados"
+#: app_settings.py:125
+msgid "Drafts folder"
+msgstr "Carpeta de borradores"
+#: app_settings.py:126
+msgid "Folder where drafts go"
+msgstr "Carpeta dónde van los borradores"
+#: app_settings.py:129
+msgid "Composing messages"
+msgstr "Composición de mensajes"
+#: app_settings.py:133
+msgid "Default editor"
+msgstr "Editor por defecto"
+#: app_settings.py:135
+msgid "The default editor to use when composing a message"
+msgstr "Editor por defecto para usar cuando redacta un mensaje"
+#: app_settings.py:141
+msgid "Signature text"
+msgstr "Texto de la firma"
+#: app_settings.py:142
+msgid "User defined email signature"
+msgstr "Firma de correo definida por el usuario"
+#: app_settings.py:161
+msgid "Value must be a positive integer (> 0)"
+msgstr ""
+#: exceptions.py:22
+msgid "Server response"
+msgstr "Respuesta del servidor"
+#: exceptions.py:37
+msgid "Unknown action"
+msgstr "Acción desconocida"
+#: forms.py:87 templates/modoboa_webmail/compose.html:9
+msgid "To"
+msgstr "A"
+#: forms.py:88 templates/modoboa_webmail/compose.html:15
+msgid "Cc"
+msgstr "Cc"
+#: forms.py:89 templates/modoboa_webmail/compose.html:16
+msgid "Cci"
+msgstr "Cco"
+#: forms.py:91 lib/imapemail.py:299
+msgid "Subject"
+msgstr "Tema"
+#: forms.py:215
+msgid "Select a file"
+msgstr "Seleccione un fichero"
+#: general_callbacks.py:17
+msgid "Webmail"
+msgstr "Correo web"
+#: lib/imapemail.py:246
+msgid "wrote:"
+msgstr "escribió:"
+#: lib/imapemail.py:301
+msgid "Date"
+msgstr "Fecha"
+#: lib/imapemail.py:313 lib/imapemail.py:316
+msgid "Original message"
+msgstr "Mensaje original"
+#: lib/imaputils.py:266
+msgid "Failed to retrieve hierarchy delimiter"
+msgstr "Fallo al recuperar el delimitador jerárquico"
+#: lib/imaputils.py:309
+#, python-format
+msgid "Connection to IMAP server failed: %s"
+msgstr "Falló la conexión con el servidor IMAP: %s"
+#: modo_extension.py:14
+msgid "Simple IMAP webmail"
+msgstr "Correo web sencillo para IMAP"
+#: templates/modoboa_webmail/attachments.html:8
+msgid "Attach"
+msgstr "Adjunto"
+#: templates/modoboa_webmail/attachments.html:12
+msgid "Uploading.."
+msgstr "Subiendo..."
+#: templates/modoboa_webmail/compose_menubar.html:9
+#: templates/modoboa_webmail/headers.html:4 views.py:282
+msgid "Attachments"
+msgstr "Adjuntos"
+#: templates/modoboa_webmail/folder.html:6
+msgid "Parent mailbox"
+msgstr "Mailbox padre"
+#: templates/modoboa_webmail/index.html:43
+msgid "Compose"
+msgstr ""
+#: templatetags/webmail_tags.py:23 templatetags/webmail_tags.py:72
+msgid "Back"
+msgstr "Anterior"
+#: templatetags/webmail_tags.py:28
+msgid "Reply"
+msgstr "Responder"
+#: templatetags/webmail_tags.py:33
+msgid "Reply all"
+msgstr "Responder a todos"
+#: templatetags/webmail_tags.py:37
+msgid "Forward"
+msgstr "Siguiente"
+#: templatetags/webmail_tags.py:44 templatetags/webmail_tags.py:91
+msgid "Delete"
+msgstr "Eliminar"
+#: templatetags/webmail_tags.py:47
+msgid "Display options"
+msgstr "Opciones de pantalla"
+#: templatetags/webmail_tags.py:51
+msgid "Activate links"
+msgstr "Activar enlaces"
+#: templatetags/webmail_tags.py:53
+msgid "Disable links"
+msgstr "Desactivar enlaces"
+#: templatetags/webmail_tags.py:77
+msgid "Send"
+msgstr "Enviar"
+#: templatetags/webmail_tags.py:97
+msgid "Actions"
+msgstr "Acciones"
+#: templatetags/webmail_tags.py:101
+#, fuzzy
+msgid "Mark as read"
+msgstr "Marcar mensajes"
+#: templatetags/webmail_tags.py:105
+#, fuzzy
+msgid "Mark as unread"
+msgstr "Como no leído"
+#: templatetags/webmail_tags.py:115
+msgid "Empty folder"
+msgstr "Vaciar la carpeta"
+#: templatetags/webmail_tags.py:186 views.py:166
+msgid "Create a new mailbox"
+msgstr "Crear un nuevo mailbox"
+#: templatetags/webmail_tags.py:194
+msgid "Edit the selected mailbox"
+msgstr "Editar el mailbox seleccionado"
+#: templatetags/webmail_tags.py:199
+msgid "Remove the selected mailbox"
+msgstr "Eliminar el mailbox seleccionado"
+#: templatetags/webmail_tags.py:203
+msgid "Compress folder"
+msgstr "Comprimir la carpeta"
+#: views.py:59 views.py:77 views.py:91 views.py:109 views.py:128 views.py:142
+#: views.py:218 views.py:241 views.py:438 views.py:488 views.py:504
+#: views.py:537 views.py:577
+msgid "Invalid request"
+msgstr "Petición inválida"
+#: views.py:97
+#, python-format
+msgid "%(count)d message deleted"
+msgid_plural "%(count)d messages deleted"
+msgstr[0] "%(count)d mensaje eliminado"
+msgstr[1] "%(count)d mensajes eliminados"
+#: views.py:130 views.py:374
+msgid "Empty mailbox"
+msgstr "Mailbox vacío"
+#: views.py:160
+msgid "Mailbox created"
+msgstr "Mailbox creado."
+#: views.py:169
+msgid "Create"
+msgstr "Crear"
+#: views.py:185 views.py:220
+msgid "Edit mailbox"
+msgstr "Editar el mailbox"
+#: views.py:188 views.py:223
+msgid "Update"
+msgstr "Actualizar"
+#: views.py:201
+msgid "Mailbox updated"
+msgstr "Mailbox actualizado"
+#: views.py:273
+msgid "Failed to save attachment: "
+msgstr "Fallo al guardar el adjunto:"
+#: views.py:276
+#, python-format
+msgid "Attachment is too big (limit: %s)"
+msgstr "EL adjunto es demasiado grande (límite: %s)"
+#: views.py:299
+msgid "Bad query"
+msgstr "Consulta errónea"
+#: views.py:311
+msgid "Failed to remove attachment: "
+msgstr "Fallo al eliminar el adjunto:"
+#: views.py:316
+msgid "Unknown attachment"
+msgstr "Adjunto desconocido"
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy
+#, fuzzy

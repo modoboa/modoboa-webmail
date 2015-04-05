@@ -1,7 +1,7 @@
 modoboa-webmail
 ===============
 
-|landscape|
+|landscape| |rtfd|
 
 The webmail of Modoboa.
 
@@ -39,3 +39,6 @@ apache, whatever).
    :target: https://landscape.io/github/modoboa/modoboa-webmail/master
    :alt: Code Health
 
+.. |rtfd| image:: https://readthedocs.org/projects/modoboa-webmail/badge/?version=latest
+   :target: https://readthedocs.org/projects/modoboa-webmail/?badge=latest
+   :alt: Documentation Status

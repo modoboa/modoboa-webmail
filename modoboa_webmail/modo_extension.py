@@ -10,7 +10,7 @@ from modoboa.lib import parameters
 class Webmail(ModoExtension):
     name = "modoboa_webmail"
     label = "Webmail"
-    version = "1.0"
+    version = "1.0.0"
     description = ugettext_lazy("Simple IMAP webmail")
     needs_media = True
     available_for_topredirection = True

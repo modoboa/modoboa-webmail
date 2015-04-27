@@ -1017,7 +1017,8 @@ Webmail.prototype = {
         this.store_nav_params();
         this.page_update(resp);
         $("#emails").htmltable({
-            row_selector: "div.email"
+            row_selector: "div.email",
+            keep_selection: true
         });
         this.htmltable = $("#emails").data("htmltable");
         this.init_draggables();

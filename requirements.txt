@@ -1,1 +1,4 @@
 modoboa-admin
+chardet
+lxml
+rfc6266

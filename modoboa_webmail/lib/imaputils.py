@@ -19,6 +19,7 @@ from modoboa.lib.exceptions import InternalError
 from ..exceptions import ImapError, WebmailInternalError
 from .fetch_parser import parse_fetch_response
 
+# imaplib.Debug = 4
 
 # workaround for the "got more than 10000 bytes" exception. MAXLINE
 # value set to 1M, as on latest python versions.

@@ -10,7 +10,7 @@ from modoboa.lib import events
 def menu(target, user):
     if target != "top_menu":
         return []
-    if not user.mailbox_set.count():
+    if not hasattr(user, "mailbox"):
         return []
     return [
         {"name": "webmail",
@@ -24,7 +24,7 @@ def userlogout(request):
     from .lib import IMAPconnector
     from .exceptions import ImapError
 
-    if not request.user.mailbox_set.count():
+    if not hasattr(request.user, "mailbox"):
         return
     try:
         m = IMAPconnector(user=request.user.username,

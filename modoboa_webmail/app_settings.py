@@ -149,7 +149,7 @@ class UserSettings(UserParametersForm):
 
     @staticmethod
     def has_access(user):
-        return user.mailbox_set.count() != 0
+        return hasattr(user, "mailbox")
 
     def clean_mboxes_col_width(self):
         """Check if the entered value is a positive integer.

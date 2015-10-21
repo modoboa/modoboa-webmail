@@ -15,7 +15,7 @@ from modoboa.lib import parameters
 from modoboa.lib.email_utils import set_email_headers
 
 from .lib import (
-    ImapEmail, create_mail_attachment
+    ImapEmail, create_mail_attachment, decode_payload
 )
 from .validators import validate_email_list
 
@@ -186,8 +186,6 @@ class ForwardMailForm(ComposeMailForm):
 
         We also add original attachments (if any) to the new message.
         """
-        from modoboa.extensions.webmail.lib import decode_payload
-
         mbox = request.GET.get("mbox", None)
         mailid = request.GET.get("mailid", None)
         msg = super(ForwardMailForm, self)._build_msg(request)

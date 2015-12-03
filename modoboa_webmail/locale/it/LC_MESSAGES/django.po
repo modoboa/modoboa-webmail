@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Giancarlo Gaifas <lallo@artiemestieri.tn.it>, 2013
 # Rocco <mors10@hotmail.com>, 2015
@@ -9,14 +9,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Modoboa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-11 10:32+0100\n"
+"POT-Creation-Date: 2015-12-03 21:34+0100\n"
 "PO-Revision-Date: 2015-10-11 11:49+0000\n"
 "Last-Translator: Rocco <mors10@hotmail.com>\n"
-"Language-Team: Italian (http://www.transifex.com/tonio/modoboa/language/it/)\n"
+"Language-Team: Italian (http://www.transifex.com/tonio/modoboa/language/"
+"it/)\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: app_settings.py:12
@@ -29,7 +30,8 @@ msgstr "Dimensione massima degli allegati"
 
 #: app_settings.py:18
 msgid "Maximum attachment size in bytes (or KB, MB, GB if specified)"
-msgstr "Dimensione massima degli allegati in bytes (o KB, MB, GB se specificato)"
+msgstr ""
+"Dimensione massima degli allegati in bytes (o KB, MB, GB se specificato)"
 
 #: app_settings.py:21
 msgid "IMAP settings"
@@ -101,7 +103,8 @@ msgstr "Modalità di visualizzazione del messaggio predefinita"
 
 #: app_settings.py:81
 msgid "The default mode used when displaying a message"
-msgstr "La modalità di visualizzazione predefinita quando viene mostrato il messaggio"
+msgstr ""
+"La modalità di visualizzazione predefinita quando viene mostrato il messaggio"
 
 #: app_settings.py:87
 msgid "Enable HTML links display"
@@ -195,23 +198,23 @@ msgstr "Risposta del server"
 msgid "Unknown action"
 msgstr "Azione sconosciuta"
 
-#: forms.py:87 templates/modoboa_webmail/compose.html:9
+#: forms.py:89 templates/modoboa_webmail/compose.html:10
 msgid "To"
 msgstr "A"
 
-#: forms.py:88 templates/modoboa_webmail/compose.html:15
+#: forms.py:91 templates/modoboa_webmail/compose.html:25
 msgid "Cc"
 msgstr "Cc"
 
-#: forms.py:89 templates/modoboa_webmail/compose.html:16
+#: forms.py:93 templates/modoboa_webmail/compose.html:30
 msgid "Cci"
 msgstr "Cci"
 
-#: forms.py:91 lib/imapemail.py:299
+#: forms.py:96 lib/imapemail.py:301
 msgid "Subject"
 msgstr "Oggetto"
 
-#: forms.py:215
+#: forms.py:218
 msgid "Select a file"
 msgstr "Seleziona un file"
 
@@ -219,23 +222,23 @@ msgstr "Seleziona un file"
 msgid "Webmail"
 msgstr "Webmail"
 
-#: lib/imapemail.py:246
+#: lib/imapemail.py:248
 msgid "wrote:"
 msgstr "scritto:"
 
-#: lib/imapemail.py:301
+#: lib/imapemail.py:303
 msgid "Date"
 msgstr "Data"
 
-#: lib/imapemail.py:313 lib/imapemail.py:316
+#: lib/imapemail.py:315 lib/imapemail.py:318
 msgid "Original message"
 msgstr "Messaggio originale"
 
-#: lib/imaputils.py:266
+#: lib/imaputils.py:272
 msgid "Failed to retrieve hierarchy delimiter"
 msgstr "Impossibile recuperare il delimitatore delle gerarchie"
 
-#: lib/imaputils.py:309
+#: lib/imaputils.py:315
 #, python-format
 msgid "Connection to IMAP server failed: %s"
 msgstr "Connessione al server IMAP fallita: %s"
@@ -252,8 +255,12 @@ msgstr "Allega"
 msgid "Uploading.."
 msgstr "Caricamento ..."
 
+#: templates/modoboa_webmail/compose.html:12
+msgid "This field is required"
+msgstr ""
+
 #: templates/modoboa_webmail/compose_menubar.html:9
-#: templates/modoboa_webmail/headers.html:4 views.py:282
+#: templates/modoboa_webmail/headers.html:4 views.py:283
 msgid "Attachments"
 msgstr "Allegati"
 
@@ -333,24 +340,24 @@ msgstr "Elimina la cartella di posta selezionata"
 msgid "Compress folder"
 msgstr "Comprimi cartella"
 
-#: views.py:59 views.py:77 views.py:91 views.py:109 views.py:128 views.py:142
-#: views.py:218 views.py:241 views.py:438 views.py:488 views.py:504
-#: views.py:537 views.py:577
+#: views.py:58 views.py:76 views.py:90 views.py:108 views.py:127 views.py:141
+#: views.py:219 views.py:242 views.py:440 views.py:490 views.py:506
+#: views.py:539 views.py:579
 msgid "Invalid request"
 msgstr "Richiesta non valida"
 
-#: views.py:97
+#: views.py:96
 #, python-format
 msgid "%(count)d message deleted"
 msgid_plural "%(count)d messages deleted"
 msgstr[0] "%(count)d messaggio cancellato"
 msgstr[1] "%(count)d messaggi cancellati"
 
-#: views.py:130 views.py:374
+#: views.py:129 views.py:376
 msgid "Empty mailbox"
 msgstr "Casella di posta vuota"
 
-#: views.py:160
+#: views.py:159
 msgid "Mailbox created"
 msgstr "Casella di posta creata"
 
@@ -358,11 +365,11 @@ msgstr "Casella di posta creata"
 msgid "Create"
 msgstr "Crea"
 
-#: views.py:185 views.py:220
+#: views.py:185 views.py:221
 msgid "Edit mailbox"
 msgstr "Modifica casella di posta"
 
-#: views.py:188 views.py:223
+#: views.py:188 views.py:224
 msgid "Update"
 msgstr "Aggiorna"
 
@@ -370,23 +377,23 @@ msgstr "Aggiorna"
 msgid "Mailbox updated"
 msgstr "Casella di posta aggiornata"
 
-#: views.py:273
+#: views.py:274
 msgid "Failed to save attachment: "
 msgstr "Salvataggio allegato fallito: "
 
-#: views.py:276
+#: views.py:277
 #, python-format
 msgid "Attachment is too big (limit: %s)"
 msgstr "L'allegato è troppo grande (limite: %s)"
 
-#: views.py:299
+#: views.py:300
 msgid "Bad query"
 msgstr "Domanda sbagliata"
 
-#: views.py:311
+#: views.py:312
 msgid "Failed to remove attachment: "
 msgstr "Rimozione allegato fallita: "
 
-#: views.py:316
+#: views.py:317
 msgid "Unknown attachment"
 msgstr "Allegato sconosciuto"

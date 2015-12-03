@@ -9,6 +9,8 @@ import chardet
 from rfc6266 import parse_headers
 
 from django.conf import settings
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 from django.utils.translation import ugettext as _
 
 from modoboa.lib import parameters, u2u_decode
@@ -170,20 +172,20 @@ class ImapEmail(Email):
             self.attachments[att["pnum"]] = attname
 
     def _fetch_inlines(self):
+        """Store inline images on filesystem to display them."""
         for cid, params in self.bs.inlines.iteritems():
             if re.search(r"\.\.", cid):
                 continue
             fname = "modoboa_webmail/%s_%s" % (self.mailid, cid)
             path = os.path.join(settings.MEDIA_ROOT, fname)
-            params["fname"] = os.path.join(settings.MEDIA_URL, fname)
-            if os.path.exists(path):
+            if default_storage.exists(path):
                 continue
-
+            params["fname"] = os.path.join(settings.MEDIA_URL, fname)
             pdef, content = self.imapc.fetchpart(
                 self.mailid, self.mbox, params["pnum"]
             )
-            with open(path, "wb") as fpo:
-                fpo.write(decode_payload(params["encoding"], content))
+            default_storage.save(
+                path, ContentFile(decode_payload(params["encoding"], content)))
 
     def map_cid(self, url):
         m = re.match(".*cid:(.+)", url)

@@ -17,14 +17,13 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.gzip import gzip_page
 
+from modoboa.admin.lib import needs_mailbox
 from modoboa.lib import parameters
 from modoboa.lib.exceptions import ModoboaException, BadRequest
 from modoboa.lib.paginator import Paginator
 from modoboa.lib.web_utils import (
     _render_to_string, ajax_response, render_to_json_response
 )
-
-from modoboa_admin.lib import needs_mailbox
 
 from .exceptions import UnknownAction
 from .forms import (
@@ -161,7 +160,8 @@ def newfolder(request, tplname="modoboa_webmail/folder.html"):
                 'newmb': form.cleaned_data["name"], 'parent': pf
             })
 
-        return render_to_json_response({'form_errors': form.errors}, status=400)
+        return render_to_json_response(
+            {'form_errors': form.errors}, status=400)
 
     ctx = {"title": _("Create a new mailbox"),
            "formid": "mboxform",
@@ -211,7 +211,8 @@ def editfolder(request, tplname="modoboa_webmail/folder.html"):
                 WebmailNavigationParameters(request).remove('mbox')
             return render_to_json_response(res)
 
-        return render_to_json_response({'form_errors': form.errors}, status=400)
+        return render_to_json_response(
+            {'form_errors': form.errors}, status=400)
 
     name = request.GET.get("name", None)
     if name is None:
@@ -362,11 +363,12 @@ def listmailbox(request, defmailbox="INBOX", update_session=True):
     content = ""
     if page is not None:
         email_list = mbc.fetch(page.id_start, page.id_stop, mbox)
-        content = _render_to_string(request, "modoboa_webmail/email_list.html", {
-            "email_list": email_list,
-            "page": page_id,
-            "with_top_div": request.GET.get("scroll", "false") == "false"
-        })
+        content = _render_to_string(
+            request, "modoboa_webmail/email_list.html", {
+                "email_list": email_list,
+                "page": page_id,
+                "with_top_div": request.GET.get("scroll", "false") == "false"
+            })
         length = len(content)
     else:
         if page_id == 1:

@@ -1,4 +1,4 @@
-modoboa-admin
+modoboa>=1.4.0
 chardet
 lxml
 rfc6266

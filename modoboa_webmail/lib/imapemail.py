@@ -178,9 +178,9 @@ class ImapEmail(Email):
                 continue
             fname = "modoboa_webmail/%s_%s" % (self.mailid, cid)
             path = os.path.join(settings.MEDIA_ROOT, fname)
+            params["fname"] = os.path.join(settings.MEDIA_URL, fname)
             if default_storage.exists(path):
                 continue
-            params["fname"] = os.path.join(settings.MEDIA_URL, fname)
             pdef, content = self.imapc.fetchpart(
                 self.mailid, self.mbox, params["pnum"]
             )

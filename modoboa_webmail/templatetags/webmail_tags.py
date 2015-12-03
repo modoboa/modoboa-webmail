@@ -39,7 +39,7 @@ def viewmail_menu(selection, folder, user, mail_id=None):
         {"name": "delete",
          "img": "fa fa-trash",
          "class": "btn-danger",
-         "url": "{0}?mbox={1}&selection[]={2}".format(
+         "url": u"{0}?mbox={1}&selection[]={2}".format(
              reverse("modoboa_webmail:mail_delete"), folder, mail_id),
          "title": _("Delete")
          },
@@ -99,11 +99,11 @@ def listmailbox_menu(selection, folder, user):
          "menu": [
              {"name": "mark-read",
               "label": _("Mark as read"),
-              "url": "{0}?status=read".format(
+              "url": u"{0}?status=read".format(
                   reverse("modoboa_webmail:mail_mark", args=[folder]))},
              {"name": "mark-unread",
               "label": _("Mark as unread"),
-              "url": "{0}?status=unread".format(
+              "url": u"{0}?status=unread".format(
                   reverse("modoboa_webmail:mail_mark", args=[folder]))},
          ]
          },
@@ -113,7 +113,7 @@ def listmailbox_menu(selection, folder, user):
         entries[1]["menu"] += [
             {"name": "empty",
              "label": _("Empty folder"),
-             "url": "{0}?name={1}".format(
+             "url": u"{0}?name={1}".format(
                  reverse("modoboa_webmail:trash_empty"), folder)}
         ]
     return render_to_string('modoboa_webmail/main_action_bar.html', {

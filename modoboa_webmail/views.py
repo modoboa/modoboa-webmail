@@ -511,7 +511,7 @@ def viewmail(request):
     else:
         links = int(links)
 
-    url = "{0}?mbox={1}&mailid={2}&links={3}".format(
+    url = u"{0}?mbox={1}&mailid={2}&links={3}".format(
         reverse("modoboa_webmail:mailcontent_get"), mbox, mailid, links)
     content = Template("""
 <iframe src="{{ url }}" id="mailcontent"></iframe>

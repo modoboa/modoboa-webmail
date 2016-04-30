@@ -1,9 +1,12 @@
 # coding: utf-8
+"""Custom template tags."""
+
 from django import template
-from django.template.loader import render_to_string
-from django.utils.translation import ugettext as _
-from django.core.urlresolvers import reverse
 from django.conf import settings
+from django.core.urlresolvers import reverse
+from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext as _
 
 from modoboa.lib import parameters
 
@@ -173,7 +176,7 @@ def print_mailboxes(
                     mbox["sub"], selected, withunseen, selectonly, hdelimiter
             ) + "</ul>\n"
         result += "</li>\n"
-    return result
+    return mark_safe(result)
 
 
 @register.simple_tag

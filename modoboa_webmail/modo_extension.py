@@ -6,11 +6,13 @@ from django.utils.translation import ugettext_lazy
 from modoboa.core.extensions import ModoExtension, exts_pool
 from modoboa.lib import parameters
 
+from . import __version__
+
 
 class Webmail(ModoExtension):
     name = "modoboa_webmail"
     label = "Webmail"
-    version = "1.0.3"
+    version = __version__
     description = ugettext_lazy("Simple IMAP webmail")
     needs_media = True
     available_for_topredirection = True

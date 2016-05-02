@@ -4,6 +4,8 @@ import re
 import os
 from setuptools import setup, find_packages
 
+from modoboa_webmail import __version__
+
 ROOT = os.path.dirname(__file__)
 
 
@@ -57,7 +59,7 @@ def read(fname):
 
 setup(
     name="modoboa-webmail",
-    version='1.0.3',
+    version=__version__,
     url='http://modoboa.org/',
     license='MIT',
     description="The webmail of Modoboa",

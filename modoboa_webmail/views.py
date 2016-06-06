@@ -126,7 +126,7 @@ def empty(request):
     if name != parameters.get_user(request.user, "TRASH_FOLDER"):
         raise BadRequest(_("Invalid request"))
     get_imapconnector(request).empty(name)
-    content = "<div class='alert alert-info'>%s</div>" % _("Empty mailbox")
+    content = u"<div class='alert alert-info'>%s</div>" % _("Empty mailbox")
     return render_to_json_response({
         'listing': content, 'mailbox': name, 'pages': [1]
     })
@@ -274,8 +274,9 @@ def attachments(request, tplname="modoboa_webmail/attachments.html"):
                 error = _("Failed to save attachment: ") + str(inst)
 
         if csuploader.toobig:
-            error = _("Attachment is too big (limit: %s)"
-                      % parameters.get_admin("MAX_ATTACHMENT_SIZE"))
+            error = (
+                _("Attachment is too big (limit: %s)") %
+                parameters.get_admin("MAX_ATTACHMENT_SIZE"))
         return render(request, "modoboa_webmail/upload_done.html", {
             "status": "ko", "error": error
         })
@@ -372,7 +373,7 @@ def listmailbox(request, defmailbox="INBOX", update_session=True):
         length = len(content)
     else:
         if page_id == 1:
-            content = "<div class='alert alert-info'>{0}</div>".format(
+            content = u"<div class='alert alert-info'>{0}</div>".format(
                 _("Empty mailbox")
             )
         length = 0

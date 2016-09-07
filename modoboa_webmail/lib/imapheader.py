@@ -1,7 +1,14 @@
 """
 Set of functions used to parse and transform email headers.
 """
+
+import datetime
+import email
+
 import chardet
+
+from django.utils import timezone
+from django.utils.formats import date_format
 
 from modoboa.lib.email_utils import EmailAddress
 
@@ -78,27 +85,20 @@ def parse_reply_to(value, **kwargs):
 
 
 def parse_date(value, **kwargs):
-    """Parse a Date: header.
-    """
-    import datetime
-    import email
-
+    """Parse a Date: header."""
     tmp = email.utils.parsedate_tz(value)
     if not tmp:
         return value
-    try:
-        ndate = datetime.datetime(*(tmp)[:7])
-        now = datetime.datetime.now()
-        if now - ndate > datetime.timedelta(7):
-            return ndate.strftime("%d/%m/%Y %H:%M")
-        return ndate.strftime("%a %H:%M")
-    except ValueError:
-        return value
+    tz = timezone.get_current_timezone()
+    ndate = tz.localize(
+        datetime.datetime.fromtimestamp(email.utils.mktime_tz(tmp)))
+    if timezone.now() - ndate > datetime.timedelta(7):
+        return date_format(ndate, "DATETIME_FORMAT")
+    return ndate.strftime("%a %H:%M")
 
 
 def parse_message_id(value, **kwargs):
-    """Parse a Message-ID: header.
-    """
+    """Parse a Message-ID: header."""
     return value.strip('\n')
 
 

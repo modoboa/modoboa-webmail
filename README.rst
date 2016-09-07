@@ -29,10 +29,11 @@ Edit the settings.py file of your modoboa instance and add
       'modoboa_webmail',
     )
 
-Run the following commands to setup the database tables::
+Run the following commands to setup the database tables and collect static files::
 
   $ cd <modoboa_instance_dir>
   $ python manage.py load_initial_data
+  $ python manage.py collectstatic
     
 Finally, restart the python process running modoboa (uwsgi, gunicorn,
 apache, whatever).

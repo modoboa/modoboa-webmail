@@ -138,7 +138,9 @@ def print_mailboxes(
     for mbox in tree:
         cssclass = ""
         name = mbox["path"] if "sub" in mbox else mbox["name"]
-        label = separate_mailbox(mbox["name"], hdelimiter)[0]
+        label = (
+            mbox["label"] if "label" in mbox else
+            separate_mailbox(mbox["name"], hdelimiter)[0])
         if mbox.get("removed", False):
             cssclass = "disabled"
         elif selected == name:

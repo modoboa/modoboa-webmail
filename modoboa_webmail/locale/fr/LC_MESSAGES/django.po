@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Modoboa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-03 21:34+0100\n"
+"POT-Creation-Date: 2016-10-05 15:04+0200\n"
 "PO-Revision-Date: 2015-06-04 19:19+0000\n"
 "Last-Translator: Antoine Nguyen <tonio@ngyn.org>\n"
 "Language-Team: French (http://www.transifex.com/tonio/modoboa/language/fr/)\n"
@@ -193,15 +193,15 @@ msgstr "Réponse du serveur"
 msgid "Unknown action"
 msgstr "Action inconnue"
 
-#: forms.py:89 templates/modoboa_webmail/compose.html:10
+#: forms.py:89 templates/modoboa_webmail/compose.html.py:10
 msgid "To"
 msgstr "A"
 
-#: forms.py:91 templates/modoboa_webmail/compose.html:25
+#: forms.py:91 templates/modoboa_webmail/compose.html.py:25
 msgid "Cc"
 msgstr "Cc"
 
-#: forms.py:93 templates/modoboa_webmail/compose.html:30
+#: forms.py:93 templates/modoboa_webmail/compose.html.py:30
 msgid "Cci"
 msgstr "Cci"
 
@@ -238,7 +238,28 @@ msgstr "Impossible de récuperer le séparateur de hiérarchie"
 msgid "Connection to IMAP server failed: %s"
 msgstr "La connexion au serveur IMAP a échoué : %s"
 
-#: modo_extension.py:14
+#: lib/imaputils.py:544
+msgid "Inbox"
+msgstr "Boîte de réception"
+
+#: lib/imaputils.py:546
+#| msgid "Drafts folder"
+msgid "Drafts"
+msgstr "Brouillons"
+
+#: lib/imaputils.py:547
+msgid "Junk"
+msgstr "Spam"
+
+#: lib/imaputils.py:549
+msgid "Sent"
+msgstr "Messages envoyés"
+
+#: lib/imaputils.py:551
+msgid "Trash"
+msgstr "Poubelle"
+
+#: modo_extension.py:16
 msgid "Simple IMAP webmail"
 msgstr "Webmail IMAP simple"
 
@@ -255,7 +276,7 @@ msgid "This field is required"
 msgstr "Ce champ est requis"
 
 #: templates/modoboa_webmail/compose_menubar.html:9
-#: templates/modoboa_webmail/headers.html:4 views.py:283
+#: templates/modoboa_webmail/headers.html:4 views.py:284
 msgid "Attachments"
 msgstr "Pièces jointes"
 
@@ -267,77 +288,77 @@ msgstr "Boite aux lettres parente"
 msgid "Compose"
 msgstr "Ecrire"
 
-#: templatetags/webmail_tags.py:23 templatetags/webmail_tags.py:72
+#: templatetags/webmail_tags.py:26 templatetags/webmail_tags.py:75
 msgid "Back"
 msgstr "Retour"
 
-#: templatetags/webmail_tags.py:28
+#: templatetags/webmail_tags.py:31
 msgid "Reply"
 msgstr "Répondre"
 
-#: templatetags/webmail_tags.py:33
+#: templatetags/webmail_tags.py:36
 msgid "Reply all"
 msgstr "Répondre à tous"
 
-#: templatetags/webmail_tags.py:37
+#: templatetags/webmail_tags.py:40
 msgid "Forward"
 msgstr "Transfert"
 
-#: templatetags/webmail_tags.py:44 templatetags/webmail_tags.py:91
+#: templatetags/webmail_tags.py:47 templatetags/webmail_tags.py:94
 msgid "Delete"
 msgstr "Supprimer"
 
-#: templatetags/webmail_tags.py:47
+#: templatetags/webmail_tags.py:50
 msgid "Display options"
 msgstr "Afficher les options"
 
-#: templatetags/webmail_tags.py:51
+#: templatetags/webmail_tags.py:54
 msgid "Activate links"
 msgstr "Activer les liens"
 
-#: templatetags/webmail_tags.py:53
+#: templatetags/webmail_tags.py:56
 msgid "Disable links"
 msgstr "Désactiver les liens"
 
-#: templatetags/webmail_tags.py:77
+#: templatetags/webmail_tags.py:80
 msgid "Send"
 msgstr "Envoyer"
 
-#: templatetags/webmail_tags.py:97
+#: templatetags/webmail_tags.py:100
 msgid "Actions"
 msgstr "Actions"
 
-#: templatetags/webmail_tags.py:101
+#: templatetags/webmail_tags.py:104
 msgid "Mark as read"
 msgstr "Marquer comme lu"
 
-#: templatetags/webmail_tags.py:105
+#: templatetags/webmail_tags.py:108
 msgid "Mark as unread"
 msgstr "Marquer comme non lu"
 
-#: templatetags/webmail_tags.py:115
+#: templatetags/webmail_tags.py:118
 msgid "Empty folder"
 msgstr "Vider ce dossier"
 
-#: templatetags/webmail_tags.py:186 views.py:166
+#: templatetags/webmail_tags.py:191 views.py:166
 msgid "Create a new mailbox"
 msgstr "Créer une nouvelle boite aux lettres"
 
-#: templatetags/webmail_tags.py:194
+#: templatetags/webmail_tags.py:199
 msgid "Edit the selected mailbox"
 msgstr "Editer la boite aux lettres sélectionnée"
 
-#: templatetags/webmail_tags.py:199
+#: templatetags/webmail_tags.py:204
 msgid "Remove the selected mailbox"
 msgstr "Supprimer la boite aux lettres sélectionnée"
 
-#: templatetags/webmail_tags.py:203
+#: templatetags/webmail_tags.py:208
 msgid "Compress folder"
 msgstr "Compresser ce dossier"
 
 #: views.py:58 views.py:76 views.py:90 views.py:108 views.py:127 views.py:141
-#: views.py:219 views.py:242 views.py:440 views.py:490 views.py:506
-#: views.py:539 views.py:579
+#: views.py:219 views.py:242 views.py:441 views.py:491 views.py:507
+#: views.py:540 views.py:580
 msgid "Invalid request"
 msgstr "Requête invalide"
 
@@ -348,7 +369,7 @@ msgid_plural "%(count)d messages deleted"
 msgstr[0] "%(count)d message supprimé"
 msgstr[1] "%(count)d messages supprimés"
 
-#: views.py:129 views.py:376
+#: views.py:129 views.py:377
 msgid "Empty mailbox"
 msgstr "Boite aux lettre vide"
 
@@ -376,19 +397,19 @@ msgstr "Boite aux lettres mise à jour"
 msgid "Failed to save attachment: "
 msgstr "Impossible d'enregistrer la pièce jointe : "
 
-#: views.py:277
+#: views.py:278
 #, python-format
 msgid "Attachment is too big (limit: %s)"
 msgstr "Pièce jointe trop grosse (limite : %s)"
 
-#: views.py:300
+#: views.py:301
 msgid "Bad query"
 msgstr "Mauvaise requête"
 
-#: views.py:312
+#: views.py:313
 msgid "Failed to remove attachment: "
 msgstr "Impossible de supprimer la pièce jointe :"
 
-#: views.py:317
+#: views.py:318
 msgid "Unknown attachment"
 msgstr "Pièce jointe inconnue"

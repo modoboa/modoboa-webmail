@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Modoboa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-05 15:04+0200\n"
+"POT-Creation-Date: 2016-10-05 18:15+0200\n"
 "PO-Revision-Date: 2015-01-06 10:05+0000\n"
 "Last-Translator: Miroslav Abrahám <miris@kunago.com>\n"
 "Language-Team: Czech (Czech Republic) (http://www.transifex.com/projects/p/"
@@ -196,15 +196,15 @@ msgstr "Odpověď serveru"
 msgid "Unknown action"
 msgstr "Neznámá akce"
 
-#: forms.py:89 templates/modoboa_webmail/compose.html.py:10
+#: forms.py:89 templates/modoboa_webmail/compose.html:10
 msgid "To"
 msgstr "Komu"
 
-#: forms.py:91 templates/modoboa_webmail/compose.html.py:25
+#: forms.py:91 templates/modoboa_webmail/compose.html:25
 msgid "Cc"
 msgstr "Kopie"
 
-#: forms.py:93 templates/modoboa_webmail/compose.html.py:30
+#: forms.py:93 templates/modoboa_webmail/compose.html:30
 msgid "Cci"
 msgstr "BCC"
 
@@ -246,8 +246,6 @@ msgid "Inbox"
 msgstr ""
 
 #: lib/imaputils.py:546
-#, fuzzy
-#| msgid "Drafts folder"
 msgid "Drafts"
 msgstr "Složka konceptů"
 

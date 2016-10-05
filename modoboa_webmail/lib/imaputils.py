@@ -550,6 +550,7 @@ class IMAPconnector(object):
                 {"name": parameters.get_user(user, "TRASH_FOLDER"),
                  "class": "fa fa-trash", "label": _("Trash")}
             ]
+            print md_mailboxes
         if until_mailbox:
             name, parent = separate_mailbox(until_mailbox, self.hdelimiter)
             if parent:

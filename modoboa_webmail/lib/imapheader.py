@@ -93,6 +93,9 @@ def parse_date(value, **kwargs):
     if ndate.tzinfo is not None:
         tz = timezone.get_current_timezone()
         ndate = tz.localize(datetime.datetime.fromtimestamp(ndate))
+    # No datetime formatting if USE_L10N is False
+    if not getattr(settings, "USE_L10N", False):
+        return ndate
     if datetime.datetime.now() - ndate > datetime.timedelta(7):
         return date_format(ndate, getattr(settings, "WEBMAIL_DATETIME_FORMAT", 'r'))
     return date_format(ndate, getattr(settings, "WEBMAIL_SHORT_DATETIME_FORMAT", 'r'))

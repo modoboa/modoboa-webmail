@@ -12,6 +12,9 @@ from django.utils import timezone
 from django.utils.formats import date_format
 
 from modoboa.lib.email_utils import EmailAddress
+from modoboa.lib.signals import get_request
+from modoboa.core.constants import DATETIME_FORMATS
+
 
 __all__ = [
     'parse_from', 'parse_to', 'parse_message_id', 'parse_date',
@@ -93,12 +96,10 @@ def parse_date(value, **kwargs):
     if ndate.tzinfo is not None:
         tz = timezone.get_current_timezone()
         ndate = tz.localize(datetime.datetime.fromtimestamp(ndate))
-    # No datetime formatting if USE_L10N is False
-    if not getattr(settings, "USE_L10N", False):
-        return ndate
+    current_language = get_request().user.language
     if datetime.datetime.now() - ndate > datetime.timedelta(7):
-        return date_format(ndate, getattr(settings, "WEBMAIL_DATETIME_FORMAT", 'r'))
-    return date_format(ndate, getattr(settings, "WEBMAIL_SHORT_DATETIME_FORMAT", 'r'))
+        return date_format(ndate, DATETIME_FORMATS[current_language]['LONG'])
+    return date_format(ndate, DATETIME_FORMATS[current_language]['SHORT'])
 
 
 

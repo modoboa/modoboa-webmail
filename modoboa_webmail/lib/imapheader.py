@@ -6,7 +6,6 @@ import datetime
 import email
 
 import chardet
-from django.conf import settings
 
 from django.utils import timezone
 from django.utils.formats import date_format
@@ -104,6 +103,7 @@ def parse_reply_to(value, **kwargs):
     """
     return parse_address_list(value, **kwargs)
 
+
 def parse_date(value, **kwargs):
     """Parse a Date: header."""
     tmp = email.utils.parsedate_tz(value)
@@ -117,7 +117,6 @@ def parse_date(value, **kwargs):
     if datetime.datetime.now() - ndate > datetime.timedelta(7):
         return date_format(ndate, DATETIME_FORMATS[current_language]['LONG'])
     return date_format(ndate, DATETIME_FORMATS[current_language]['SHORT'])
-
 
 
 def parse_message_id(value, **kwargs):

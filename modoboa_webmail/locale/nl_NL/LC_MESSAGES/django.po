@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Modoboa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-05 15:04+0200\n"
+"POT-Creation-Date: 2016-10-05 18:15+0200\n"
 "PO-Revision-Date: 2014-12-31 11:37+0000\n"
 "Last-Translator: TuxBrother <vrijwilligerswerk@wij.rs>\n"
 "Language-Team: Dutch (Netherlands) (http://www.transifex.com/projects/p/"
@@ -196,15 +196,15 @@ msgstr "Antwoord van server"
 msgid "Unknown action"
 msgstr "Onbekende actie"
 
-#: forms.py:89 templates/modoboa_webmail/compose.html.py:10
+#: forms.py:89 templates/modoboa_webmail/compose.html:10
 msgid "To"
 msgstr "Naar"
 
-#: forms.py:91 templates/modoboa_webmail/compose.html.py:25
+#: forms.py:91 templates/modoboa_webmail/compose.html:25
 msgid "Cc"
 msgstr "CC"
 
-#: forms.py:93 templates/modoboa_webmail/compose.html.py:30
+#: forms.py:93 templates/modoboa_webmail/compose.html:30
 msgid "Cci"
 msgstr "BCc"
 
@@ -246,8 +246,6 @@ msgid "Inbox"
 msgstr ""
 
 #: lib/imaputils.py:546
-#, fuzzy
-#| msgid "Drafts folder"
 msgid "Drafts"
 msgstr "Concepten"
 

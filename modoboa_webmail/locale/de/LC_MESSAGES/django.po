@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Modoboa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-05 15:04+0200\n"
+"POT-Creation-Date: 2016-10-05 18:15+0200\n"
 "PO-Revision-Date: 2015-07-11 11:51+0000\n"
 "Last-Translator: controlc.de\n"
 "Language-Team: German (http://www.transifex.com/tonio/modoboa/language/de/)\n"
@@ -198,15 +198,15 @@ msgstr "Server-Antwort"
 msgid "Unknown action"
 msgstr "Unbekannte Aktion"
 
-#: forms.py:89 templates/modoboa_webmail/compose.html.py:10
+#: forms.py:89 templates/modoboa_webmail/compose.html:10
 msgid "To"
 msgstr "An"
 
-#: forms.py:91 templates/modoboa_webmail/compose.html.py:25
+#: forms.py:91 templates/modoboa_webmail/compose.html:25
 msgid "Cc"
 msgstr "Cc"
 
-#: forms.py:93 templates/modoboa_webmail/compose.html.py:30
+#: forms.py:93 templates/modoboa_webmail/compose.html:30
 msgid "Cci"
 msgstr "Bcc"
 
@@ -245,25 +245,23 @@ msgstr "Verbindung zu IMAP-Server fehlgeschlagen: %s"
 
 #: lib/imaputils.py:544
 msgid "Inbox"
-msgstr ""
+msgstr "Eingang"
 
 #: lib/imaputils.py:546
-#, fuzzy
-#| msgid "Drafts folder"
 msgid "Drafts"
 msgstr "Entwürfe"
 
 #: lib/imaputils.py:547
 msgid "Junk"
-msgstr ""
+msgstr "Werbung"
 
 #: lib/imaputils.py:549
 msgid "Sent"
-msgstr ""
+msgstr "Gesendet"
 
 #: lib/imaputils.py:551
 msgid "Trash"
-msgstr ""
+msgstr "Papierkorb"
 
 #: modo_extension.py:16
 msgid "Simple IMAP webmail"
@@ -279,7 +277,7 @@ msgstr "Hochladen…"
 
 #: templates/modoboa_webmail/compose.html:12
 msgid "This field is required"
-msgstr ""
+msgstr "Pflichtfeld"
 
 #: templates/modoboa_webmail/compose_menubar.html:9
 #: templates/modoboa_webmail/headers.html:4 views.py:284

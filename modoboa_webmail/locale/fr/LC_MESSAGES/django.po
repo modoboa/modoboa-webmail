@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Modoboa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-05 15:04+0200\n"
+"POT-Creation-Date: 2016-10-05 18:15+0200\n"
 "PO-Revision-Date: 2015-06-04 19:19+0000\n"
 "Last-Translator: Antoine Nguyen <tonio@ngyn.org>\n"
 "Language-Team: French (http://www.transifex.com/tonio/modoboa/language/fr/)\n"
@@ -193,15 +193,15 @@ msgstr "Réponse du serveur"
 msgid "Unknown action"
 msgstr "Action inconnue"
 
-#: forms.py:89 templates/modoboa_webmail/compose.html.py:10
+#: forms.py:89 templates/modoboa_webmail/compose.html:10
 msgid "To"
 msgstr "A"
 
-#: forms.py:91 templates/modoboa_webmail/compose.html.py:25
+#: forms.py:91 templates/modoboa_webmail/compose.html:25
 msgid "Cc"
 msgstr "Cc"
 
-#: forms.py:93 templates/modoboa_webmail/compose.html.py:30
+#: forms.py:93 templates/modoboa_webmail/compose.html:30
 msgid "Cci"
 msgstr "Cci"
 
@@ -243,7 +243,6 @@ msgid "Inbox"
 msgstr "Boîte de réception"
 
 #: lib/imaputils.py:546
-#| msgid "Drafts folder"
 msgid "Drafts"
 msgstr "Brouillons"
 

@@ -13,13 +13,30 @@ from django.utils.formats import date_format
 
 from modoboa.lib.email_utils import EmailAddress
 from modoboa.lib.signals import get_request
-from modoboa.core.constants import DATETIME_FORMATS
 
 
 __all__ = [
     'parse_from', 'parse_to', 'parse_message_id', 'parse_date',
     'parse_reply_to', 'parse_cc', 'parse_subject'
 ]
+
+# date and time formats for email list
+# according to https://en.wikipedia.org/wiki/Date_format_by_country
+# and https://en.wikipedia.org/wiki/Date_and_time_representation_by_country
+DATETIME_FORMATS = {
+    "cs": {'SHORT': 'l, H:i', 'LONG': 'd. N Y H:i'},
+    "de": {'SHORT': 'l, H:i', 'LONG': 'd. N Y H:i'},
+    "en": {'SHORT': 'l, P', 'LONG': 'N j, Y P'},
+    "es": {'SHORT': 'l, H:i', 'LONG': 'd. N Y H:i'},
+    "fr": {'SHORT': 'l, H:i', 'LONG': 'd. N Y H:i'},
+    "it": {'SHORT': 'l, H:i', 'LONG': 'd. N Y H:i'},
+    "ja_JP": {'SHORT': 'l, P', 'LONG': 'N j, Y P'},
+    "nl": {'SHORT': 'l, H:i', 'LONG': 'd. N Y H:i'},
+    "pt_PT": {'SHORT': 'l, H:i', 'LONG': 'd. N Y H:i'},
+    "pt_BR": {'SHORT': 'l, H:i', 'LONG': 'd. N Y H:i'},
+    "ru": {'SHORT': 'l, H:i', 'LONG': 'd. N Y H:i'},
+    "sv": {'SHORT': 'l, H:i', 'LONG': 'd. N Y H:i'},
+}
 
 
 def to_unicode(value):

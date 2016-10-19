@@ -5,6 +5,7 @@
 # Translators:
 # Andrew <buddha@cryptolab.net>, 2014
 # TuxBrother <vrijwilligerswerk@wij.rs>, 2014
+# Jeeptwister <peter@cpu.nl>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Modoboa\n"
@@ -150,7 +151,7 @@ msgstr "Map voor verwijderde berichten"
 
 #: app_settings.py:119
 msgid "Sent folder"
-msgstr "Verstuurd"
+msgstr "Verzonden"
 
 #: app_settings.py:120
 msgid "Folder where copies of sent messages go"
@@ -178,11 +179,11 @@ msgstr "De standaard editor voor het schrijven van een bericht"
 
 #: app_settings.py:141
 msgid "Signature text"
-msgstr "Handtekening text"
+msgstr "Handtekening tekst"
 
 #: app_settings.py:142
 msgid "User defined email signature"
-msgstr "Gebruiker opgegeven email handtekening"
+msgstr "Door gebruiker opgegeven email handtekening"
 
 #: app_settings.py:161
 msgid "Value must be a positive integer (> 0)"
@@ -243,7 +244,7 @@ msgstr "Verbinding met de IMAP server mislukt: %s"
 
 #: lib/imaputils.py:544
 msgid "Inbox"
-msgstr ""
+msgstr "Inbox"
 
 #: lib/imaputils.py:546
 msgid "Drafts"
@@ -251,19 +252,19 @@ msgstr "Concepten"
 
 #: lib/imaputils.py:547
 msgid "Junk"
-msgstr ""
+msgstr "Spam"
 
 #: lib/imaputils.py:549
 msgid "Sent"
-msgstr ""
+msgstr "Verzonden"
 
 #: lib/imaputils.py:551
 msgid "Trash"
-msgstr ""
+msgstr "Prullenbak"
 
 #: modo_extension.py:16
 msgid "Simple IMAP webmail"
-msgstr "Simpele IMAP webmail"
+msgstr "Eenvoudige IMAP webmail"
 
 #: templates/modoboa_webmail/attachments.html:8
 msgid "Attach"
@@ -275,7 +276,7 @@ msgstr "Uploaden.."
 
 #: templates/modoboa_webmail/compose.html:12
 msgid "This field is required"
-msgstr ""
+msgstr "Dit veld is verplicht"
 
 #: templates/modoboa_webmail/compose_menubar.html:9
 #: templates/modoboa_webmail/headers.html:4 views.py:284
@@ -288,7 +289,7 @@ msgstr "Hoofd mailbox"
 
 #: templates/modoboa_webmail/index.html:43
 msgid "Compose"
-msgstr "Samenstellen"
+msgstr "Nieuw bericht"
 
 #: templatetags/webmail_tags.py:26 templatetags/webmail_tags.py:75
 msgid "Back"
@@ -324,7 +325,7 @@ msgstr "Links uitschakelen"
 
 #: templatetags/webmail_tags.py:80
 msgid "Send"
-msgstr "Versturen"
+msgstr "Verzenden"
 
 #: templatetags/webmail_tags.py:100
 msgid "Actions"
@@ -397,7 +398,7 @@ msgstr "Mailbox aangepast"
 
 #: views.py:274
 msgid "Failed to save attachment: "
-msgstr "Mislukt om deze bijlage(s) op te slaan:"
+msgstr "Het is niet gelukt om deze bijlage(n) op te slaan:"
 
 #: views.py:278
 #, python-format
@@ -410,7 +411,7 @@ msgstr "Verkeerde query"
 
 #: views.py:313
 msgid "Failed to remove attachment: "
-msgstr "Mislukt om bijlage te verwijderen:"
+msgstr "Het is niet gelukt om de bijlage te verwijderen:"
 
 #: views.py:318
 msgid "Unknown attachment"

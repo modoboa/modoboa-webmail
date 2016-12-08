@@ -1,9 +1,9 @@
 import smtplib
 
-from modoboa.lib import parameters
 from modoboa.lib.email_utils import prepare_addresses
 from modoboa.lib.web_utils import _render_to_string
 from modoboa.lib.cryptutils import get_password
+from modoboa.parameters import tools as param_tools
 
 from ..exceptions import WebmailInternalError
 from . import get_imapconnector, clean_attachments
@@ -21,7 +21,7 @@ def send_mail(request, form, posturl=None):
     :return: a 2-uple (True|False, HttpResponse)
     """
     if not form.is_valid():
-        editormode = parameters.get_user(request.user, "EDITOR")
+        editormode = request.user.parameters.get_value("editor")
         listing = _render_to_string(
             request, "modoboa_webmail/compose.html",
             {"form": form, "noerrors": True,
@@ -37,19 +37,17 @@ def send_mail(request, form, posturl=None):
             msg[hdr.capitalize()] = prepare_addresses(form.cleaned_data[hdr])
             rcpts += prepare_addresses(form.cleaned_data[hdr], "envelope")
     try:
-        secmode = parameters.get_admin("SMTP_SECURED_MODE")
-        if secmode == "ssl":
-            s = smtplib.SMTP_SSL(parameters.get_admin("SMTP_SERVER"),
-                                 int(parameters.get_admin("SMTP_PORT")))
+        conf = dict(param_tools.get_globa_parameters("modoboa_webmail"))
+        if conf["smtp_secured_mode"] == "ssl":
+            s = smtplib.SMTP_SSL(conf["smtp_server"], conf["smtp_port"])
         else:
-            s = smtplib.SMTP(parameters.get_admin("SMTP_SERVER"),
-                             int(parameters.get_admin("SMTP_PORT")))
-            if secmode == "starttls":
+            s = smtplib.SMTP(conf["smtp_server"], conf["smtp_port"])
+            if conf["smtp_secured_mode"] == "starttls":
                 s.starttls()
     except Exception as text:
         raise WebmailInternalError(str(text))
 
-    if parameters.get_admin("SMTP_AUTHENTICATION") == "yes":
+    if conf["smtp_authentication"]:
         try:
             s.login(request.user.username, get_password(request))
         except smtplib.SMTPException as err:
@@ -60,7 +58,7 @@ def send_mail(request, form, posturl=None):
     except smtplib.SMTPException as err:
         raise WebmailInternalError(str(err))
 
-    sentfolder = parameters.get_user(request.user, "SENT_FOLDER")
+    sentfolder = request.user.parameters.get_value("sent_folder")
     get_imapconnector(request).push_mail(sentfolder, msg)
     clean_attachments(request.session["compose_mail"]["attachments"])
     del request.session["compose_mail"]

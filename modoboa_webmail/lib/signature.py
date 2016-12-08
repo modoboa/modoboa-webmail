@@ -1,7 +1,5 @@
 import re
 
-from modoboa.lib import parameters
-
 
 class EmailSignature(object):
 
@@ -12,8 +10,8 @@ class EmailSignature(object):
 
     def __init__(self, user):
         self._sig = u""
-        dformat = parameters.get_user(user, "EDITOR")
-        content = parameters.get_user(user, "SIGNATURE")
+        dformat = user.parameters.get_value("editor")
+        content = user.parameters.get_value("signature")
         if len(content):
             getattr(self, "_format_sig_%s" % dformat)(content)
 

@@ -8,8 +8,6 @@ from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
-from modoboa.lib import parameters
-
 from ..lib import imapheader, separate_mailbox
 
 register = template.Library()
@@ -111,7 +109,7 @@ def listmailbox_menu(selection, folder, user):
          ]
          },
     ]
-    if folder == parameters.get_user(user, "TRASH_FOLDER"):
+    if folder == user.parameters.get_value("trash_folder"):
         entries[0]["class"] += " disabled"
         entries[1]["menu"] += [
             {"name": "empty",

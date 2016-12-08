@@ -5,9 +5,9 @@ from rfc6266 import build_header
 from django.conf import settings
 from django.core.files.uploadhandler import FileUploadHandler, SkipFile
 
-from modoboa.lib import parameters
 from modoboa.lib.exceptions import InternalError
 from modoboa.lib.web_utils import size2integer
+from modoboa.parameters import tools as param_tools
 
 
 def set_compose_session(request):
@@ -83,7 +83,8 @@ def create_mail_attachment(attdef, payload=None):
     res = MIMEBase(maintype, subtype)
     if payload is None:
         with open(os.path.join(
-                settings.MEDIA_ROOT, "webmail", attdef["tmpname"]), "rb") as fp:
+                settings.MEDIA_ROOT, "webmail", attdef["tmpname"]),
+                  "rb") as fp:
             res.set_payload(fp.read())
     else:
         res.set_payload(payload)
@@ -105,7 +106,8 @@ class AttachmentUploadHandler(FileUploadHandler):
         super(AttachmentUploadHandler, self).__init__(request)
         self.total_upload = 0
         self.toobig = False
-        self.maxsize = size2integer(parameters.get_admin("MAX_ATTACHMENT_SIZE"))
+        self.maxsize = size2integer(
+            param_tools.get_globa_parameter("max_attachment_size"))
 
     def receive_data_chunk(self, raw_data, start):
         self.total_upload += len(raw_data)

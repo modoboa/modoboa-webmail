@@ -18,12 +18,12 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.gzip import gzip_page
 
 from modoboa.admin.lib import needs_mailbox
-from modoboa.lib import parameters
 from modoboa.lib.exceptions import ModoboaException, BadRequest
 from modoboa.lib.paginator import Paginator
 from modoboa.lib.web_utils import (
     _render_to_string, ajax_response, render_to_json_response
 )
+from modoboa.parameters import tools as param_tools
 
 from .exceptions import UnknownAction
 from .forms import (
@@ -91,7 +91,7 @@ def delete(request):
     selection = [item for item in selection if item.isdigit()]
     mbc = get_imapconnector(request)
     mbc.move(",".join(selection), mbox,
-             parameters.get_user(request.user, "TRASH_FOLDER"))
+             request.user.parameters.get_value("trash_folder"))
     count = len(selection)
     message = ungettext("%(count)d message deleted",
                         "%(count)d messages deleted",
@@ -123,7 +123,7 @@ def mark(request, name):
 def empty(request):
     """Empty the trash folder."""
     name = request.GET.get("name", None)
-    if name != parameters.get_user(request.user, "TRASH_FOLDER"):
+    if name != request.user.parameters.get_value("trash_folder"):
         raise BadRequest(_("Invalid request"))
     get_imapconnector(request).empty(name)
     content = u"<div class='alert alert-info'>%s</div>" % _("Empty mailbox")
@@ -276,7 +276,7 @@ def attachments(request, tplname="modoboa_webmail/attachments.html"):
         if csuploader.toobig:
             error = (
                 _("Attachment is too big (limit: %s)") %
-                parameters.get_admin("MAX_ATTACHMENT_SIZE"))
+                param_tools.get_globa_parameter("max_attachment_size"))
         return render(request, "modoboa_webmail/upload_done.html", {
             "status": "ko", "error": error
         })
@@ -358,7 +358,7 @@ def listmailbox(request, defmailbox="INBOX", update_session=True):
 
     paginator = Paginator(
         mbc.messages_count(folder=mbox, order=navparams.get("order")),
-        int(parameters.get_user(request.user, "MESSAGES_PER_PAGE"))
+        request.user.parameters.get_value("messages_per_page")
     )
     page = paginator.getpage(page_id)
     content = ""
@@ -414,7 +414,7 @@ def render_compose(request, form, posturl, email=None, insert_signature=False):
 
     resp.update({
         "listing": content,
-        "editor": parameters.get_user(request.user, "EDITOR")
+        "editor": request.user.parameters.get_value("editor")
     })
     if randid is not None:
         resp["id"] = randid
@@ -507,8 +507,7 @@ def viewmail(request):
         raise BadRequest(_("Invalid request"))
     links = request.GET.get("links", None)
     if links is None:
-        links = 1 if parameters.get_user(
-            request.user, "ENABLE_LINKS") == "yes" else 0
+        links = int(request.user.parameters.get_value("enable_links"))
     else:
         links = int(links)
 
@@ -587,19 +586,19 @@ def index(request):
         response["hdelimiter"] = imapc.hdelimiter
         response["mboxes"] = render_mboxes_list(request, imapc)
         imapc.getquota(curmbox)
-        response["refreshrate"] = \
-            int(parameters.get_user(request.user, "REFRESH_INTERVAL"))
+        response["refreshrate"] = request.user.parameters.get_value(
+            "refresh_interval")
         response["quota"] = imapc.quota_usage
-        trash = parameters.get_user(request.user, "TRASH_FOLDER")
+        trash = request.user.parameters.get_value("trash_folder")
         response["trash"] = trash
         response["ro_mboxes"] = [
             "INBOX", "Junk",
-            parameters.get_user(request.user, "SENT_FOLDER"),
+            request.user.parameters.get_value("sent_folder"),
             trash,
-            parameters.get_user(request.user, "DRAFTS_FOLDER")
+            request.user.parameters.get_value("drafts_folder")
         ]
-        response['mboxes_col_width'] = \
-            int(parameters.get_user(request.user, 'MBOXES_COL_WIDTH'))
+        response['mboxes_col_width'] = request.user.parameters.get_value(
+            "mboxes_col_width")
         return render(request, "modoboa_webmail/index.html", response)
 
     if action in ["reply", "forward"]:

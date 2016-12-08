@@ -11,8 +11,9 @@ from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
-from modoboa.lib import parameters
 from modoboa.lib.email_utils import set_email_headers
+from modoboa.lib import form_utils
+from modoboa.parameters import forms as param_forms
 
 from .lib import (
     ImapEmail, create_mail_attachment, decode_payload
@@ -148,7 +149,7 @@ class ComposeMailForm(forms.Form):
     def _build_msg(self, request):
         """Convert form's content to a MIME message.
         """
-        editormode = parameters.get_user(request.user, "EDITOR")
+        editormode = request.user.parameters.get_value("editor")
         msg = getattr(self, "_%s_msg" % editormode)()
 
         if request.session["compose_mail"]["attachments"]:
@@ -216,3 +217,160 @@ class FolderForm(forms.Form):
 
 class AttachmentForm(forms.Form):
     attachment = forms.FileField(label=_("Select a file"))
+
+
+class ParametersForm(param_forms.AdminParametersForm):
+    app = "modoboa_webmail"
+
+    sep3 = form_utils.SeparatorField(label=_("General"))
+
+    max_attachment_size = forms.CharField(
+        label=_("Maximum attachment size"),
+        initial="2048",
+        help_text=_(
+            "Maximum attachment size in bytes (or KB, MB, GB if specified)")
+    )
+
+    sep1 = form_utils.SeparatorField(label=_("IMAP settings"))
+
+    imap_server = forms.CharField(
+        label=_("Server address"),
+        initial="127.0.0.1",
+        help_text=_("Address of your IMAP server")
+    )
+
+    imap_secured = form_utils.YesNoField(
+        label=_("Use a secured connection"),
+        initial=False,
+        help_text=_("Use a secured connection to access IMAP server")
+    )
+
+    imap_port = forms.IntegerField(
+        label=_("Server port"),
+        initial=143,
+        help_text=_("Listening port of your IMAP server")
+    )
+
+    sep2 = form_utils.SeparatorField(label=_("SMTP settings"))
+
+    smtp_server = forms.CharField(
+        label=_("Server address"),
+        initial="127.0.0.1",
+        help_text=_("Address of your SMTP server")
+    )
+
+    smtp_secured_mode = forms.ChoiceField(
+        label=_("Secured connection mode"),
+        choices=[("none", _("None")),
+                 ("starttls", "STARTTLS"),
+                 ("ssl", "SSL/TLS")],
+        initial="none",
+        help_text=_("Use a secured connection to access SMTP server"),
+        widget=form_utils.InlineRadioSelect
+    )
+
+    smtp_port = forms.IntegerField(
+        label=_("Server port"),
+        initial=25,
+        help_text=_("Listening port of your SMTP server")
+    )
+
+    smtp_authentication = form_utils.YesNoField(
+        label=_("Authentication required"),
+        initial=False,
+        help_text=_("Server needs authentication")
+    )
+
+
+class UserSettings(param_forms.UserParametersForm):
+    app = "modoboa_webmail"
+
+    sep1 = form_utils.SeparatorField(label=_("Display"))
+
+    displaymode = forms.ChoiceField(
+        initial="plain",
+        label=_("Default message display mode"),
+        choices=[("html", "html"), ("plain", "text")],
+        help_text=_("The default mode used when displaying a message"),
+        widget=form_utils.InlineRadioSelect()
+    )
+
+    enable_links = form_utils.YesNoField(
+        initial=False,
+        label=_("Enable HTML links display"),
+        help_text=_("Enable/Disable HTML links display")
+    )
+
+    messages_per_page = forms.IntegerField(
+        initial=40,
+        label=_("Number of displayed emails per page"),
+        help_text=_("Sets the maximum number of messages displayed in a page")
+    )
+
+    refresh_interval = forms.IntegerField(
+        initial=300,
+        label=_("Listing refresh rate"),
+        help_text=_("Automatic folder refresh rate (in seconds)")
+    )
+
+    mboxes_col_width = forms.IntegerField(
+        initial=200,
+        label=_("Mailboxes container's width"),
+        help_text=_("The width of the mailbox list container")
+    )
+
+    sep2 = form_utils.SeparatorField(label=_("Mailboxes"))
+
+    trash_folder = forms.CharField(
+        initial="Trash",
+        label=_("Trash folder"),
+        help_text=_("Folder where deleted messages go")
+    )
+
+    sent_folder = forms.CharField(
+        initial="Sent",
+        label=_("Sent folder"),
+        help_text=_("Folder where copies of sent messages go")
+    )
+
+    drafts_folder = forms.CharField(
+        initial="Drafts",
+        label=_("Drafts folder"),
+        help_text=_("Folder where drafts go")
+    )
+
+    sep3 = form_utils.SeparatorField(label=_("Composing messages"))
+
+    editor = forms.ChoiceField(
+        initial="plain",
+        label=_("Default editor"),
+        choices=[("html", "html"), ("plain", "text")],
+        help_text=_("The default editor to use when composing a message"),
+        widget=form_utils.InlineRadioSelect()
+    )
+
+    signature = forms.CharField(
+        initial="",
+        label=_("Signature text"),
+        help_text=_("User defined email signature"),
+        required=False
+    )
+
+    visibility_rules = {
+        "enable_links": "displaymode=html"
+    }
+
+    @staticmethod
+    def has_access(**kwargs):
+        return hasattr(kwargs.get("user"), "mailbox")
+
+    def clean_mboxes_col_width(self):
+        """Check if the entered value is a positive integer.
+
+        It must also be different from 0.
+        """
+        if self.cleaned_data['mboxes_col_width'] <= 0:
+            raise forms.ValidationError(
+                _('Value must be a positive integer (> 0)')
+            )
+        return self.cleaned_data['mboxes_col_width']

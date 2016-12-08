@@ -13,7 +13,7 @@ from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.utils.translation import ugettext as _
 
-from modoboa.lib import parameters, u2u_decode
+from modoboa.lib import u2u_decode
 from modoboa.lib.email_utils import Email, EmailAddress
 
 from .imaputils import (
@@ -86,9 +86,8 @@ class ImapEmail(Email):
             self.bs = BodyStructure(self._msg['BODYSTRUCTURE'])
             self._find_attachments()
             if self.dformat not in ["plain", "html"]:
-                self.dformat = parameters.get_user(
-                    self.request.user, self.dformat
-                )
+                self.dformat = self.request.user.parameters.get_value(
+                    self.dformat)
             fallback_fmt = "html" if self.dformat == "plain" else "plain"
             self.mformat = self.dformat \
                 if self.dformat in self.bs.contents else fallback_fmt

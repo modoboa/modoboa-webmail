@@ -1,7 +1,8 @@
 import smtplib
 
+from django.template.loader import render_to_string
+
 from modoboa.lib.email_utils import prepare_addresses
-from modoboa.lib.web_utils import _render_to_string
 from modoboa.lib.cryptutils import get_password
 from modoboa.parameters import tools as param_tools
 
@@ -22,11 +23,12 @@ def send_mail(request, form, posturl=None):
     """
     if not form.is_valid():
         editormode = request.user.parameters.get_value("editor")
-        listing = _render_to_string(
-            request, "modoboa_webmail/compose.html",
+        listing = render_to_string(
+            "modoboa_webmail/compose.html",
             {"form": form, "noerrors": True,
              "body": form.cleaned_data.get("body", "").strip(),
-             "posturl": posturl}
+             "posturl": posturl},
+            request
         )
         return False, dict(status="ko", listing=listing, editor=editormode)
 

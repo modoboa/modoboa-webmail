@@ -1,6 +1,7 @@
 # coding: utf-8
 """Declare and register the webmail extension."""
 
+from django.core.urlresolvers import reverse_lazy
 from django.utils.translation import ugettext_lazy
 
 from modoboa.core.extensions import ModoExtension, exts_pool
@@ -16,8 +17,8 @@ class Webmail(ModoExtension):
     version = __version__
     description = ugettext_lazy("Simple IMAP webmail")
     needs_media = True
-    available_for_topredirection = True
     url = "webmail"
+    topredirection_url = reverse_lazy("modoboa_webmail:index")
 
     def load(self):
         param_tools.registry.add("global", forms.ParametersForm, "Webmail")

@@ -8,20 +8,22 @@ import os
 from rfc6266 import build_header
 
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import Template, Context
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _, ungettext
-from django.core.urlresolvers import reverse
-from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.gzip import gzip_page
+
+from django.contrib.auth.decorators import login_required
 
 from modoboa.admin.lib import needs_mailbox
 from modoboa.lib.exceptions import ModoboaException, BadRequest
 from modoboa.lib.paginator import Paginator
 from modoboa.lib.web_utils import (
-    _render_to_string, ajax_response, render_to_json_response
+    ajax_response, render_to_json_response
 )
 from modoboa.parameters import tools as param_tools
 
@@ -327,11 +329,11 @@ def render_mboxes_list(request, imapc):
     :return: a string
     """
     curmbox = WebmailNavigationParameters(request).get("mbox", "INBOX")
-    return _render_to_string(request, "modoboa_webmail/folders.html", {
+    return render_to_string("modoboa_webmail/folders.html", {
         "selected": curmbox,
         "mboxes": imapc.getmboxes(request.user),
         "withunseen": True
-    })
+    }, request)
 
 
 def listmailbox(request, defmailbox="INBOX", update_session=True):
@@ -364,12 +366,13 @@ def listmailbox(request, defmailbox="INBOX", update_session=True):
     content = ""
     if page is not None:
         email_list = mbc.fetch(page.id_start, page.id_stop, mbox)
-        content = _render_to_string(
-            request, "modoboa_webmail/email_list.html", {
+        content = render_to_string(
+            "modoboa_webmail/email_list.html", {
                 "email_list": email_list,
                 "page": page_id,
                 "with_top_div": request.GET.get("scroll", "false") == "false"
-            })
+            }, request
+        )
         length = len(content)
     else:
         if page_id == 1:
@@ -407,10 +410,10 @@ def render_compose(request, form, posturl, email=None, insert_signature=False):
     if attachment_list:
         resp["menuargs"] = {"attachment_counter": len(attachment_list)}
 
-    content = _render_to_string(request, "modoboa_webmail/compose.html", {
+    content = render_to_string("modoboa_webmail/compose.html", {
         "form": form, "bodyheader": textheader,
         "body": body, "posturl": posturl
-    })
+    }, request)
 
     resp.update({
         "listing": content,

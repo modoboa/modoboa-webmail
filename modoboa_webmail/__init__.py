@@ -1,3 +1,3 @@
-__version__ = "1.0.5"
+__version__ = "1.1.0"
 
 default_app_config = "modoboa_webmail.apps.WebmailConfig"

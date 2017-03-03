@@ -1,4 +1,3 @@
-modoboa>=1.4.0
+modoboa>=1.7.0
 chardet
 lxml
-rfc6266

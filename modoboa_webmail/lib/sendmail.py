@@ -39,7 +39,7 @@ def send_mail(request, form, posturl=None):
             msg[hdr.capitalize()] = prepare_addresses(form.cleaned_data[hdr])
             rcpts += prepare_addresses(form.cleaned_data[hdr], "envelope")
     try:
-        conf = dict(param_tools.get_globa_parameters("modoboa_webmail"))
+        conf = dict(param_tools.get_global_parameters("modoboa_webmail"))
         if conf["smtp_secured_mode"] == "ssl":
             s = smtplib.SMTP_SSL(conf["smtp_server"], conf["smtp_port"])
         else:

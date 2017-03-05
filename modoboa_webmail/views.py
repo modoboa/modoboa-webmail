@@ -278,7 +278,7 @@ def attachments(request, tplname="modoboa_webmail/attachments.html"):
         if csuploader.toobig:
             error = (
                 _("Attachment is too big (limit: %s)") %
-                param_tools.get_globa_parameter("max_attachment_size"))
+                param_tools.get_global_parameter("max_attachment_size"))
         return render(request, "modoboa_webmail/upload_done.html", {
             "status": "ko", "error": error
         })

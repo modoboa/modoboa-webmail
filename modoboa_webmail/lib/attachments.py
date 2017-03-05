@@ -107,7 +107,7 @@ class AttachmentUploadHandler(FileUploadHandler):
         self.total_upload = 0
         self.toobig = False
         self.maxsize = size2integer(
-            param_tools.get_globa_parameter("max_attachment_size"))
+            param_tools.get_global_parameter("max_attachment_size"))
 
     def receive_data_chunk(self, raw_data, start):
         self.total_upload += len(raw_data)

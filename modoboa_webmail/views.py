@@ -297,14 +297,14 @@ def attachments(request, tplname="modoboa_webmail/attachments.html"):
 @login_required
 @needs_mailbox()
 def delattachment(request):
-    if "compose_mail" not in request.session \
-            or "name" not in request.GET \
-            or not request.GET["name"]:
+    """Delete an attachment."""
+    name = request.GET.get("name")
+    if not name or "compose_mail" not in request.session:
         return ajax_response(request, "ko", respmsg=_("Bad query"))
 
     error = None
     for att in request.session["compose_mail"]["attachments"]:
-        if att["tmpname"] == request.GET["name"]:
+        if att["tmpname"] == name:
             request.session["compose_mail"]["attachments"].remove(att)
             fullpath = os.path.join(
                 settings.MEDIA_ROOT, "webmail", att["tmpname"]

@@ -1,0 +1,36 @@
+language: python
+cache: pip
+python:
+  - "2.7"
+
+env:
+  - DB="POSTGRESQL"
+  - DB="MYSQL"
+
+services:
+  - mysql
+  - postgres
+
+before_install:
+  - pip install codecov
+  - if [[ $DB = 'POSTGRESQL' ]]; then pip install -q psycopg2; fi
+  - if [[ $DB = 'MYSQL' ]]; then pip install -q mysqlclient; fi
+
+install:
+  - pip install -e git+https://github.com/tonioo/modoboa.git#egg=modoboa
+  - pip install -q factory-boy testfixtures
+  - python setup.py -q develop
+
+before_script:
+  - if [[ $DB = 'POSTGRESQL' ]]; then psql -c 'create database modoboa_test;' -U postgres; fi
+  - if [[ $DB = 'MYSQL' ]]; then mysql -e "create database IF NOT EXISTS modoboa_test;" -uroot; fi
+  - if [[ $DB = 'MYSQL' ]]; then mysql -e "CREATE USER 'modoboa'@'localhost' IDENTIFIED BY 'modoboa'" -uroot; fi
+  - if [[ $DB = 'MYSQL' ]]; then mysql -e "GRANT ALL PRIVILEGES ON * . * TO 'modoboa'@'localhost';" -uroot; fi
+
+script:
+  - cd test_project
+  - coverage run --source ../modoboa_amavis manage.py test modoboa_webmail
+
+after_success:
+  - codecov
+

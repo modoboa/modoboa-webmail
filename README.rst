@@ -1,7 +1,7 @@
 modoboa-webmail
 ===============
 
-|landscape| |rtfd|
+|travis| |landscape| |rtfd|
 
 The webmail of Modoboa.
 
@@ -37,6 +37,9 @@ Run the following commands to setup the database tables and collect static files
     
 Finally, restart the python process running modoboa (uwsgi, gunicorn,
 apache, whatever).
+
+.. |travis| image:: https://travis-ci.org/modoboa/modoboa-webmail.svg?branch=master
+   :target: https://travis-ci.org/modoboa/modoboa-webmail
 
 .. |landscape| image:: https://landscape.io/github/modoboa/modoboa-webmail/master/landscape.svg?style=flat
    :target: https://landscape.io/github/modoboa/modoboa-webmail/master

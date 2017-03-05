@@ -29,7 +29,7 @@ before_script:
 
 script:
   - cd test_project
-  - coverage run --source ../modoboa_amavis manage.py test modoboa_webmail
+  - coverage run --source ../modoboa_webmail manage.py test modoboa_webmail
 
 after_success:
   - codecov

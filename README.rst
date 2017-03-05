@@ -1,7 +1,7 @@
 modoboa-webmail
 ===============
 
-|travis| |landscape| |rtfd|
+|travis| |codecov| |landscape| |rtfd|
 
 The webmail of Modoboa.
 
@@ -44,6 +44,9 @@ apache, whatever).
 .. |landscape| image:: https://landscape.io/github/modoboa/modoboa-webmail/master/landscape.svg?style=flat
    :target: https://landscape.io/github/modoboa/modoboa-webmail/master
    :alt: Code Health
+
+.. |codecov| image:: https://codecov.io/gh/modoboa/modoboa-webmail/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/modoboa/modoboa-webmail
 
 .. |rtfd| image:: https://readthedocs.org/projects/modoboa-webmail/badge/?version=latest
    :target: https://readthedocs.org/projects/modoboa-webmail/?badge=latest

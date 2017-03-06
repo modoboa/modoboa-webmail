@@ -114,4 +114,4 @@ class WebmailTestCase(ModoTestCase):
         response = self.client.post(
             url, {"to": "", "subject": "test", "body": "Test"}
         )
-        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(len(mail.outbox), 0)

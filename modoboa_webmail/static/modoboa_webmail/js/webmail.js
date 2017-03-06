@@ -1044,7 +1044,7 @@ Webmail.prototype = {
     compose_callback: function(resp) {
         this.page_update(resp);
         $("#add_cc").click($.proxy(function(e) { this.add_field(e, "cc"); }, this));
-        $("#add_cci").click($.proxy(function(e) { this.add_field(e, "cci"); }, this));
+        $("#add_bcc").click($.proxy(function(e) { this.add_field(e, "bcc"); }, this));
         this.editormode = resp.editor;
         if (resp.editor == "html") {
             var instance = CKEDITOR.instances[this.editorid];

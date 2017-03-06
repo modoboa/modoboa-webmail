@@ -17,17 +17,17 @@
 	  {% endif %}
         </div>
 
-	{# handling cc and cci buttons #}
-        {% if not form.cc.value or not form.cci.value %}
+	{# handling cc and bcc buttons #}
+        {% if not form.cc.value or not form.bcc.value %}
         <div class="col-sm-2">
 	  {% if not form.cc.value %}
           <button id="add_cc" class="btn btn-default btn-xs">
 	    <span class="fa fa-plus"></span> {% trans "Cc" %}
 	  </button>
 	  {% endif %}
-	  {% if not form.cci.value %}
-          <button id="add_cci" class="btn btn-default btn-xs">
-	    <span class="fa fa-plus"> {% trans "Cci" %}</span>
+	  {% if not form.bcc.value %}
+          <button id="add_bcc" class="btn btn-default btn-xs">
+	    <span class="fa fa-plus"> {% trans "Bcc" %}</span>
 	  </button>
 	  {% endif %}
         </div>
@@ -41,11 +41,11 @@
         {% render_field form.cc label_width="col-sm-1" hidden=True %}
       {% endif %}
 
-      {# display cci field when required #}
-      {% if form.cci.value %}
-        {% render_field form.cci label_width="col-sm-1" %}
+      {# display bcc field when required #}
+      {% if form.bcc.value %}
+        {% render_field form.bcc label_width="col-sm-1" %}
       {% else %}
-        {% render_field form.cci label_width="col-sm-1" hidden=True %}
+        {% render_field form.bcc label_width="col-sm-1" hidden=True %}
       {% endif %}
 
       {% render_field form.subject label_width="col-sm-1" %}

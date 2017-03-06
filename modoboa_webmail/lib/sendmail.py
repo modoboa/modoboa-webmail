@@ -1,8 +1,6 @@
-import smtplib
-
+from django.core import mail
 from django.template.loader import render_to_string
 
-from modoboa.lib.email_utils import prepare_addresses
 from modoboa.lib.cryptutils import get_password
 from modoboa.parameters import tools as param_tools
 
@@ -33,35 +31,30 @@ def send_mail(request, form, posturl=None):
         return False, dict(status="ko", listing=listing, editor=editormode)
 
     msg = form.to_msg(request)
-    rcpts = prepare_addresses(form.cleaned_data["to"], "envelope")
-    for hdr in ["cc", "cci"]:
-        if form.cleaned_data[hdr]:
-            msg[hdr.capitalize()] = prepare_addresses(form.cleaned_data[hdr])
-            rcpts += prepare_addresses(form.cleaned_data[hdr], "envelope")
-    try:
-        conf = dict(param_tools.get_global_parameters("modoboa_webmail"))
-        if conf["smtp_secured_mode"] == "ssl":
-            s = smtplib.SMTP_SSL(conf["smtp_server"], conf["smtp_port"])
-        else:
-            s = smtplib.SMTP(conf["smtp_server"], conf["smtp_port"])
-            if conf["smtp_secured_mode"] == "starttls":
-                s.starttls()
-    except Exception as text:
-        raise WebmailInternalError(str(text))
-
+    conf = dict(param_tools.get_global_parameters("modoboa_webmail"))
+    options = {
+        "host": conf["smtp_server"], "port": conf["smtp_port"]
+    }
+    if conf["smtp_secured_mode"] == "ssl":
+        options.update({"use_ssl": True})
+    elif conf["smtp_secured_mode"] == "starttls":
+        options.update({"use_tls": True})
     if conf["smtp_authentication"]:
-        try:
-            s.login(request.user.username, get_password(request))
-        except smtplib.SMTPException as err:
-            raise WebmailInternalError(str(err))
+        options.update({
+            "username": request.user.username,
+            "password": get_password(request)
+        })
     try:
-        s.sendmail(request.user.email, rcpts, msg.as_string())
-        s.quit()
-    except smtplib.SMTPException as err:
-        raise WebmailInternalError(str(err))
+        with mail.get_connection(**options) as connection:
+            msg.connection = connection
+            msg.send()
+    except Exception as inst:
+        raise WebmailInternalError(str(inst))
 
+    # Copy message to sent folder
     sentfolder = request.user.parameters.get_value("sent_folder")
-    get_imapconnector(request).push_mail(sentfolder, msg)
+    get_imapconnector(request).push_mail(sentfolder, msg.message())
     clean_attachments(request.session["compose_mail"]["attachments"])
     del request.session["compose_mail"]
+
     return True, {}

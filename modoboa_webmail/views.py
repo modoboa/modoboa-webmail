@@ -425,6 +425,7 @@ def render_compose(request, form, posturl, email=None, insert_signature=False):
 
 
 def compose(request):
+    """Compose email."""
     url = "?action=compose"
     if request.method == "POST":
         form = ComposeMailForm(request.POST)
@@ -458,8 +459,7 @@ def new_compose_form(request, action, mbox, mailid):
 
 
 def reply(request):
-    """Reply to email.
-    """
+    """Reply to email."""
     mbox, mailid = get_mail_info(request)
     if request.method == "POST":
         url = "?action=reply&mbox=%s&mailid=%s" % (mbox, mailid)
@@ -472,8 +472,7 @@ def reply(request):
 
 
 def forward(request):
-    """Forward email.
-    """
+    """Forward email."""
     mbox, mailid = get_mail_info(request)
     if request.method == "POST":
         url = "?action=forward&mbox=%s&mailid=%s" % (mbox, mailid)

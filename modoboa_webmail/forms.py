@@ -2,17 +2,19 @@
 
 """Webmail forms."""
 
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+import os
+import pkg_resources
+from urlparse import urlparse
 
 import lxml.html
 
 from django import forms
 from django.conf import settings
+from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.utils.translation import ugettext_lazy as _
 
-from modoboa.lib.email_utils import set_email_headers
-from modoboa.lib import form_utils
+from modoboa.lib import email_utils, form_utils
 from modoboa.parameters import forms as param_forms
 
 from .lib import (
@@ -54,10 +56,6 @@ def make_body_images_inline(body):
 
     :param body: the HTML body to parse
     """
-    import os
-    from email.mime.image import MIMEImage
-    from urlparse import urlparse
-
     html = lxml.html.fromstring(body)
     parts = []
     for tag in html.iter("img"):
@@ -65,7 +63,7 @@ def make_body_images_inline(body):
         if src is None:
             continue
         o = urlparse(src)
-        path = os.path.join(settings.MODOBOA_DIR, o.path[1:])
+        path = os.path.join(settings.BASE_DIR, o.path[1:])
         if not os.path.exists(path):
             continue
         fname = os.path.basename(path)
@@ -83,15 +81,14 @@ def make_body_images_inline(body):
 
 
 class ComposeMailForm(forms.Form):
-
     """Compose mail form."""
 
     to = forms.CharField(
         label=_("To"), validators=[validate_email_list])
     cc = forms.CharField(
         label=_("Cc"), required=False, validators=[validate_email_list])
-    cci = forms.CharField(
-        label=_("Cci"), required=False, validators=[validate_email_list])
+    bcc = forms.CharField(
+        label=_("Bcc"), required=False, validators=[validate_email_list])
 
     subject = forms.CharField(
         label=_("Subject"),
@@ -106,80 +103,83 @@ class ComposeMailForm(forms.Form):
         super(ComposeMailForm, self).__init__(*args, **kwargs)
         self.field_widths = {
             "cc": "11",
-            "cci": "11",
+            "bcc": "11",
             "subject": "11"
         }
 
-    def _html_msg(self):
+    def clean_to(self):
+        """Convert to a list."""
+        to = self.cleaned_data["to"]
+        return email_utils.prepare_addresses(to, "envelope")
+
+    def _html_msg(self, sender, headers):
         """Create a multipart message.
 
         We attach two alternatives:
         * text/html
         * text/plain
         """
-        msg = MIMEMultipart(_subtype="related")
-        submsg = MIMEMultipart(_subtype="alternative")
         body = self.cleaned_data["body"]
-        charset = "utf-8"
         if body:
             tbody = html2plaintext(body)
             body, images = make_body_images_inline(body)
         else:
             tbody = ""
             images = []
-        submsg.attach(
-            MIMEText(tbody.encode(charset), _subtype="plain", _charset=charset)
+        msg = EmailMultiAlternatives(
+            self.cleaned_data["subject"],
+            tbody,
+            sender, self.cleaned_data["to"],
+            cc=self.cleaned_data["cc"],
+            bcc=self.cleaned_data["bcc"],
+            headers=headers
         )
-        submsg.attach(
-            MIMEText(body.encode(charset), _subtype="html", _charset=charset)
-        )
-        msg.attach(submsg)
+        msg.attach_alternative(body, "text/html")
         for img in images:
             msg.attach(img)
         return msg
 
-    def _plain_msg(self):
-        """Create a simple text message.
-        """
-        charset = "utf-8"
-        text = MIMEText(self.cleaned_data["body"].encode(charset),
-                        _subtype="plain", _charset=charset)
-        return text
-
-    def _build_msg(self, request):
-        """Convert form's content to a MIME message.
-        """
-        editormode = request.user.parameters.get_value("editor")
-        msg = getattr(self, "_%s_msg" % editormode)()
-
-        if request.session["compose_mail"]["attachments"]:
-            wrapper = MIMEMultipart(_subtype="mixed")
-            wrapper.attach(msg)
-            for attdef in request.session["compose_mail"]["attachments"]:
-                wrapper.attach(create_mail_attachment(attdef))
-            msg = wrapper
+    def _plain_msg(self, sender, headers):
+        """Create a simple text message."""
+        msg = EmailMessage(
+            self.cleaned_data["subject"],
+            self.cleaned_data["body"],
+            sender,
+            self.cleaned_data["to"],
+            cc=self.cleaned_data["cc"],
+            bcc=self.cleaned_data["bcc"],
+            headers=headers
+        )
         return msg
 
-    def to_msg(self, request):
-        """Convert form's content to an object ready to send.
+    def _build_msg(self, request):
+        """Build message to send.
 
-        We set headers at the end to be sure no one will override
-        them.
-
+        Can be overidden by children.
         """
-        msg = self._build_msg(request)
-        set_email_headers(
-            msg, self.cleaned_data["subject"], request.user.encoded_address,
-            self.cleaned_data['to']
-        )
-        origmsgid = self.cleaned_data.get("origmsgid", None)
+        headers = {
+            "User-Agent": pkg_resources.get_distribution("modoboa").version
+        }
+        origmsgid = self.cleaned_data.get("origmsgid")
         if origmsgid:
-            msg["References"] = msg["In-Reply-To"] = origmsgid
+            headers.update({
+                "References": origmsgid,
+                "In-Reply-To": origmsgid
+            })
+        mode = request.user.parameters.get_value("editor")
+        return getattr(self, "_{}_msg".format(mode))(
+            request.user.encoded_address, headers)
+
+    def to_msg(self, request):
+        """Convert form's content to an object ready to send."""
+        msg = self._build_msg(request)
+        if request.session["compose_mail"]["attachments"]:
+            for attdef in request.session["compose_mail"]["attachments"]:
+                msg.attach(create_mail_attachment(attdef))
         return msg
 
 
 class ForwardMailForm(ComposeMailForm):
-
     """Forward mail form."""
 
     def _build_msg(self, request):
@@ -192,10 +192,6 @@ class ForwardMailForm(ComposeMailForm):
         msg = super(ForwardMailForm, self)._build_msg(request)
         origmsg = ImapEmail(request, False, "%s:%s" % (mbox, mailid))
         if origmsg.attachments:
-            if not msg.is_multipart or not msg.get_content_subtype() == "mixed":
-                wrapper = MIMEMultipart(_subtype="mixed")
-                wrapper.attach(msg)
-                msg = wrapper
             for attpart, fname in origmsg.attachments.items():
                 attdef, payload = origmsg.fetch_attachment(attpart)
                 attdef["fname"] = fname

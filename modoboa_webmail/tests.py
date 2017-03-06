@@ -6,6 +6,7 @@ import tempfile
 
 from six import BytesIO
 
+from django.core import mail
 from django.core.urlresolvers import reverse
 
 from modoboa.admin import factories as admin_factories
@@ -92,3 +93,25 @@ class WebmailTestCase(ModoTestCase):
             response = self.ajax_get("{}?name=test".format(url))
         self.assertEqual(response["status"], "ko")
         self.assertEqual(response["respmsg"], "Unknown attachment")
+
+    def test_send_mail(self):
+        """Check compose form."""
+        url = "{}?action=compose".format(reverse("modoboa_webmail:index"))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.post(
+            url, {"to": "test@example.test", "subject": "test", "body": "Test"}
+        )
+        self.assertEqual(len(mail.outbox), 1)
+
+    def test_send_mail_errors(self):
+        """Check error cases."""
+        url = "{}?action=compose".format(reverse("modoboa_webmail:index"))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.post(
+            url, {"to": "", "subject": "test", "body": "Test"}
+        )
+        self.assertEqual(len(mail.outbox), 1)

@@ -4,6 +4,7 @@ import os
 import shutil
 import tempfile
 
+import mock
 from six import BytesIO
 
 from django.core import mail
@@ -23,6 +24,23 @@ def get_gif():
     return gif
 
 
+class IMAP4Mock(object):
+    """Fake IMAP4 client."""
+
+    def __init__(self, *args, **kwargs):
+        self.untagged_responses = {}
+
+    def _simple_command(self, name, *args, **kwargs):
+        if name == "CAPABILITY":
+            self.untagged_responses["CAPABILITY"] = [""]
+        elif name == "LIST":
+            self.untagged_responses["LIST"] = ["() \".\" \"INBOX\""]
+        return "OK", None
+
+    def list(self):
+        return "OK", ["() \".\" \"INBOX\""]
+
+
 class WebmailTestCase(ModoTestCase):
     """Check webmail backend."""
 
@@ -35,6 +53,7 @@ class WebmailTestCase(ModoTestCase):
 
     def setUp(self):
         """Connect with a simpler user."""
+        self.set_global_parameter("imap_port", 1435)
         self.workdir = tempfile.mkdtemp()
         os.mkdir("{}/webmail".format(self.workdir))
         url = reverse("core:login")
@@ -105,13 +124,15 @@ class WebmailTestCase(ModoTestCase):
         )
         self.assertEqual(len(mail.outbox), 1)
 
-    def test_send_mail_errors(self):
+    @mock.patch("imaplib.IMAP4")
+    def test_send_mail_errors(self, imap_mock):
         """Check error cases."""
+        imap_mock.return_value = IMAP4Mock()
         url = "{}?action=compose".format(reverse("modoboa_webmail:index"))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
-        response = self.client.post(
-            url, {"to": "", "subject": "test", "body": "Test"}
+        response = self.ajax_post(
+            url, {"to": "", "subject": "test", "body": "Test"}, 400
         )
         self.assertEqual(len(mail.outbox), 0)

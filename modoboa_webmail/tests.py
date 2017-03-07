@@ -37,8 +37,20 @@ class IMAP4Mock(object):
             self.untagged_responses["LIST"] = ["() \".\" \"INBOX\""]
         return "OK", None
 
+    def append(self, *args, **kwargs):
+        pass
+
+    def create(self, name):
+        return "OK", None
+
+    def delete(self, name):
+        return "OK", None
+
     def list(self):
         return "OK", ["() \".\" \"INBOX\""]
+
+    def rename(self, oldname, newname):
+        return "OK", None
 
 
 class WebmailTestCase(ModoTestCase):
@@ -53,6 +65,10 @@ class WebmailTestCase(ModoTestCase):
 
     def setUp(self):
         """Connect with a simpler user."""
+        patcher = mock.patch("imaplib.IMAP4")
+        self.mock_imap4 = patcher.start()
+        self.mock_imap4.return_value = IMAP4Mock()
+        self.addCleanup(patcher.stop)
         self.set_global_parameter("imap_port", 1435)
         self.workdir = tempfile.mkdtemp()
         os.mkdir("{}/webmail".format(self.workdir))
@@ -124,10 +140,8 @@ class WebmailTestCase(ModoTestCase):
         )
         self.assertEqual(len(mail.outbox), 1)
 
-    @mock.patch("imaplib.IMAP4")
-    def test_send_mail_errors(self, imap_mock):
+    def test_send_mail_errors(self):
         """Check error cases."""
-        imap_mock.return_value = IMAP4Mock()
         url = "{}?action=compose".format(reverse("modoboa_webmail:index"))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -136,3 +150,39 @@ class WebmailTestCase(ModoTestCase):
             url, {"to": "", "subject": "test", "body": "Test"}, 400
         )
         self.assertEqual(len(mail.outbox), 0)
+
+    def test_new_folder(self):
+        """Test folder creation."""
+        url = reverse("modoboa_webmail:folder_add")
+        response = self.client.get(url)
+        self.assertContains(response, "Create a new mailbox")
+
+        response = self.ajax_post(url, {"name": "Test"})
+        self.assertIn("newmb", response)
+
+    def test_edit_folder(self):
+        """Test folder edition."""
+        url = reverse("modoboa_webmail:folder_change")
+        response = self.client.get(url)
+        self.assertContains(response, "Invalid request")
+
+        url = "{}?name=Test".format(url)
+        response = self.client.get(url)
+        self.assertContains(response, "Edit mailbox")
+
+        session = self.client.session
+        session["webmail_navparams"] = {"inbox": "Test"}
+        session.save()
+        response = self.ajax_post(url, {"oldname": "Test", "name": "Toto"})
+        self.assertEqual(response["respmsg"], "Mailbox updated")
+
+    def test_delete_folder(self):
+        """Test folder removal."""
+        url = reverse("modoboa_webmail:folder_delete")
+        self.ajax_get(url, status=400)
+
+        url = "{}?name=Test".format(url)
+        session = self.client.session
+        session["webmail_navparams"] = {"inbox": "Test"}
+        session.save()
+        self.ajax_get(url)

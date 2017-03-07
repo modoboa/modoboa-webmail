@@ -216,7 +216,7 @@ def editfolder(request, tplname="modoboa_webmail/folder.html"):
         return render_to_json_response(
             {'form_errors': form.errors}, status=400)
 
-    name = request.GET.get("name", None)
+    name = request.GET.get("name")
     if name is None:
         raise BadRequest(_("Invalid request"))
     shortname, parent = separate_mailbox(name, sep=mbc.hdelimiter)

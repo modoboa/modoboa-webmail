@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-05 18:15+0200\n"
+"POT-Creation-Date: 2017-03-07 10:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,174 +16,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: app_settings.py:12
-msgid "General"
-msgstr ""
-
-#: app_settings.py:15
-msgid "Maximum attachment size"
-msgstr ""
-
-#: app_settings.py:18
-msgid "Maximum attachment size in bytes (or KB, MB, GB if specified)"
-msgstr ""
-
-#: app_settings.py:21
-msgid "IMAP settings"
-msgstr ""
-
-#: app_settings.py:24 app_settings.py:44
-msgid "Server address"
-msgstr ""
-
-#: app_settings.py:26
-msgid "Address of your IMAP server"
-msgstr ""
-
-#: app_settings.py:30
-msgid "Use a secured connection"
-msgstr ""
-
-#: app_settings.py:32
-msgid "Use a secured connection to access IMAP server"
-msgstr ""
-
-#: app_settings.py:36 app_settings.py:60
-msgid "Server port"
-msgstr ""
-
-#: app_settings.py:38
-msgid "Listening port of your IMAP server"
-msgstr ""
-
-#: app_settings.py:41
-msgid "SMTP settings"
-msgstr ""
-
-#: app_settings.py:46
-msgid "Address of your SMTP server"
-msgstr ""
-
-#: app_settings.py:50
-msgid "Secured connection mode"
-msgstr ""
-
-#: app_settings.py:51
-msgid "None"
-msgstr ""
-
-#: app_settings.py:55
-msgid "Use a secured connection to access SMTP server"
-msgstr ""
-
-#: app_settings.py:62
-msgid "Listening port of your SMTP server"
-msgstr ""
-
-#: app_settings.py:66
-msgid "Authentication required"
-msgstr ""
-
-#: app_settings.py:68
-msgid "Server needs authentication"
-msgstr ""
-
-#: app_settings.py:75
-msgid "Display"
-msgstr ""
-
-#: app_settings.py:79
-msgid "Default message display mode"
-msgstr ""
-
-#: app_settings.py:81
-msgid "The default mode used when displaying a message"
-msgstr ""
-
-#: app_settings.py:87
-msgid "Enable HTML links display"
-msgstr ""
-
-#: app_settings.py:88
-msgid "Enable/Disable HTML links display"
-msgstr ""
-
-#: app_settings.py:93
-msgid "Number of displayed emails per page"
-msgstr ""
-
-#: app_settings.py:94
-msgid "Sets the maximum number of messages displayed in a page"
-msgstr ""
-
-#: app_settings.py:99
-msgid "Listing refresh rate"
-msgstr ""
-
-#: app_settings.py:100
-msgid "Automatic folder refresh rate (in seconds)"
-msgstr ""
-
-#: app_settings.py:105
-msgid "Mailboxes container's width"
-msgstr ""
-
-#: app_settings.py:106
-msgid "The width of the mailbox list container"
-msgstr ""
-
-#: app_settings.py:109
-msgid "Mailboxes"
-msgstr ""
-
-#: app_settings.py:113
-msgid "Trash folder"
-msgstr ""
-
-#: app_settings.py:114
-msgid "Folder where deleted messages go"
-msgstr ""
-
-#: app_settings.py:119
-msgid "Sent folder"
-msgstr ""
-
-#: app_settings.py:120
-msgid "Folder where copies of sent messages go"
-msgstr ""
-
-#: app_settings.py:125
-msgid "Drafts folder"
-msgstr ""
-
-#: app_settings.py:126
-msgid "Folder where drafts go"
-msgstr ""
-
-#: app_settings.py:129
-msgid "Composing messages"
-msgstr ""
-
-#: app_settings.py:133
-msgid "Default editor"
-msgstr ""
-
-#: app_settings.py:135
-msgid "The default editor to use when composing a message"
-msgstr ""
-
-#: app_settings.py:141
-msgid "Signature text"
-msgstr ""
-
-#: app_settings.py:142
-msgid "User defined email signature"
-msgstr ""
-
-#: app_settings.py:161
-msgid "Value must be a positive integer (> 0)"
-msgstr ""
 
 #: exceptions.py:22
 msgid "Server response"
@@ -193,72 +25,248 @@ msgstr ""
 msgid "Unknown action"
 msgstr ""
 
-#: forms.py:89 templates/modoboa_webmail/compose.html:10
+#: forms.py:87 templates/modoboa_webmail/compose.html:10
 msgid "To"
 msgstr ""
 
-#: forms.py:91 templates/modoboa_webmail/compose.html:25
+#: forms.py:89 templates/modoboa_webmail/compose.html:25
 msgid "Cc"
 msgstr ""
 
-#: forms.py:93 templates/modoboa_webmail/compose.html:30
-msgid "Cci"
+#: forms.py:91 templates/modoboa_webmail/compose.html:30
+msgid "Bcc"
 msgstr ""
 
-#: forms.py:96 lib/imapemail.py:301
+#: forms.py:94 lib/imapemail.py:300
 msgid "Subject"
 msgstr ""
 
-#: forms.py:218
+#: forms.py:225
 msgid "Select a file"
 msgstr ""
 
-#: general_callbacks.py:17
+#: forms.py:231
+msgid "General"
+msgstr ""
+
+#: forms.py:234
+msgid "Maximum attachment size"
+msgstr ""
+
+#: forms.py:237
+msgid "Maximum attachment size in bytes (or KB, MB, GB if specified)"
+msgstr ""
+
+#: forms.py:240
+msgid "IMAP settings"
+msgstr ""
+
+#: forms.py:243 forms.py:263
+msgid "Server address"
+msgstr ""
+
+#: forms.py:245
+msgid "Address of your IMAP server"
+msgstr ""
+
+#: forms.py:249
+msgid "Use a secured connection"
+msgstr ""
+
+#: forms.py:251
+msgid "Use a secured connection to access IMAP server"
+msgstr ""
+
+#: forms.py:255 forms.py:279
+msgid "Server port"
+msgstr ""
+
+#: forms.py:257
+msgid "Listening port of your IMAP server"
+msgstr ""
+
+#: forms.py:260
+msgid "SMTP settings"
+msgstr ""
+
+#: forms.py:265
+msgid "Address of your SMTP server"
+msgstr ""
+
+#: forms.py:269
+msgid "Secured connection mode"
+msgstr ""
+
+#: forms.py:270
+msgid "None"
+msgstr ""
+
+#: forms.py:274
+msgid "Use a secured connection to access SMTP server"
+msgstr ""
+
+#: forms.py:281
+msgid "Listening port of your SMTP server"
+msgstr ""
+
+#: forms.py:285
+msgid "Authentication required"
+msgstr ""
+
+#: forms.py:287
+msgid "Server needs authentication"
+msgstr ""
+
+#: forms.py:294
+msgid "Display"
+msgstr ""
+
+#: forms.py:298
+msgid "Default message display mode"
+msgstr ""
+
+#: forms.py:300
+msgid "The default mode used when displaying a message"
+msgstr ""
+
+#: forms.py:306
+msgid "Enable HTML links display"
+msgstr ""
+
+#: forms.py:307
+msgid "Enable/Disable HTML links display"
+msgstr ""
+
+#: forms.py:312
+msgid "Show full email addresses"
+msgstr ""
+
+#: forms.py:313
+msgid "Show full email addresses when displaying a message"
+msgstr ""
+
+#: forms.py:318
+msgid "Number of displayed emails per page"
+msgstr ""
+
+#: forms.py:319
+msgid "Sets the maximum number of messages displayed in a page"
+msgstr ""
+
+#: forms.py:324
+msgid "Listing refresh rate"
+msgstr ""
+
+#: forms.py:325
+msgid "Automatic folder refresh rate (in seconds)"
+msgstr ""
+
+#: forms.py:330
+msgid "Mailboxes container's width"
+msgstr ""
+
+#: forms.py:331
+msgid "The width of the mailbox list container"
+msgstr ""
+
+#: forms.py:334
+msgid "Mailboxes"
+msgstr ""
+
+#: forms.py:338
+msgid "Trash folder"
+msgstr ""
+
+#: forms.py:339
+msgid "Folder where deleted messages go"
+msgstr ""
+
+#: forms.py:344
+msgid "Sent folder"
+msgstr ""
+
+#: forms.py:345
+msgid "Folder where copies of sent messages go"
+msgstr ""
+
+#: forms.py:350
+msgid "Drafts folder"
+msgstr ""
+
+#: forms.py:351
+msgid "Folder where drafts go"
+msgstr ""
+
+#: forms.py:354
+msgid "Composing messages"
+msgstr ""
+
+#: forms.py:358
+msgid "Default editor"
+msgstr ""
+
+#: forms.py:360
+msgid "The default editor to use when composing a message"
+msgstr ""
+
+#: forms.py:366
+msgid "Signature text"
+msgstr ""
+
+#: forms.py:367
+msgid "User defined email signature"
+msgstr ""
+
+#: forms.py:386
+msgid "Value must be a positive integer (> 0)"
+msgstr ""
+
+#: handlers.py:20
 msgid "Webmail"
 msgstr ""
 
-#: lib/imapemail.py:248
+#: lib/imapemail.py:247
 msgid "wrote:"
 msgstr ""
 
-#: lib/imapemail.py:303
+#: lib/imapemail.py:302
 msgid "Date"
 msgstr ""
 
-#: lib/imapemail.py:315 lib/imapemail.py:318
+#: lib/imapemail.py:314 lib/imapemail.py:317
 msgid "Original message"
 msgstr ""
 
-#: lib/imaputils.py:272
+#: lib/imaputils.py:275
 msgid "Failed to retrieve hierarchy delimiter"
 msgstr ""
 
-#: lib/imaputils.py:315
+#: lib/imaputils.py:317
 #, python-format
 msgid "Connection to IMAP server failed: %s"
 msgstr ""
 
-#: lib/imaputils.py:544
+#: lib/imaputils.py:546
 msgid "Inbox"
 msgstr ""
 
-#: lib/imaputils.py:546
+#: lib/imaputils.py:548
 msgid "Drafts"
 msgstr ""
 
-#: lib/imaputils.py:547
+#: lib/imaputils.py:549
 msgid "Junk"
 msgstr ""
 
-#: lib/imaputils.py:549
+#: lib/imaputils.py:551
 msgid "Sent"
 msgstr ""
 
-#: lib/imaputils.py:551
+#: lib/imaputils.py:553
 msgid "Trash"
 msgstr ""
 
-#: modo_extension.py:16
+#: modo_extension.py:18
 msgid "Simple IMAP webmail"
 msgstr ""
 
@@ -275,7 +283,7 @@ msgid "This field is required"
 msgstr ""
 
 #: templates/modoboa_webmail/compose_menubar.html:9
-#: templates/modoboa_webmail/headers.html:4 views.py:284
+#: templates/modoboa_webmail/headers.html:4 views.py:286
 msgid "Attachments"
 msgstr ""
 
@@ -287,128 +295,128 @@ msgstr ""
 msgid "Compose"
 msgstr ""
 
-#: templatetags/webmail_tags.py:26 templatetags/webmail_tags.py:75
+#: templatetags/webmail_tags.py:24 templatetags/webmail_tags.py:73
 msgid "Back"
 msgstr ""
 
-#: templatetags/webmail_tags.py:31
+#: templatetags/webmail_tags.py:29
 msgid "Reply"
 msgstr ""
 
-#: templatetags/webmail_tags.py:36
+#: templatetags/webmail_tags.py:34
 msgid "Reply all"
 msgstr ""
 
-#: templatetags/webmail_tags.py:40
+#: templatetags/webmail_tags.py:38
 msgid "Forward"
 msgstr ""
 
-#: templatetags/webmail_tags.py:47 templatetags/webmail_tags.py:94
+#: templatetags/webmail_tags.py:45 templatetags/webmail_tags.py:92
 msgid "Delete"
 msgstr ""
 
-#: templatetags/webmail_tags.py:50
+#: templatetags/webmail_tags.py:48
 msgid "Display options"
 msgstr ""
 
-#: templatetags/webmail_tags.py:54
+#: templatetags/webmail_tags.py:52
 msgid "Activate links"
 msgstr ""
 
-#: templatetags/webmail_tags.py:56
+#: templatetags/webmail_tags.py:54
 msgid "Disable links"
 msgstr ""
 
-#: templatetags/webmail_tags.py:80
+#: templatetags/webmail_tags.py:78
 msgid "Send"
 msgstr ""
 
-#: templatetags/webmail_tags.py:100
+#: templatetags/webmail_tags.py:98
 msgid "Actions"
 msgstr ""
 
-#: templatetags/webmail_tags.py:104
+#: templatetags/webmail_tags.py:102
 msgid "Mark as read"
 msgstr ""
 
-#: templatetags/webmail_tags.py:108
+#: templatetags/webmail_tags.py:106
 msgid "Mark as unread"
 msgstr ""
 
-#: templatetags/webmail_tags.py:118
+#: templatetags/webmail_tags.py:116
 msgid "Empty folder"
 msgstr ""
 
-#: templatetags/webmail_tags.py:191 views.py:166
+#: templatetags/webmail_tags.py:189 views.py:168
 msgid "Create a new mailbox"
 msgstr ""
 
-#: templatetags/webmail_tags.py:199
+#: templatetags/webmail_tags.py:197
 msgid "Edit the selected mailbox"
 msgstr ""
 
-#: templatetags/webmail_tags.py:204
+#: templatetags/webmail_tags.py:202
 msgid "Remove the selected mailbox"
 msgstr ""
 
-#: templatetags/webmail_tags.py:208
+#: templatetags/webmail_tags.py:206
 msgid "Compress folder"
 msgstr ""
 
-#: views.py:58 views.py:76 views.py:90 views.py:108 views.py:127 views.py:141
-#: views.py:219 views.py:242 views.py:441 views.py:491 views.py:507
-#: views.py:540 views.py:580
+#: views.py:60 views.py:78 views.py:92 views.py:110 views.py:129 views.py:143
+#: views.py:221 views.py:244 views.py:445 views.py:493 views.py:510
+#: views.py:542 views.py:582
 msgid "Invalid request"
 msgstr ""
 
-#: views.py:96
+#: views.py:98
 #, python-format
 msgid "%(count)d message deleted"
 msgid_plural "%(count)d messages deleted"
 msgstr[0] ""
 msgstr[1] ""
 
-#: views.py:129 views.py:377
+#: views.py:131 views.py:380
 msgid "Empty mailbox"
 msgstr ""
 
-#: views.py:159
+#: views.py:161
 msgid "Mailbox created"
 msgstr ""
 
-#: views.py:169
+#: views.py:171
 msgid "Create"
 msgstr ""
 
-#: views.py:185 views.py:221
+#: views.py:187 views.py:223
 msgid "Edit mailbox"
 msgstr ""
 
-#: views.py:188 views.py:224
+#: views.py:190 views.py:226
 msgid "Update"
 msgstr ""
 
-#: views.py:201
+#: views.py:203
 msgid "Mailbox updated"
 msgstr ""
 
-#: views.py:274
+#: views.py:276
 msgid "Failed to save attachment: "
 msgstr ""
 
-#: views.py:278
+#: views.py:280
 #, python-format
 msgid "Attachment is too big (limit: %s)"
 msgstr ""
 
-#: views.py:301
+#: views.py:303
 msgid "Bad query"
 msgstr ""
 
-#: views.py:313
+#: views.py:315
 msgid "Failed to remove attachment: "
 msgstr ""
 
-#: views.py:318
+#: views.py:320
 msgid "Unknown attachment"
 msgstr ""

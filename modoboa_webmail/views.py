@@ -492,7 +492,8 @@ def getmailcontent(request):
     if mbox is None or mailid is None:
         raise BadRequest(_("Invalid request"))
     email = ImapEmail(
-        request, False, "%s:%s" % (mbox, mailid), dformat="DISPLAYMODE",
+        request, request.user.parameters.get_value("display_full_addresses"),
+        "%s:%s" % (mbox, mailid), dformat="DISPLAYMODE",
         links=int(request.GET["links"])
     )
     return render(request, "common/viewmail.html", {

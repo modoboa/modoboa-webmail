@@ -112,6 +112,16 @@ class ComposeMailForm(forms.Form):
         to = self.cleaned_data["to"]
         return email_utils.prepare_addresses(to, "envelope")
 
+    def clean_cc(self):
+        """Convert to a list."""
+        cc = self.cleaned_data["cc"]
+        return email_utils.prepare_addresses(cc, "envelope")
+
+    def clean_bcc(self):
+        """Convert to a list."""
+        bcc = self.cleaned_data["bcc"]
+        return email_utils.prepare_addresses(bcc, "envelope")
+
     def _html_msg(self, sender, headers):
         """Create a multipart message.
 
@@ -295,6 +305,12 @@ class UserSettings(param_forms.UserParametersForm):
         initial=False,
         label=_("Enable HTML links display"),
         help_text=_("Enable/Disable HTML links display")
+    )
+
+    display_full_addresses = form_utils.YesNoField(
+        initial=True,
+        label=_("Show full email addresses"),
+        help_text=_("Show full email addresses when displaying a message")
     )
 
     messages_per_page = forms.IntegerField(

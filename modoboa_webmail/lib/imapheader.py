@@ -59,10 +59,9 @@ def to_unicode(value):
 
 
 def parse_address(value, **kwargs):
-    """Parse an email address.
-    """
+    """Parse an email address."""
     addr = EmailAddress(value)
-    if "full" in kwargs.keys() and kwargs["full"]:
+    if kwargs.get("full"):
         return to_unicode(addr.fulladdress)
     result = addr.name and addr.name or addr.fulladdress
     return to_unicode(result)

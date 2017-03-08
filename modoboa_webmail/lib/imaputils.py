@@ -316,6 +316,7 @@ class IMAPconnector(object):
         except (socket.error, imaplib.IMAP4.error, ssl.SSLError) as error:
             raise ImapError(_("Connection to IMAP server failed: %s" % error))
 
+        passwd = self.m._quote(passwd)
         data = self._cmd("LOGIN", user, passwd)
         self.m.state = "AUTH"
         if "CAPABILITY" in self.m.untagged_responses:

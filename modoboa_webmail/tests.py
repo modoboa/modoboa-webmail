@@ -30,6 +30,9 @@ class IMAP4Mock(object):
     def __init__(self, *args, **kwargs):
         self.untagged_responses = {}
 
+    def _quote(self, data):
+        return data
+
     def _simple_command(self, name, *args, **kwargs):
         if name == "CAPABILITY":
             self.untagged_responses["CAPABILITY"] = [""]

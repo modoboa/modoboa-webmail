@@ -143,6 +143,39 @@ class WebmailTestCase(ModoTestCase):
         )
         self.assertEqual(len(mail.outbox), 1)
 
+        # Try to send an email using HTML format
+        self.user.parameters.set_value("editor", "html")
+        self.user.save()
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.post(
+            url, {
+                "to": "test@example.test", "subject": "test",
+                "body": "<p>Test</p>"
+            }
+        )
+        self.assertEqual(len(mail.outbox), 2)
+
+    def test_signature(self):
+        """Check signature in different formats."""
+        signature = "Antoine Nguyen"
+        self.user.parameters.set_value("signature", signature)
+        self.user.save()
+
+        response = self.client.get(reverse("modoboa_webmail:index"))
+        self.assertEqual(response.status_code, 200)
+
+        url = "{}?action=compose".format(reverse("modoboa_webmail:index"))
+        response = self.ajax_get(url)
+        self.assertIn(signature, response["listing"])
+
+    def test_custom_js_in_preferences(self):
+        """Check that custom js is included."""
+        url = reverse("core:user_index")
+        response = self.client.get(url)
+        self.assertContains(response, "function toggleSignatureEditor()")
+
     def test_send_mail_errors(self):
         """Check error cases."""
         url = "{}?action=compose".format(reverse("modoboa_webmail:index"))

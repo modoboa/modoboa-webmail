@@ -44,7 +44,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'reversion',
-
+    'ckeditor',
+    'ckeditor_uploader',
 )
 
 # A dedicated place to register Modoboa applications
@@ -145,6 +146,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #DOVECOT_LOOKUP_PATH = ('/path/to/dovecot', )
 
 MODOBOA_API_URL = 'http://api.modoboa.org/1/'
+
+# CKeditor
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 # Logging configuration
 

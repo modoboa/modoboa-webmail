@@ -170,6 +170,12 @@ class WebmailTestCase(ModoTestCase):
         response = self.ajax_get(url)
         self.assertIn(signature, response["listing"])
 
+    def test_custom_js_in_preferences(self):
+        """Check that custom js is included."""
+        url = reverse("core:user_index")
+        response = self.client.get(url)
+        self.assertContains(response, "function toggleSignatureEditor()")
+
     def test_send_mail_errors(self):
         """Check error cases."""
         url = "{}?action=compose".format(reverse("modoboa_webmail:index"))

@@ -40,22 +40,14 @@ Do the same to communicate with your SMTP server (under *SMTP settings*):
 
 .. note::
 
-   The size of each attachment sent with messages is limited. You can
+   The size of each attachment sent with a message is limited. You can
    change the default value by modifying the **Maximum attachment
    size** parameter.
 
 Using CKeditor
 ==============
 
-Modoboa supports CKeditor to compose HTML messages. To use it, first
-download it from `the official website <http://ckeditor.com/>`_, then
-extract the tarball::
-
-  $ cd <modoboa_site_dir>
-  $ tar xzf /path/to/ckeditor/tarball.tag.gz -C sitestatic/js/
-
-And you're done!
-
-Now, each user has the possibility to choose between CKeditor and the
-raw text editor to compose their messages. (see *User > Settings >
-Preferences > Webmail*)
+Modoboa supports CKeditor to compose HTML messages. Each user has the
+possibility to choose between CKeditor and the raw text editor to
+compose their messages. (see *User > Settings > Preferences >
+Webmail*)

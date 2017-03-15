@@ -1,4 +1,4 @@
-import re
+"""Tools to deal with message signatures."""
 
 
 class EmailSignature(object):

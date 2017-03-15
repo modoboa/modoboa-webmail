@@ -1046,19 +1046,21 @@ Webmail.prototype = {
         $("#add_cc").click($.proxy(function(e) { this.add_field(e, "cc"); }, this));
         $("#add_bcc").click($.proxy(function(e) { this.add_field(e, "bcc"); }, this));
         this.editormode = resp.editor;
+        $('.django-ckeditor-widget').css("display", "");
         if (resp.editor == "html") {
             var instance = CKEDITOR.instances[this.editorid];
 
             $(window).resize($.proxy(this.resize_editor, this));
+            $('.django-ckeditor-widget').css("display", "");
             if (instance) {
                 CKEDITOR.remove(instance);
             }
-            CKEDITOR.replace(this.editorid, {
-                customConfig: get_static_url("js/editor_config.js")
-            });
-            CKEDITOR.on("instanceReady", $.proxy(function(evt) {
+            CKEDITOR.replace(this.editorid, $('#' + this.editorid).data('config'));
+            CKEDITOR.on("instanceReady", $.proxy(function() {
                 this.resize_editor();
             }, this));
+        } else {
+            $('.django-ckeditor-widget').css("height", "100%");
         }
         if (resp.id !== undefined) {
             this.navobject.setparam("id", resp.id).update(false, true);

@@ -39,3 +39,26 @@ def userlogout(sender, request, **kwargs):
         m.logout()
     except exceptions.ImapError:
         pass
+
+
+@receiver(core_signals.extra_static_content)
+def extra_js(sender, caller, st_type, user, **kwargs):
+    """Add javascript."""
+    if caller != "user_index" or st_type != "js":
+        return ""
+    return """function toggleSignatureEditor() {
+    var editorId = 'id_modoboa_webmail-signature';
+    if ($(this).val() === 'html') {
+        CKEDITOR.replace(editorId, $('#' + editorId).data('config'));
+    } else {
+        var instance = CKEDITOR.instances[editorId];
+        instance.destroy();
+    }
+}
+
+$(document).on(
+    'change', 'input[name=modoboa_webmail-editor]', toggleSignatureEditor);
+$(document).on('preferencesLoaded', function() {
+    $('input[name=modoboa_webmail-editor]:checked').change();
+});
+"""

@@ -2,7 +2,6 @@ import re
 
 
 class EmailSignature(object):
-
     """User signature
 
     :param user: User object
@@ -21,10 +20,9 @@ class EmailSignature(object):
 %s""" % content
 
     def _format_sig_html(self, content):
-        content = re.sub("\n", "<br/>", content)
-        self._sig = u"""<br/>
----<br/>
-%s""" % content
+        content = "---<br>{}".format(content)
+        self._sig = content
+        return
 
     def __unicode__(self):
         return self._sig

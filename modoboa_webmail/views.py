@@ -410,9 +410,11 @@ def render_compose(request, form, posturl, email=None, insert_signature=False):
     if attachment_list:
         resp["menuargs"] = {"attachment_counter": len(attachment_list)}
 
+    if textheader:
+        body = u"{}\n{}".format(textheader, body)
+    form.fields["body"].initial = body
     content = render_to_string("modoboa_webmail/compose.html", {
-        "form": form, "bodyheader": textheader,
-        "body": body, "posturl": posturl
+        "form": form, "posturl": posturl
     }, request)
 
     resp.update({

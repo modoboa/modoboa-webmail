@@ -204,13 +204,11 @@ class ImapEmail(Email):
         return res
 
     def fetch_attachment(self, pnum):
-        """Fetch an attachment from the IMAP server.
-        """
+        """Fetch an attachment from the IMAP server."""
         return self.imapc.fetchpart(self.mailid, self.mbox, pnum)
 
 
 class Modifier(ImapEmail):
-
     """Message modifier."""
 
     def __init__(self, form, *args, **kwargs):
@@ -234,17 +232,19 @@ class Modifier(ImapEmail):
 
 
 class ReplyModifier(Modifier):
-
     """Modify a message to reply to it."""
 
-    headernames = ImapEmail.headernames + \
-        [("Reply-To", True),
-         ("Message-ID", False)]
+    headernames = ImapEmail.headernames + [
+        ("Reply-To", True),
+        ("Message-ID", False)
+    ]
 
     def __init__(self, *args, **kwargs):
         super(ReplyModifier, self).__init__(*args, **kwargs)
 
-        self.textheader = "%s %s" % (self.From, _("wrote:"))
+        self.textheader = u"%s %s" % (self.From, _("wrote:"))
+        if self.dformat == "html":
+            self.textheader = u"<p>{}</p>".format(self.textheader)
         if hasattr(self, "Message_ID"):
             self.form.fields["origmsgid"].initial = self.Message_ID
         if not hasattr(self, "Reply_To"):

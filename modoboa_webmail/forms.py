@@ -5,6 +5,7 @@
 from email.mime.image import MIMEImage
 import os
 import pkg_resources
+import urllib
 from urlparse import urlparse
 
 import lxml.html
@@ -13,6 +14,8 @@ from django import forms
 from django.conf import settings
 from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.utils.translation import ugettext_lazy as _
+
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 from modoboa.lib import email_utils, form_utils
 from modoboa.parameters import forms as param_forms
@@ -63,7 +66,7 @@ def make_body_images_inline(body):
         if src is None:
             continue
         o = urlparse(src)
-        path = os.path.join(settings.BASE_DIR, o.path[1:])
+        path = urllib.unquote(os.path.join(settings.BASE_DIR, o.path[1:]))
         if not os.path.exists(path):
             continue
         fname = os.path.basename(path)
@@ -96,7 +99,10 @@ class ComposeMailForm(forms.Form):
         required=False
     )
     origmsgid = forms.CharField(label="", required=False)
-    body = forms.CharField(required=False)
+    body = forms.CharField(
+        required=False, widget=CKEditorUploadingWidget(
+            attrs={"class": "editor form-control"})
+    )
 
     def __init__(self, *args, **kwargs):
         """Custom constructor."""
@@ -365,7 +371,8 @@ class UserSettings(param_forms.UserParametersForm):
         initial="",
         label=_("Signature text"),
         help_text=_("User defined email signature"),
-        required=False
+        required=False,
+        widget=CKEditorUploadingWidget()
     )
 
     visibility_rules = {

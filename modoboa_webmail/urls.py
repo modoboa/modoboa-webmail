@@ -16,6 +16,8 @@ urlpatterns = [
         name="mail_move"),
     url(r'^mark/(?P<name>.+)/$', views.mark,
         name="mail_mark"),
+    url(r'^mark_as_junk/$', views.mark_as_junk,
+        name="mail_mark_as_junk"),
 
     url(r'^newfolder/$', views.newfolder,
         name="folder_add"),

@@ -364,6 +364,11 @@ class UserSettings(param_forms.UserParametersForm):
         label=_("Drafts folder"),
         help_text=_("Folder where drafts go")
     )
+    junk_folder = forms.CharField(
+        initial="Junk",
+        label=_("Junk folder"),
+        help_text=_("Folder where junk messages should go")
+    )
 
     sep3 = form_utils.SeparatorField(label=_("Composing messages"))
 

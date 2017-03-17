@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Modoboa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-07 10:52+0100\n"
+"POT-Creation-Date: 2017-03-17 13:36+0100\n"
 "PO-Revision-Date: 2015-07-11 11:51+0000\n"
 "Last-Translator: controlc.de\n"
 "Language-Team: German (http://www.transifex.com/tonio/modoboa/language/de/)\n"
@@ -28,203 +28,207 @@ msgstr "Server-Antwort"
 msgid "Unknown action"
 msgstr "Unbekannte Aktion"
 
-#: forms.py:87 templates/modoboa_webmail/compose.html:10
+#: forms.py:90 templates/modoboa_webmail/compose.html:10
 msgid "To"
 msgstr "An"
 
-#: forms.py:89 templates/modoboa_webmail/compose.html:25
+#: forms.py:92 templates/modoboa_webmail/compose.html:26
 msgid "Cc"
 msgstr "Cc"
 
-#: forms.py:91 templates/modoboa_webmail/compose.html:30
+#: forms.py:95 forms.py:101 templates/modoboa_webmail/compose.html:13
+msgid "Enter one or more addresses separated by a comma."
+msgstr ""
+
+#: forms.py:98 templates/modoboa_webmail/compose.html:31
 msgid "Bcc"
 msgstr ""
 
-#: forms.py:94 lib/imapemail.py:300
+#: forms.py:105 lib/imapemail.py:300
 msgid "Subject"
 msgstr "Betreff"
 
-#: forms.py:225
+#: forms.py:239
 msgid "Select a file"
 msgstr "Wählen Sie eine Datei"
 
-#: forms.py:231
+#: forms.py:245
 msgid "General"
 msgstr "Allgemein"
 
-#: forms.py:234
+#: forms.py:248
 msgid "Maximum attachment size"
 msgstr "Maximale Größe für Anhänge"
 
-#: forms.py:237
+#: forms.py:251
 msgid "Maximum attachment size in bytes (or KB, MB, GB if specified)"
 msgstr "Maximale Größe für Anhänge in Bytes (oder KB, MB, GB wenn angegeben)"
 
-#: forms.py:240
+#: forms.py:254
 msgid "IMAP settings"
 msgstr "IMAP-Einstellungen"
 
-#: forms.py:243 forms.py:263
+#: forms.py:257 forms.py:277
 msgid "Server address"
 msgstr "Server-Adresse"
 
-#: forms.py:245
+#: forms.py:259
 msgid "Address of your IMAP server"
 msgstr "Adresse Ihres IMAP-Servers"
 
-#: forms.py:249
+#: forms.py:263
 msgid "Use a secured connection"
 msgstr "Gesicherte Verbindung verwenden"
 
-#: forms.py:251
+#: forms.py:265
 msgid "Use a secured connection to access IMAP server"
 msgstr "Gesicherte Verbindung für Zugriff auf IMAP-Server verwenden"
 
-#: forms.py:255 forms.py:279
+#: forms.py:269 forms.py:293
 msgid "Server port"
 msgstr "Server-Port"
 
-#: forms.py:257
+#: forms.py:271
 msgid "Listening port of your IMAP server"
 msgstr "Port auf dem der IMAP-Server lauscht"
 
-#: forms.py:260
+#: forms.py:274
 msgid "SMTP settings"
 msgstr "SMTP-Einstellungen"
 
-#: forms.py:265
+#: forms.py:279
 msgid "Address of your SMTP server"
 msgstr "Adresse Ihres SMTP-Servers"
 
-#: forms.py:269
+#: forms.py:283
 msgid "Secured connection mode"
 msgstr "Gesicherter Verbindungsaufbau"
 
-#: forms.py:270
+#: forms.py:284
 msgid "None"
 msgstr "Kein"
 
-#: forms.py:274
+#: forms.py:288
 msgid "Use a secured connection to access SMTP server"
 msgstr "Gesicherte Verbindung für Zugriff auf SMTP-Server verwenden"
 
-#: forms.py:281
+#: forms.py:295
 msgid "Listening port of your SMTP server"
 msgstr "Port auf dem der SMTP-Server lauscht"
 
-#: forms.py:285
+#: forms.py:299
 msgid "Authentication required"
 msgstr "Anmeldung erforderlich"
 
-#: forms.py:287
+#: forms.py:301
 msgid "Server needs authentication"
 msgstr "Server erfordert Authentifizierung"
 
-#: forms.py:294
+#: forms.py:308
 msgid "Display"
 msgstr "Darstellung"
 
-#: forms.py:298
+#: forms.py:312
 msgid "Default message display mode"
 msgstr "Standard-Betrachtungsmodus für Nachrichten"
 
-#: forms.py:300
+#: forms.py:314
 msgid "The default mode used when displaying a message"
 msgstr "Der Standard-Modus zum Betrachten einer Nachricht"
 
-#: forms.py:306
+#: forms.py:320
 msgid "Enable HTML links display"
 msgstr "Aktiviere Darstellung von HTML-Links"
 
-#: forms.py:307
+#: forms.py:321
 msgid "Enable/Disable HTML links display"
 msgstr "Aktiviere/Deaktiviere Darstellung von HTML-Links"
 
-#: forms.py:312
+#: forms.py:326
 msgid "Show full email addresses"
 msgstr ""
 
-#: forms.py:313
+#: forms.py:327
 #, fuzzy
 #| msgid "The default mode used when displaying a message"
 msgid "Show full email addresses when displaying a message"
 msgstr "Der Standard-Modus zum Betrachten einer Nachricht"
 
-#: forms.py:318
+#: forms.py:332
 msgid "Number of displayed emails per page"
 msgstr "Anzahl dargestellter Nachrichten pro Seite"
 
-#: forms.py:319
+#: forms.py:333
 msgid "Sets the maximum number of messages displayed in a page"
 msgstr ""
 "Legt die maximale Anzahl von Nachrichten fest, die auf einer Seite "
 "dargestellt werden"
 
-#: forms.py:324
+#: forms.py:338
 msgid "Listing refresh rate"
 msgstr "Aktualisierungsintervall für Liste"
 
-#: forms.py:325
+#: forms.py:339
 msgid "Automatic folder refresh rate (in seconds)"
 msgstr "Aktualisierungsintervall für Ordner (in Sekunden)"
 
-#: forms.py:330
+#: forms.py:344
 msgid "Mailboxes container's width"
 msgstr "Breite des Postfachcontainers"
 
-#: forms.py:331
+#: forms.py:345
 msgid "The width of the mailbox list container"
 msgstr "Die Breite der Postfach-Liste"
 
-#: forms.py:334
+#: forms.py:348
 msgid "Mailboxes"
 msgstr "Postfächer"
 
-#: forms.py:338
+#: forms.py:352
 msgid "Trash folder"
 msgstr "Papierkorb"
 
-#: forms.py:339
+#: forms.py:353
 msgid "Folder where deleted messages go"
 msgstr "Ordner für gelöschte Nachrichten"
 
-#: forms.py:344
+#: forms.py:358
 msgid "Sent folder"
 msgstr "Gesendete Nachrichten"
 
-#: forms.py:345
+#: forms.py:359
 msgid "Folder where copies of sent messages go"
 msgstr "Ordner für Gesendete Nachrichten"
 
-#: forms.py:350
+#: forms.py:364
 msgid "Drafts folder"
 msgstr "Entwürfe"
 
-#: forms.py:351
+#: forms.py:365
 msgid "Folder where drafts go"
 msgstr "Ordner für Entwürfe"
 
-#: forms.py:354
+#: forms.py:368
 msgid "Composing messages"
 msgstr "Nachrichten erstellen"
 
-#: forms.py:358
+#: forms.py:372
 msgid "Default editor"
 msgstr "Standard-Editor"
 
-#: forms.py:360
+#: forms.py:374
 msgid "The default editor to use when composing a message"
 msgstr "Der Standard-Editor zum Erstellen einer Nachricht"
 
-#: forms.py:366
+#: forms.py:380
 msgid "Signature text"
 msgstr "Signatur"
 
-#: forms.py:367
+#: forms.py:381
 msgid "User defined email signature"
 msgstr "Benutzerdefinierte E-Mail-Signatur"
 
-#: forms.py:386
+#: forms.py:401
 msgid "Value must be a positive integer (> 0)"
 msgstr "Wert muss eine positive Ganzzahl sein (>0)"
 
@@ -232,7 +236,7 @@ msgstr "Wert muss eine positive Ganzzahl sein (>0)"
 msgid "Webmail"
 msgstr "Webmail"
 
-#: lib/imapemail.py:247
+#: lib/imapemail.py:245
 msgid "wrote:"
 msgstr "schrieb:"
 
@@ -253,23 +257,23 @@ msgstr "Hierarchie-Trenner konnte nicht ermittelt werden"
 msgid "Connection to IMAP server failed: %s"
 msgstr "Verbindung zu IMAP-Server fehlgeschlagen: %s"
 
-#: lib/imaputils.py:546
+#: lib/imaputils.py:547
 msgid "Inbox"
 msgstr "Eingang"
 
-#: lib/imaputils.py:548
+#: lib/imaputils.py:549
 msgid "Drafts"
 msgstr "Entwürfe"
 
-#: lib/imaputils.py:549
+#: lib/imaputils.py:550
 msgid "Junk"
 msgstr "Werbung"
 
-#: lib/imaputils.py:551
+#: lib/imaputils.py:552
 msgid "Sent"
 msgstr "Gesendet"
 
-#: lib/imaputils.py:553
+#: lib/imaputils.py:554
 msgid "Trash"
 msgstr "Papierkorb"
 
@@ -284,10 +288,6 @@ msgstr "Anhängen"
 #: templates/modoboa_webmail/attachments.html:12
 msgid "Uploading.."
 msgstr "Hochladen…"
-
-#: templates/modoboa_webmail/compose.html:12
-msgid "This field is required"
-msgstr "Pflichtfeld"
 
 #: templates/modoboa_webmail/compose_menubar.html:9
 #: templates/modoboa_webmail/headers.html:4 views.py:286
@@ -371,8 +371,8 @@ msgid "Compress folder"
 msgstr "Ordner komprimieren"
 
 #: views.py:60 views.py:78 views.py:92 views.py:110 views.py:129 views.py:143
-#: views.py:221 views.py:244 views.py:445 views.py:493 views.py:510
-#: views.py:542 views.py:582
+#: views.py:221 views.py:244 views.py:447 views.py:495 views.py:512
+#: views.py:544 views.py:584
 msgid "Invalid request"
 msgstr "Ungültige Anfrage"
 
@@ -427,6 +427,9 @@ msgstr "Konnte Anhang nicht entfernen:"
 #: views.py:320
 msgid "Unknown attachment"
 msgstr "Unbekannter Anhang"
+
+#~ msgid "This field is required"
+#~ msgstr "Pflichtfeld"
 
 #~ msgid "Cci"
 #~ msgstr "Bcc"

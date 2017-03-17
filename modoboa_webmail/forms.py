@@ -89,9 +89,17 @@ class ComposeMailForm(forms.Form):
     to = forms.CharField(
         label=_("To"), validators=[validate_email_list])
     cc = forms.CharField(
-        label=_("Cc"), required=False, validators=[validate_email_list])
+        label=_("Cc"), required=False, validators=[validate_email_list],
+        widget=forms.TextInput(
+            attrs={"placeholder":
+                   _("Enter one or more addresses separated by a comma.")})
+    )
     bcc = forms.CharField(
-        label=_("Bcc"), required=False, validators=[validate_email_list])
+        label=_("Bcc"), required=False, validators=[validate_email_list],
+        widget=forms.TextInput(
+            attrs={"placeholder":
+                   _("Enter one or more addresses separated by a comma.")})
+    )
 
     subject = forms.CharField(
         label=_("Subject"),

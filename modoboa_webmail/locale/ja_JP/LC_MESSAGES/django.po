@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Modoboa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-07 10:52+0100\n"
+"POT-Creation-Date: 2017-03-17 13:36+0100\n"
 "PO-Revision-Date: 2016-11-09 16:14+0000\n"
 "Last-Translator: Masayuki Kumagai <makumagai@gmail.com>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/tonio/modoboa/"
@@ -28,201 +28,205 @@ msgstr "サーバー応答"
 msgid "Unknown action"
 msgstr "不明なアクション"
 
-#: forms.py:87 templates/modoboa_webmail/compose.html:10
+#: forms.py:90 templates/modoboa_webmail/compose.html:10
 msgid "To"
 msgstr "To"
 
-#: forms.py:89 templates/modoboa_webmail/compose.html:25
+#: forms.py:92 templates/modoboa_webmail/compose.html:26
 msgid "Cc"
 msgstr "Cc"
 
-#: forms.py:91 templates/modoboa_webmail/compose.html:30
+#: forms.py:95 forms.py:101 templates/modoboa_webmail/compose.html:13
+msgid "Enter one or more addresses separated by a comma."
+msgstr ""
+
+#: forms.py:98 templates/modoboa_webmail/compose.html:31
 msgid "Bcc"
 msgstr ""
 
-#: forms.py:94 lib/imapemail.py:300
+#: forms.py:105 lib/imapemail.py:300
 msgid "Subject"
 msgstr "件名"
 
-#: forms.py:225
+#: forms.py:239
 msgid "Select a file"
 msgstr "ファイルを選択"
 
-#: forms.py:231
+#: forms.py:245
 msgid "General"
 msgstr "全般"
 
-#: forms.py:234
+#: forms.py:248
 msgid "Maximum attachment size"
 msgstr "最大添付サイズ"
 
-#: forms.py:237
+#: forms.py:251
 msgid "Maximum attachment size in bytes (or KB, MB, GB if specified)"
 msgstr "最大添付サイズ (B, KB, MB, GB 指定)"
 
-#: forms.py:240
+#: forms.py:254
 msgid "IMAP settings"
 msgstr "IMAP 設定"
 
-#: forms.py:243 forms.py:263
+#: forms.py:257 forms.py:277
 msgid "Server address"
 msgstr "サーバーアドレス"
 
-#: forms.py:245
+#: forms.py:259
 msgid "Address of your IMAP server"
 msgstr "IMAP サーバーのアドレス"
 
-#: forms.py:249
+#: forms.py:263
 msgid "Use a secured connection"
 msgstr "セキュアな接続を使う"
 
-#: forms.py:251
+#: forms.py:265
 msgid "Use a secured connection to access IMAP server"
 msgstr "IMAP サーバーへのアクセスにセキュアな接続を使う"
 
-#: forms.py:255 forms.py:279
+#: forms.py:269 forms.py:293
 msgid "Server port"
 msgstr "サーバーポート"
 
-#: forms.py:257
+#: forms.py:271
 msgid "Listening port of your IMAP server"
 msgstr "IMAP サーバーの待受ポート"
 
-#: forms.py:260
+#: forms.py:274
 msgid "SMTP settings"
 msgstr "SMTP 設定"
 
-#: forms.py:265
+#: forms.py:279
 msgid "Address of your SMTP server"
 msgstr "SMTP サーバーのアドレス"
 
-#: forms.py:269
+#: forms.py:283
 msgid "Secured connection mode"
 msgstr "セキュア接続モード"
 
-#: forms.py:270
+#: forms.py:284
 msgid "None"
 msgstr "なし"
 
-#: forms.py:274
+#: forms.py:288
 msgid "Use a secured connection to access SMTP server"
 msgstr "SMTP サーバーへのアクセスにセキュアな接続を使う"
 
-#: forms.py:281
+#: forms.py:295
 msgid "Listening port of your SMTP server"
 msgstr "SMTP サーバーの待受ポート"
 
-#: forms.py:285
+#: forms.py:299
 msgid "Authentication required"
 msgstr "認証が必要"
 
-#: forms.py:287
+#: forms.py:301
 msgid "Server needs authentication"
 msgstr "サーバーが認証を求めています"
 
-#: forms.py:294
+#: forms.py:308
 msgid "Display"
 msgstr "表示"
 
-#: forms.py:298
+#: forms.py:312
 msgid "Default message display mode"
 msgstr "デフォルトのメッセージ表示モード"
 
-#: forms.py:300
+#: forms.py:314
 msgid "The default mode used when displaying a message"
 msgstr "メッセージを表示するときのデフォルトのモード"
 
-#: forms.py:306
+#: forms.py:320
 msgid "Enable HTML links display"
 msgstr "HTMLリンクの表示を有効にします"
 
-#: forms.py:307
+#: forms.py:321
 msgid "Enable/Disable HTML links display"
 msgstr "HTMLリンクの表示を有効または無効にします"
 
-#: forms.py:312
+#: forms.py:326
 msgid "Show full email addresses"
 msgstr ""
 
-#: forms.py:313
+#: forms.py:327
 #, fuzzy
 #| msgid "The default mode used when displaying a message"
 msgid "Show full email addresses when displaying a message"
 msgstr "メッセージを表示するときのデフォルトのモード"
 
-#: forms.py:318
+#: forms.py:332
 msgid "Number of displayed emails per page"
 msgstr "ページあたりに表示される電子メールの数"
 
-#: forms.py:319
+#: forms.py:333
 msgid "Sets the maximum number of messages displayed in a page"
 msgstr "1ページに表示されるメッセージの最大数を設定します"
 
-#: forms.py:324
+#: forms.py:338
 msgid "Listing refresh rate"
 msgstr "リストのリフレッシュレート"
 
-#: forms.py:325
+#: forms.py:339
 msgid "Automatic folder refresh rate (in seconds)"
 msgstr "自動フォルダリフレッシュレート (秒)"
 
-#: forms.py:330
+#: forms.py:344
 msgid "Mailboxes container's width"
 msgstr "メールボックスコンテナの幅"
 
-#: forms.py:331
+#: forms.py:345
 msgid "The width of the mailbox list container"
 msgstr "メールボックスリストコンテナの幅"
 
-#: forms.py:334
+#: forms.py:348
 msgid "Mailboxes"
 msgstr "メールボックス"
 
-#: forms.py:338
+#: forms.py:352
 msgid "Trash folder"
 msgstr "ゴミ箱フォルダー"
 
-#: forms.py:339
+#: forms.py:353
 msgid "Folder where deleted messages go"
 msgstr "削除されたメッセージが置かれるフォルダ"
 
-#: forms.py:344
+#: forms.py:358
 msgid "Sent folder"
 msgstr "送信済みフォルダー"
 
-#: forms.py:345
+#: forms.py:359
 msgid "Folder where copies of sent messages go"
 msgstr "送信されたメッセージのコピーが置かれるフォルダ"
 
-#: forms.py:350
+#: forms.py:364
 msgid "Drafts folder"
 msgstr "下書きフォルダー"
 
-#: forms.py:351
+#: forms.py:365
 msgid "Folder where drafts go"
 msgstr "下書きが置かれるフォルダ"
 
-#: forms.py:354
+#: forms.py:368
 msgid "Composing messages"
 msgstr "メッセージの作成"
 
-#: forms.py:358
+#: forms.py:372
 msgid "Default editor"
 msgstr "デフォルトエディタ"
 
-#: forms.py:360
+#: forms.py:374
 msgid "The default editor to use when composing a message"
 msgstr "メッセージを作成するときのデフォルトのエディター"
 
-#: forms.py:366
+#: forms.py:380
 msgid "Signature text"
 msgstr "署名テキスト"
 
-#: forms.py:367
+#: forms.py:381
 msgid "User defined email signature"
 msgstr "ユーザー定義の電子メール署名"
 
-#: forms.py:386
+#: forms.py:401
 msgid "Value must be a positive integer (> 0)"
 msgstr "値は、正の整数 (> 0) でなければいけません"
 
@@ -230,7 +234,7 @@ msgstr "値は、正の整数 (> 0) でなければいけません"
 msgid "Webmail"
 msgstr "Web メール"
 
-#: lib/imapemail.py:247
+#: lib/imapemail.py:245
 msgid "wrote:"
 msgstr "wrote:"
 
@@ -251,23 +255,23 @@ msgstr "階層区切り文字を取得できませんでした"
 msgid "Connection to IMAP server failed: %s"
 msgstr "IMAP サーバーへの接続に失敗しました: %s"
 
-#: lib/imaputils.py:546
+#: lib/imaputils.py:547
 msgid "Inbox"
 msgstr "受信トレイ"
 
-#: lib/imaputils.py:548
+#: lib/imaputils.py:549
 msgid "Drafts"
 msgstr "下書き"
 
-#: lib/imaputils.py:549
+#: lib/imaputils.py:550
 msgid "Junk"
 msgstr "迷惑メール"
 
-#: lib/imaputils.py:551
+#: lib/imaputils.py:552
 msgid "Sent"
 msgstr "送信済み"
 
-#: lib/imaputils.py:553
+#: lib/imaputils.py:554
 msgid "Trash"
 msgstr "ごみ箱"
 
@@ -282,10 +286,6 @@ msgstr "添付"
 #: templates/modoboa_webmail/attachments.html:12
 msgid "Uploading.."
 msgstr "アプロード中 ..."
-
-#: templates/modoboa_webmail/compose.html:12
-msgid "This field is required"
-msgstr "このフィールドは必須です"
 
 #: templates/modoboa_webmail/compose_menubar.html:9
 #: templates/modoboa_webmail/headers.html:4 views.py:286
@@ -369,8 +369,8 @@ msgid "Compress folder"
 msgstr "フォルダーを圧縮"
 
 #: views.py:60 views.py:78 views.py:92 views.py:110 views.py:129 views.py:143
-#: views.py:221 views.py:244 views.py:445 views.py:493 views.py:510
-#: views.py:542 views.py:582
+#: views.py:221 views.py:244 views.py:447 views.py:495 views.py:512
+#: views.py:544 views.py:584
 msgid "Invalid request"
 msgstr "不正なリクエスト"
 
@@ -424,6 +424,9 @@ msgstr "添付ファイルの削除に失敗しました："
 #: views.py:320
 msgid "Unknown attachment"
 msgstr "不明な添付ファイル"
+
+#~ msgid "This field is required"
+#~ msgstr "このフィールドは必須です"
 
 #~ msgid "Cci"
 #~ msgstr "Cci"

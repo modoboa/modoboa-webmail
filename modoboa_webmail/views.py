@@ -122,6 +122,25 @@ def mark(request, name):
 
 @login_required
 @needs_mailbox()
+def mark_as_junk(request):
+    """Mark a message as SPAM."""
+    mbox = request.GET.get("mbox")
+    selection = request.GET.getlist("selection[]")
+    if mbox is None or selection is None:
+        raise BadRequest(_("Invalid request"))
+    selection = [item for item in selection if item.isdigit()]
+    mbc = get_imapconnector(request)
+    mbc.move(",".join(selection), mbox,
+             request.user.parameters.get_value("junk_folder"))
+    count = len(selection)
+    message = ungettext("%(count)d message marked",
+                        "%(count)d messages marked",
+                        count) % {"count": count}
+    return render_to_json_response(message)
+
+
+@login_required
+@needs_mailbox()
 def empty(request):
     """Empty the trash folder."""
     name = request.GET.get("name", None)

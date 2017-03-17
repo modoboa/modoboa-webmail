@@ -109,6 +109,9 @@ Webmail.prototype = {
         $(document).on(
             "click", "a[name=totrash]", $.proxy(this.delete_messages, this));
         $(document).on(
+            "click", "a[name=mark_as_junk_multi]", $.proxy(this.markMessagesAsJunk, this));
+
+        $(document).on(
             "click", "a[name*=mark-]", $.proxy(this.send_mark_request, this));
         $(document).on("click", "a[name=compress]", $.proxy(this.compress, this));
         $(document).on("click", "a[name=empty]", $.proxy(this.empty, this));
@@ -129,6 +132,7 @@ Webmail.prototype = {
         $(document).on("click", "a[name=replyall]", $.proxy(this.reply_loader, this));
         $(document).on("click", "a[name=forward]", $.proxy(this.reply_loader, this));
         $(document).on("click", "a[name=delete]", $.proxy(this.delete_message, this));
+        $(document).on("click", "a[name=mark_as_junk]", $.proxy(this.markMessageAsJunk, this));
         $(document).on(
             "click", "a[name=activate_links]", $.proxy(function(e) { this.display_mode(e, "1"); }, this));
         $(document).on("click", "a[name=disable_links]", $.proxy(function(e) { this.display_mode(e, "0"); }, this));
@@ -877,6 +881,44 @@ Webmail.prototype = {
         }).done($.proxy(this.delete_callback, this));
     },
 
+    markMessageAsJunk: function(e) {
+        var $link = get_target(e, 'a');
+        e.preventDefault();
+        $.ajax({
+            url: $link.attr('href'),
+            dataType: 'json'
+        }).done($.proxy(this.markAsJunkCallback, this));
+    },
+
+    markMessagesAsJunk: function(e) {
+        e.preventDefault();
+        var $link = get_target(e, 'a');
+        if ($link.hasClass("disabled")) {
+            return;
+        }
+        var msgs = this.htmltable.current_selection();
+        var selection = [];
+        var unseen_cnt = 0;
+
+        if (!msgs.length) {
+            return;
+        }
+        $link.addClass("disabled");
+        $.each(msgs, function(idx, item) {
+            var $tr = $(item);
+            selection.push($tr.attr("id"));
+            if ($tr.hasClass("unseen")) {
+                unseen_cnt++;
+            }
+        });
+        this.change_unseen_messages(this.get_current_mailbox(), -unseen_cnt);
+        this.change_unseen_messages(this.options.trash, unseen_cnt);
+        $.ajax({
+            url: $link.attr("href"),
+            data: {mbox: this.get_current_mailbox(), selection: selection}
+        }).done($.proxy(this.markAsJunkCallback, this));
+    },
+
     display_mode: function(e, value) {
         e.preventDefault();
         this.navobject.setparam("links", value).update();
@@ -1100,6 +1142,11 @@ Webmail.prototype = {
         if (this.get_current_mailbox() != this.options.trash) {
             $("a[name=totrash]").removeClass("disabled");
         }
+        $("body").notify("success", data, 2000);
+    },
+
+    markAsJunkCallback: function(data) {
+        this.go_back_to_listing();
         $("body").notify("success", data, 2000);
     },
 

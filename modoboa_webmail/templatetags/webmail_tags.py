@@ -16,45 +16,55 @@ register = template.Library()
 @register.simple_tag
 def viewmail_menu(selection, folder, user, mail_id=None):
     """Menu of the viewmail location."""
-    entries = [
-        {"name": "back",
-         "url": "javascript:history.go(-1)",
-         "img": "fa fa-arrow-left",
-         "class": "btn-default",
-         "label": _("Back")},
-        {"name": "reply",
-         "url": "action=reply&mbox=%s&mailid=%s" % (folder, mail_id),
-         "img": "fa fa-mail-reply",
-         "class": "btn-primary",
-         "label": _("Reply"),
-         "menu": [
-             {"name": "replyall",
-              "url": "action=reply&mbox=%s&mailid=%s&all=1" % (folder, mail_id),
-              "img": "fa fa-mail-reply-all",
-              "label": _("Reply all")},
-             {"name": "forward",
-              "url": "action=forward&mbox=%s&mailid=%s" % (folder, mail_id),
-              "img": "fa fa-mail-forward",
-              "label": _("Forward")},
-         ]},
-        {"name": "delete",
-         "img": "fa fa-trash",
-         "class": "btn-danger",
-         "url": u"{0}?mbox={1}&selection[]={2}".format(
-             reverse("modoboa_webmail:mail_delete"), folder, mail_id),
-         "title": _("Delete")
-         },
-        {"name": "display_options",
-         "title": _("Display options"),
-         "img": "fa fa-cog",
-         "menu": [
-             {"name": "activate_links",
-              "label": _("Activate links")},
-             {"name": "disable_links",
-              "label": _("Disable links")}
-         ]
-         }
-    ]
+    entries = [{
+        "name": "back",
+        "url": "javascript:history.go(-1)",
+        "img": "fa fa-arrow-left",
+        "class": "btn-default",
+        "label": _("Back")
+    }, {
+        "name": "reply",
+        "url": "action=reply&mbox=%s&mailid=%s" % (folder, mail_id),
+        "img": "fa fa-mail-reply",
+        "class": "btn-primary",
+        "label": _("Reply"),
+        "menu": [{
+            "name": "replyall",
+            "url": "action=reply&mbox=%s&mailid=%s&all=1" % (folder, mail_id),
+            "img": "fa fa-mail-reply-all",
+            "label": _("Reply all")
+        }, {
+            "name": "forward",
+            "url": "action=forward&mbox=%s&mailid=%s" % (folder, mail_id),
+            "img": "fa fa-mail-forward",
+            "label": _("Forward")
+        }]
+    }, {
+        "name": "delete",
+        "img": "fa fa-trash",
+        "class": "btn-danger",
+        "url": u"{0}?mbox={1}&selection[]={2}".format(
+            reverse("modoboa_webmail:mail_delete"), folder, mail_id),
+        "title": _("Delete")
+    }, {
+        "name": "mark_as_junk",
+        "img": "fa fa-fire",
+        "class": "btn-warning",
+        "url": u"{0}?mbox={1}&selection[]={2}".format(
+            reverse("modoboa_webmail:mail_mark_as_junk"), folder, mail_id),
+        "title": _("Mark as spam")
+    }, {
+        "name": "display_options",
+        "title": _("Display options"),
+        "img": "fa fa-cog",
+        "menu": [{
+            "name": "activate_links",
+            "label": _("Activate links")
+        }, {
+            "name": "disable_links",
+            "label": _("Disable links")
+        }]
+    }]
     menu = render_to_string('common/buttons_list.html',
                             {"selection": selection, "entries": entries,
                              "user": user, "extraclasses": "pull-left"})
@@ -87,28 +97,34 @@ def compose_menu(selection, backurl, user, **kwargs):
 @register.simple_tag
 def listmailbox_menu(selection, folder, user):
     """The menu of the listmailbox action."""
-    entries = [
-        {"name": "totrash",
-         "title": _("Delete"),
-         "class": "btn-danger",
-         "img": "fa fa-trash",
-         "url": reverse("modoboa_webmail:mail_delete")
-         },
-        {"name": "actions",
-         "label": _("Actions"),
-         "class": "btn btn-default",
-         "menu": [
-             {"name": "mark-read",
-              "label": _("Mark as read"),
-              "url": u"{0}?status=read".format(
-                  reverse("modoboa_webmail:mail_mark", args=[folder]))},
-             {"name": "mark-unread",
-              "label": _("Mark as unread"),
-              "url": u"{0}?status=unread".format(
-                  reverse("modoboa_webmail:mail_mark", args=[folder]))},
-         ]
-         },
-    ]
+    entries = [{
+        "name": "totrash",
+        "title": _("Delete"),
+        "class": "btn-danger",
+        "img": "fa fa-trash",
+        "url": reverse("modoboa_webmail:mail_delete")
+    }, {
+        "name": "mark_as_junk_multi",
+        "img": "fa fa-fire",
+        "class": "btn-warning",
+        "url": reverse("modoboa_webmail:mail_mark_as_junk"),
+        "title": _("Mark as spam")
+    }, {
+        "name": "actions",
+        "label": _("Actions"),
+        "class": "btn btn-default",
+        "menu": [{
+            "name": "mark-read",
+            "label": _("Mark as read"),
+            "url": u"{0}?status=read".format(
+                reverse("modoboa_webmail:mail_mark", args=[folder]))
+        }, {
+            "name": "mark-unread",
+            "label": _("Mark as unread"),
+            "url": u"{0}?status=unread".format(
+                reverse("modoboa_webmail:mail_mark", args=[folder]))
+        }]
+    }]
     if folder == user.parameters.get_value("trash_folder"):
         entries[0]["class"] += " disabled"
         entries[1]["menu"] += [

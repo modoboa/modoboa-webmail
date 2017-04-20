@@ -119,6 +119,59 @@ def parse_bodystructure(buf, depth=0, prefix=""):
         "End of buffer reached while looking for a BODY/BODYSTRUCTURE end")
 
 
+def parse_response_chunk(chunk):
+    """Parse a piece of response..."""
+    buf = "".join(chunk)
+    parts = buf.split(" ", 3)
+    result = {}
+    response = parts[3]
+    while len(response):
+        if response.startswith('BODY') and response[4] == '[':
+            end = response.find(']', 5)
+            if response[end + 1] == '<':
+                end = response.find('>', end + 1)
+            end += 1
+        else:
+            end = response.find(' ')
+        cmdname = response[:end]
+        response = response[end + 1:]
+
+        end = 0
+        if cmdname in ['BODY', 'BODYSTRUCTURE', 'FLAGS']:
+            parendepth = 0
+            instring = False
+            for pos, c in enumerate(response):
+                if not instring and c == '"':
+                    instring = True
+                    continue
+                if instring and c == '"':
+                    if pos and response[pos - 1] != '\\':
+                        instring = False
+                        continue
+                if not instring and c == '(':
+                    parendepth += 1
+                    continue
+                if not instring and c == ')':
+                    parendepth -= 1
+                    if parendepth == 0:
+                        end = pos + 1
+                        break
+        else:
+            token, end = parse_next_token(response)
+            if isinstance(token, Literal):
+                response = response[end:]
+                end = token.next_token_len
+
+        result[cmdname] = response[:end]
+        response = response[end + 1:]
+        try:
+            func = globals()["parse_%s" % cmdname.lower()]
+            result[cmdname] = func(result[cmdname])[0]
+        except KeyError:
+            pass
+    return int(parts[2]), result
+
+
 def parse_fetch_response(data):
     """Parse a FETCH response, previously issued by a UID command
 
@@ -130,67 +183,22 @@ def parse_fetch_response(data):
     """
     result = {}
     cpt = 0
-    while cpt < len(data):
-        content = ()
-        while cpt < len(data) and data[cpt] != ')':
-            if isinstance(data[cpt], str):
-                # FIXME : probably an unsolicited response
+    if len(data) == 1:
+        key, value = parse_response_chunk(data[0])
+        result[key] = value
+    else:
+        while cpt < len(data):
+            content = ()
+            while cpt < len(data) and data[cpt] != ")":
+                if isinstance(data[cpt], str):
+                    # FIXME : probably an unsolicited response
+                    cpt += 1
+                    continue
+                content += data[cpt]
                 cpt += 1
-                continue
-            content += data[cpt]
             cpt += 1
-        cpt += 1
-
-        buf = "".join(content)
-        parts = buf.split(' ', 3)
-        msgdef = result[int(parts[2])] = {}
-        response = parts[3]
-
-        while len(response):
-            if response.startswith('BODY') and response[4] == '[':
-                end = response.find(']', 5)
-                if response[end + 1] == '<':
-                    end = response.find('>', end + 1)
-                end += 1
-            else:
-                end = response.find(' ')
-            cmdname = response[:end]
-            response = response[end + 1:]
-
-            end = 0
-            if cmdname in ['BODY', 'BODYSTRUCTURE', 'FLAGS']:
-                parendepth = 0
-                instring = False
-                for pos, c in enumerate(response):
-                    if not instring and c == '"':
-                        instring = True
-                        continue
-                    if instring and c == '"':
-                        if pos and response[pos - 1] != '\\':
-                            instring = False
-                            continue
-                    if not instring and c == '(':
-                        parendepth += 1
-                        continue
-                    if not instring and c == ')':
-                        parendepth -= 1
-                        if parendepth == 0:
-                            end = pos + 1
-                            break
-            else:
-                token, end = parse_next_token(response)
-                if isinstance(token, Literal):
-                    response = response[end:]
-                    end = token.next_token_len
-
-            msgdef[cmdname] = response[:end]
-            response = response[end + 1:]
-            try:
-                func = globals()["parse_%s" % cmdname.lower()]
-                msgdef[cmdname] = func(msgdef[cmdname])[0]
-            except KeyError:
-                pass
-
+            key, value = parse_response_chunk(content)
+            result[key] = value
     return result
 
 

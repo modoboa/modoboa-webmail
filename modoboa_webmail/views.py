@@ -11,7 +11,6 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.template import Template, Context
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _, ungettext
 from django.views.decorators.csrf import csrf_exempt
@@ -20,6 +19,7 @@ from django.views.decorators.gzip import gzip_page
 from django.contrib.auth.decorators import login_required
 
 from modoboa.admin.lib import needs_mailbox
+from modoboa.core.extensions import exts_pool
 from modoboa.lib.exceptions import ModoboaException, BadRequest
 from modoboa.lib.paginator import Paginator
 from modoboa.lib.web_utils import (
@@ -518,8 +518,6 @@ def getmailcontent(request):
         links=int(request.GET["links"])
     )
     return render(request, "common/viewmail.html", {
-        "headers": email.render_headers(folder=mbox, mail_id=mailid),
-        "folder": mbox, "imapid": mailid,
         "mailbody": email.body if email.body else ""
     })
 
@@ -534,14 +532,21 @@ def viewmail(request):
         links = int(request.user.parameters.get_value("enable_links"))
     else:
         links = int(links)
-
-    url = u"{0}?mbox={1}&mailid={2}&links={3}".format(
-        reverse("modoboa_webmail:mailcontent_get"), mbox, mailid, links)
-    content = Template("""
-<iframe src="{{ url }}" id="mailcontent"></iframe>
-""").render(Context({"url": url}))
-
-    return dict(listing=content, menuargs=dict(mail_id=mailid))
+    email = ImapEmail(
+        request, request.user.parameters.get_value("display_full_addresses"),
+        "%s:%s" % (mbox, mailid), dformat="DISPLAYMODE", links=links
+    )
+    email.fetch_headers()
+    context = {
+        "mbox": mbox,
+        "mailid": mailid,
+        "links": links,
+        "headers": email.headers,
+        "attachments": email.attachments
+    }
+    content = render_to_string(
+        "modoboa_webmail/headers.html", context, request)
+    return {"listing": content, "menuargs": {"mail_id": mailid}}
 
 
 @login_required
@@ -607,22 +612,26 @@ def index(request):
     if not request.is_ajax():
         request.session["lastaction"] = None
         imapc = get_imapconnector(request)
-        response["hdelimiter"] = imapc.hdelimiter
-        response["mboxes"] = render_mboxes_list(request, imapc)
         imapc.getquota(curmbox)
-        response["refreshrate"] = request.user.parameters.get_value(
-            "refresh_interval")
-        response["quota"] = imapc.quota_usage
         trash = request.user.parameters.get_value("trash_folder")
-        response["trash"] = trash
-        response["ro_mboxes"] = [
-            "INBOX", "Junk",
-            request.user.parameters.get_value("sent_folder"),
-            trash,
-            request.user.parameters.get_value("drafts_folder")
-        ]
-        response['mboxes_col_width'] = request.user.parameters.get_value(
-            "mboxes_col_width")
+        response.update({
+            "hdelimiter": imapc.hdelimiter,
+            "mboxes": render_mboxes_list(request, imapc),
+            "refreshrate": request.user.parameters.get_value(
+                "refresh_interval"),
+            "quota": imapc.quota_usage,
+            "trash": trash,
+            "ro_mboxes": [
+                "INBOX", "Junk",
+                request.user.parameters.get_value("sent_folder"),
+                trash,
+                request.user.parameters.get_value("drafts_folder")
+            ],
+            "mboxes_col_width": request.user.parameters.get_value(
+                "mboxes_col_width"),
+            "contacts_plugin_enabled": exts_pool.get_extension(
+                "modoboa_contacts")
+        })
         return render(request, "modoboa_webmail/index.html", response)
 
     if action in ["reply", "forward"]:

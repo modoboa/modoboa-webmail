@@ -39,12 +39,11 @@ DATETIME_FORMATS = {
 
 
 def to_unicode(value):
-    """Try to convert a string to unicode.
-    """
+    """Try to convert a string to unicode."""
     if value is None or isinstance(value, unicode):
         return value
     try:
-        value = value.decode('utf-8')
+        value = value.decode("utf-8")
     except UnicodeDecodeError:
         pass
     else:
@@ -61,39 +60,33 @@ def to_unicode(value):
 def parse_address(value, **kwargs):
     """Parse an email address."""
     addr = EmailAddress(value)
-    if kwargs.get("full"):
-        return to_unicode(addr.fulladdress)
-    result = addr.name and addr.name or addr.fulladdress
-    return to_unicode(result)
+    if addr.name:
+        return u"<span title={}>{}</span>".format(
+            to_unicode(addr.address), to_unicode(addr.name))
+    return to_unicode(addr.address)
 
 
 def parse_address_list(values, **kwargs):
-    """Parse a list of email addresses.
-    """
+    """Parse a list of email addresses."""
     lst = values.split(",")
-    result = ""
+    result = []
     for addr in lst:
-        if result != "":
-            result += ", "
-        result += parse_address(addr, **kwargs)
+        result.append(parse_address(addr, **kwargs))
     return result
 
 
 def parse_from(value, **kwargs):
-    """Parse a From: header.
-    """
-    return parse_address(value, **kwargs)
+    """Parse a From: header."""
+    return [parse_address(value, **kwargs)]
 
 
 def parse_to(value, **kwargs):
-    """Parse a To: header.
-    """
+    """Parse a To: header."""
     return parse_address_list(value, **kwargs)
 
 
 def parse_cc(value, **kwargs):
-    """Parse a Cc: header.
-    """
+    """Parse a Cc: header."""
     return parse_address_list(value, **kwargs)
 
 
@@ -124,8 +117,7 @@ def parse_message_id(value, **kwargs):
 
 
 def parse_subject(value, **kwargs):
-    """Parse a Subject: header.
-    """
+    """Parse a Subject: header."""
     from modoboa.lib import u2u_decode
 
     try:

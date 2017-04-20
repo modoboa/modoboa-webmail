@@ -1,11 +1,22 @@
-{% extends "common/mailheaders.html" %}{% load i18n %}
-{% block extraheaders %}{% if attachments %}
-  <div class="row">
-    <div class="header">{% trans "Attachments" %}</div>
-    <div class="value">{% url "modoboa_webmail:attachment_get" as url %}
-      {% for key, fname in attachments.items %}
-      <a href="{{ url }}?mbox={{ folder }}&mailid={{ mail_id }}&fname={{ fname }}&partnumber={{ key }}">{{ fname }}</a>
-      {% endfor %}
-    </div>
-  </div>
-{% endif %}{% endblock %}
+{% load i18n lib_tags %}
+
+<table id="emailheaders" class="table table-condensed">
+  {% for hdr in headers %}
+    <tr>
+      <th>{{ hdr.name|localize_header_name }}</th><td>{{ hdr.value|safe }}</td>
+    </tr>
+  {% endfor %}
+  {% if attachments %}
+    <tr>
+      <th>{% trans "Attachments" %}</th>
+      <td>
+        {% url "modoboa_webmail:attachment_get" as url %}
+        {% for key, fname in attachments.items %}
+          <a href="{{ url }}?mbox={{ mbox }}&mailid={{ mailid }}&fname={{ fname }}&partnumber={{ key }}">{{ fname }}</a>
+        {% endfor %}
+      </td>
+    </tr>
+  {% endif %}
+</table>
+
+<iframe src="{% url 'modoboa_webmail:mailcontent_get' %}?mbox={{ mbox }}&mailid={{ mailid }}&links={{ links }}" id="mailcontent"></iframe>

@@ -11,11 +11,14 @@ from rfc6266 import parse_headers
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
+from modoboa.core.extensions import exts_pool
 from modoboa.lib import u2u_decode
 from modoboa.lib.email_utils import Email, EmailAddress
 
+from . import imapheader
 from .imaputils import (
     get_imapconnector, BodyStructure
 )
@@ -43,14 +46,40 @@ class ImapEmail(Email):
         self.imapc = get_imapconnector(request)
         self.mbox, self.mailid = self.mailid.split(":")
 
-        headers = self.msg['BODY[HEADER.FIELDS (%s)]' % self.headers_as_text]
+    def _insert_contact_links(self, addresses):
+        """Insert 'add to address book' links."""
+        result = []
+        title = _("Add to contacts")
+        url = reverse("api:contact-list")
+        link_tpl = (
+            " <a class='addcontact' href='{}' title='{}'>"
+            "<span class='fa fa-vcard'></span></a>"
+        )
+        for address in addresses:
+            address += link_tpl.format(url, title)
+            result.append(address)
+        return result
+
+    def fetch_headers(self):
+        """Fetch message headers from server."""
+        msg = self.imapc.fetchmail(
+            self.mbox, self.mailid, readonly=False,
+            headers=self.headers_as_list
+        )
+        headers = msg["BODY[HEADER.FIELDS ({})]".format(self.headers_as_text)]
+        self.fetch_body_structure(msg)
         msg = email.message_from_string(headers)
+        contacts_plugin_installed = exts_pool.get_extension("modoboa_contacts")
+        headers_with_address = ("From", "To", "Cc")
         for hdr in self.headernames:
             label = hdr[0]
             hdrvalue = self.get_header(msg, label)
             if not hdrvalue:
                 continue
             if hdr[1]:
+                if contacts_plugin_installed and label in headers_with_address:
+                    hdrvalue = self._insert_contact_links(hdrvalue)
+                    hdrvalue = ", ".join(hdrvalue)
                 self.headers += [{"name": label, "value": hdrvalue}]
             label = re.sub("-", "_", label)
             setattr(self, label, hdrvalue)
@@ -60,8 +89,6 @@ class ImapEmail(Email):
 
         We also try to decode the default value.
         """
-        from . import imapheader
-
         hdrvalue = super(ImapEmail, self).get_header(msg, hdrname)
         if not hdrvalue:
             return ""
@@ -74,24 +101,20 @@ class ImapEmail(Email):
             pass
         return hdrvalue
 
-    @property
-    def msg(self):
-        """
-        """
-        if self._msg is None:
-            self._msg = self.imapc.fetchmail(
-                self.mbox, self.mailid, readonly=False,
-                headers=self.headers_as_list
+    def fetch_body_structure(self, msg=None):
+        """Fetch BODYSTRUCTURE for email."""
+        if msg is None:
+            msg = self.imapc.fetchmail(
+                self.mbox, self.mailid, readonly=False
             )
-            self.bs = BodyStructure(self._msg['BODYSTRUCTURE'])
-            self._find_attachments()
-            if self.dformat not in ["plain", "html"]:
-                self.dformat = self.request.user.parameters.get_value(
-                    self.dformat)
-            fallback_fmt = "html" if self.dformat == "plain" else "plain"
-            self.mformat = self.dformat \
-                if self.dformat in self.bs.contents else fallback_fmt
-        return self._msg
+        self.bs = BodyStructure(msg["BODYSTRUCTURE"])
+        self._find_attachments()
+        if self.dformat not in ["plain", "html"]:
+            self.dformat = self.request.user.parameters.get_value(
+                self.dformat)
+        fallback_fmt = "html" if self.dformat == "plain" else "plain"
+        self.mformat = (
+            self.dformat if self.dformat in self.bs.contents else fallback_fmt)
 
     @property
     def headers_as_list(self):
@@ -107,17 +130,17 @@ class ImapEmail(Email):
 
         This operation has to be made "on demand" because it requires
         a communication with the IMAP server.
-
         """
-        if self._body is None and self.bs.contents:
-            bodyc = u''
+        if self._body is None:
+            self.fetch_body_structure()
+            bodyc = u""
             for part in self.bs.contents[self.mformat]:
-                pnum = part['pnum']
+                pnum = part["pnum"]
                 data = self.imapc._cmd(
                     "FETCH", self.mailid, "(BODY.PEEK[%s])" % pnum
                 )
                 content = decode_payload(
-                    part['encoding'], data[int(self.mailid)]['BODY[%s]' % pnum]
+                    part["encoding"], data[int(self.mailid)]["BODY[%s]" % pnum]
                 )
                 charset = self._find_content_charset(part)
                 if charset is not None:
@@ -125,7 +148,7 @@ class ImapEmail(Email):
                         content = content.decode(charset)
                     except (UnicodeDecodeError, LookupError):
                         result = chardet.detect(content)
-                        content = content.decode(result['encoding'])
+                        content = content.decode(result["encoding"])
                 bodyc += content
             self._fetch_inlines()
             self._body = getattr(self, "viewmail_%s" % self.mformat)(
@@ -192,16 +215,6 @@ class ImapEmail(Email):
             if m.group(1) in self.bs.inlines:
                 return self.bs.inlines[m.group(1)]["fname"]
         return url
-
-    def render_headers(self, **kwargs):
-        from django.template.loader import render_to_string
-
-        res = render_to_string("modoboa_webmail/headers.html", {
-            "headers": self.headers,
-            "folder": kwargs["folder"], "mail_id": kwargs["mail_id"],
-            "attachments": self.attachments != {} and self.attachments or None
-        })
-        return res
 
     def fetch_attachment(self, pnum):
         """Fetch an attachment from the IMAP server."""

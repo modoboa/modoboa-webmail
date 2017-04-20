@@ -762,12 +762,12 @@ class IMAPconnector(object):
         """
         self.select_mailbox(mbox, readonly)
         if headers is None:
-            headers = ['DATE', 'FROM', 'TO', 'CC', 'SUBJECT']
-        bcmd = "BODY.PEEK" if readonly else "BODY"
-        data = self._cmd(
-            "FETCH", mailid,
-            "(BODYSTRUCTURE %s[HEADER.FIELDS (%s)])" % (bcmd, " ".join(headers))
-        )
+            to_fetch = "(BODYSTRUCTURE)"
+        else:
+            bcmd = "BODY.PEEK" if readonly else "BODY"
+            to_fetch = "(BODYSTRUCTURE {}[HEADER.FIELDS ({})])".format(
+                bcmd, " ".join(headers))
+        data = self._cmd("FETCH", mailid, to_fetch)
         return data[int(mailid)]
 
 

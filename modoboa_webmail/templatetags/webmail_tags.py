@@ -236,4 +236,6 @@ def parse_imap_header(value, header):
         value = getattr(imapheader, "parse_%s" % header)(value)
     except AttributeError:
         pass
-    return value
+    if header == "from":
+        value = value[0]
+    return mark_safe(value)

@@ -25,6 +25,7 @@ $(document).ready(function() {
         move_url: "{% url 'modoboa_webmail:mail_move' %}",
         submboxes_url: "{% url 'modoboa_webmail:submailboxes_get' %}",
         delattachment_url: "{% url 'modoboa_webmail:attachment_delete' %}",
+        contactListUrl: {% if contacts_plugin_enabled %}"{% url 'api:emailaddress-list' %}"{% else %}null{% endif %},
         deflocation: "{{ deflocation }}",
         defcallback: "{{ defcallback }}",
         ro_mboxes: {% tolist ro_mboxes %},

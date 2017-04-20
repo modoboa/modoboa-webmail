@@ -5,6 +5,9 @@
  * @param {Object} options - instance options
  * @classdesc The javascript code that brings the webmail to life!
  */
+
+/* global $ gettext */
+
 var Webmail = function(options) {
     this.initialize(options);
 };
@@ -102,47 +105,50 @@ Webmail.prototype = {
     },
 
     listen: function() {
+        var $document = $(document);
+
         $(window).resize($.proxy(this.resize, this));
 
-        $(document).on(
+        $document.on(
             "click", "a[name=compose]", $.proxy(this.compose_loader, this));
-        $(document).on(
+        $document.on(
             "click", "a[name=totrash]", $.proxy(this.delete_messages, this));
-        $(document).on(
+        $document.on(
             "click", "a[name=mark_as_junk_multi]", $.proxy(this.markMessagesAsJunk, this));
 
-        $(document).on(
+        $document.on(
             "click", "a[name*=mark-]", $.proxy(this.send_mark_request, this));
-        $(document).on("click", "a[name=compress]", $.proxy(this.compress, this));
-        $(document).on("click", "a[name=empty]", $.proxy(this.empty, this));
-        $(document).on("click", "#bottom-bar a", $.proxy(this.getpage_loader, this));
+        $document.on("click", "a[name=compress]", $.proxy(this.compress, this));
+        $document.on("click", "a[name=empty]", $.proxy(this.empty, this));
+        $document.on("click", "#bottom-bar a", $.proxy(this.getpage_loader, this));
 
-        $(document).on(
+        $document.on(
             "click", "a[name=loadfolder]", $.proxy(this.listmailbox_loader, this));
-        $(document).on("click", "a[name=selectfolder]", this.select_parent_mailbox);
-        $(document).on(
+        $document.on("click", "a[name=selectfolder]", this.select_parent_mailbox);
+        $document.on(
             "click", "div[class*=clickbox]", $.proxy(this.mbox_state_callback, this));
-        $(document).on("click", "a[name=newmbox]", $.proxy(this.new_mailbox, this));
-        $(document).on("click", "a[name=editmbox]", $.proxy(this.edit_mbox, this));
-        $(document).on("click", "a[name=removembox]", $.proxy(this.remove_mbox, this));
+        $document.on("click", "a[name=newmbox]", $.proxy(this.new_mailbox, this));
+        $document.on("click", "a[name=editmbox]", $.proxy(this.edit_mbox, this));
+        $document.on("click", "a[name=removembox]", $.proxy(this.remove_mbox, this));
 
-        $(document).on("click", "div.openable", $.proxy(this.viewmail_loader, this));
+        $document.on("click", "div.openable", $.proxy(this.viewmail_loader, this));
 
-        $(document).on("click", "a[name=reply]", $.proxy(this.reply_loader, this));
-        $(document).on("click", "a[name=replyall]", $.proxy(this.reply_loader, this));
-        $(document).on("click", "a[name=forward]", $.proxy(this.reply_loader, this));
-        $(document).on("click", "a[name=delete]", $.proxy(this.delete_message, this));
-        $(document).on("click", "a[name=mark_as_junk]", $.proxy(this.markMessageAsJunk, this));
-        $(document).on(
+        $document.on("click", "a[name=reply]", $.proxy(this.reply_loader, this));
+        $document.on("click", "a[name=replyall]", $.proxy(this.reply_loader, this));
+        $document.on("click", "a[name=forward]", $.proxy(this.reply_loader, this));
+        $document.on("click", "a[name=delete]", $.proxy(this.delete_message, this));
+        $document.on("click", "a[name=mark_as_junk]", $.proxy(this.markMessageAsJunk, this));
+        $document.on(
             "click", "a[name=activate_links]", $.proxy(function(e) { this.display_mode(e, "1"); }, this));
-        $(document).on("click", "a[name=disable_links]", $.proxy(function(e) { this.display_mode(e, "0"); }, this));
+        $document.on("click", "a[name=disable_links]", $.proxy(function(e) { this.display_mode(e, "0"); }, this));
 
-        $(document).on("click", "a[name=sendmail]", $.proxy(this.sendmail, this));
+        $document.on("click", "a[name=sendmail]", $.proxy(this.sendmail, this));
 
-        $(document).on("click", "a[name=attachments]", $.proxy(function(e) {
+        $document.on("click", "a[name=attachments]", $.proxy(function(e) {
             modalbox(e, undefined, $("a[name=attachments]").attr("href"),
                 $.proxy(this.attachments_init, this));
         }, this));
+        $document.on('click', '.addcontact', $.proxy(this.addContact, this));
     },
 
     /**
@@ -221,20 +227,15 @@ Webmail.prototype = {
      * Global resize event callback.
      */
     resize: function() {
-        var $window = $(window);
-        var current_action = this.navobject.getparam("action");
+        var currentAction = this.navobject.getparam("action");
 
         $("#folders").height(
             $("#left-toolbar").offset().top - $("#folders").offset().top
         );
-
-        // if ($window.width() <= 768) {        
-        //     $(".main").css("margin-left", "0");
-        // } else {
-        //     $(".main").css("margin-left", $(".sidebar").width() + "px");
-        // }
-        if (current_action == "compose") {
+        if (currentAction === "compose") {
             this.resize_compose_body();
+        } else if (currentAction === 'viewmail') {
+            this.resizeEmailIframe();
         }
     },
 
@@ -999,7 +1000,7 @@ Webmail.prototype = {
 
         e.preventDefault();
         $link.attr("disabled", "disabled");
-        if (this.editormode == "html") {
+        if (this.editormode === "html") {
             CKEDITOR.instances[this.editorid].updateElement();
         }
         var args = $form.serialize();
@@ -1070,12 +1071,12 @@ Webmail.prototype = {
         }
     },
 
-    add_field: function(e, name) {
+    addField: function(e, name) {
         e.preventDefault();
-        $("label[for=id_" + name + "]").parent().show();
+        $('label[for=id_' + name + '-selectized]').parent().show();
         $(e.target).hide();
         this.resize_compose_body();
-        if (this.editormode == "html") {
+        if (this.editormode === 'html') {
             this.resize_editor();
         }
     },
@@ -1084,9 +1085,46 @@ Webmail.prototype = {
      * Compose form loading and initialization.
      */
     compose_callback: function(resp) {
+        var renderFunc = function (item, escape) {
+            if (item.display_name) {
+                return '<div>{0} {1}</div>'.format(
+                    item.display_name,
+                    escape('<{0}>'.format(item.address)));
+            }
+            return '<div>{0}</div>'.format(item.address);
+        };
+        var apiUrl = this.options.contactListUrl;
+
         this.page_update(resp);
-        $("#add_cc").click($.proxy(function(e) { this.add_field(e, "cc"); }, this));
-        $("#add_bcc").click($.proxy(function(e) { this.add_field(e, "bcc"); }, this));
+        if (this.options.contactListUrl) {
+            this.$select = $('.selectize').selectize({
+                valueField: 'address',
+                searchField: 'address',
+                options: [],
+                create: function (input) {
+                    return {
+                        address: input
+                    };
+                },
+                load: function (query, callback) {
+                    if (!query.length) {
+                        callback();
+                        return;
+                    }
+                    $.ajax({
+                        url: '{0}?search={1}'.format(apiUrl, encodeURIComponent(query))
+                    }).success(function (data) {
+                        callback(data);
+                    });
+                },
+                render: {
+                    option: renderFunc,
+                    item: renderFunc
+                }
+            });
+        }
+        $("#add_cc").click($.proxy(function(e) { this.addField(e, "cc"); }, this));
+        $("#add_bcc").click($.proxy(function(e) { this.addField(e, "bcc"); }, this));
         this.editormode = resp.editor;
         $('.django-ckeditor-widget').css("display", "");
         if (resp.editor == "html") {
@@ -1120,10 +1158,20 @@ Webmail.prototype = {
     viewmail_callback: function(resp) {
         this.page_update(resp);
         $("#listing").css("overflow-y", "hidden");
+        this.resizeEmailIframe();
         $("a[name=back]").click($.proxy(function(e) {
             e.preventDefault();
             this.go_back_to_listing();
         }, this));
+    },
+
+    resizeEmailIframe: function() {
+        var $emailHeaders = $('#emailheaders');
+        if (!$emailHeaders.length) {
+            return;
+        }
+        var top = $emailHeaders.offset().top + $emailHeaders.innerHeight();
+        $("#mailcontent").innerHeight($(window).height() - top);
     },
 
     mark_callback: function(data) {
@@ -1330,6 +1378,52 @@ Webmail.prototype = {
                     plug.listmailbox_callback(data);
                 });
             }
+        });
+    },
+
+    /**
+     * Add a new contact to address book.
+     */
+    addContact: function(evt) {
+        evt.preventDefault();
+        var $link = get_target(evt, 'a');
+        var $span = $link.prev('span');
+        var address = $span.attr('title');
+        var name = '';
+
+        if (address === '') {
+            address = $span.html();
+            name = address;
+        } else {
+            name = $span.html();
+        }
+
+        var createContact = function () {
+            var data = {
+                'display_name': name,
+                emails: [{address: address, type: 'other'}]
+            };
+            $.ajax({
+                url: $link.attr('href'),
+                data: JSON.stringify(data),
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json'
+            }).done(function(data) {
+                $("body").notify("success", gettext("Contact added!"), 2000);
+            });
+        };
+
+        $.ajax({
+            url: '{0}?search={1}'.format(this.options.contactListUrl, address)
+        }).success(function (data) {
+            if (data.length) {
+                $('body').notify(
+                    'warning', gettext('A contact with this address already exists'),
+                    1500);
+                return;
+            }
+            createContact();
         });
     }
 };

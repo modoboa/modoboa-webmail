@@ -359,7 +359,7 @@ Webmail.prototype = {
 
         $("#listing").html(response.listing);
 
-        if (this.navobject.getparam("action") == "listmailbox") {
+        if (this.navobject.getparam('action') === 'listmailbox') {
             this.setup_infinite_scroll(response);
         } else {
             this.disable_infinite_scroll();
@@ -1170,12 +1170,14 @@ Webmail.prototype = {
         if (!$emailHeaders.length) {
             return;
         }
-        var top = $emailHeaders.offset().top + $emailHeaders.innerHeight();
-        $("#mailcontent").innerHeight($(window).height() - top);
+        var top = $emailHeaders.height();
+        $('#mailcontent').css({ top: top });
+        top += $emailHeaders.offset().top;
+        $('#mailcontent').innerHeight($(window).height() - top);
     },
 
     mark_callback: function(data) {
-        if (data.action == "read") {
+        if (data.action === "read") {
             this.htmltable.current_selection().removeClass("unseen");
         } else {
             this.htmltable.current_selection().addClass("unseen");
@@ -1187,7 +1189,7 @@ Webmail.prototype = {
 
     delete_callback: function(data) {
         this.go_back_to_listing();
-        if (this.get_current_mailbox() != this.options.trash) {
+        if (this.get_current_mailbox() !== this.options.trash) {
             $("a[name=totrash]").removeClass("disabled");
         }
         $("body").notify("success", data, 2000);

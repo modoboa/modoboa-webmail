@@ -39,10 +39,9 @@ class ImapEmail(Email):
         ('Subject', True),
     ]
 
-    def __init__(self, request, addrfull, *args, **kwargs):
+    def __init__(self, request, *args, **kwargs):
         super(ImapEmail, self).__init__(*args, **kwargs)
         self.request = request
-        self.addrfull = addrfull
         self.imapc = get_imapconnector(request)
         self.mbox, self.mailid = self.mailid.split(":")
 
@@ -94,9 +93,7 @@ class ImapEmail(Email):
             return ""
         try:
             key = re.sub("-", "_", hdrname).lower()
-            hdrvalue = getattr(imapheader, "parse_%s" % key)(
-                hdrvalue, full=self.addrfull
-            )
+            hdrvalue = getattr(imapheader, "parse_%s" % key)(hdrvalue)
         except AttributeError:
             pass
         return hdrvalue

@@ -321,12 +321,6 @@ class UserSettings(param_forms.UserParametersForm):
         help_text=_("Enable/Disable HTML links display")
     )
 
-    display_full_addresses = form_utils.YesNoField(
-        initial=True,
-        label=_("Show full email addresses"),
-        help_text=_("Show full email addresses when displaying a message")
-    )
-
     messages_per_page = forms.IntegerField(
         initial=40,
         label=_("Number of displayed emails per page"),

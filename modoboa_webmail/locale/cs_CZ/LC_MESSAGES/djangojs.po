@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Modoboa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-03 21:35+0100\n"
+"POT-Creation-Date: 2017-04-24 09:43+0200\n"
 "PO-Revision-Date: 2015-01-06 10:05+0000\n"
 "Last-Translator: Miroslav Abrahám <miris@kunago.com>\n"
 "Language-Team: Czech (Czech Republic) (http://www.transifex.com/projects/p/"
@@ -19,26 +19,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: static/modoboa_webmail/js/webmail.js:188
+#: static/modoboa_webmail/js/webmail.js:198
 msgid "No more message in this mailbox."
 msgstr "Ve schránce není žádná další zpráva."
 
-#: static/modoboa_webmail/js/webmail.js:685
+#: static/modoboa_webmail/js/webmail.js:690
 msgid "Remove the selected mailbox?"
 msgstr "Odstranit vybranou schránku?"
 
-#: static/modoboa_webmail/js/webmail.js:698
+#: static/modoboa_webmail/js/webmail.js:703
 msgid "Mailbox removed"
 msgstr "Schránka odstraněna"
 
-#: static/modoboa_webmail/js/webmail.js:973
+#: static/modoboa_webmail/js/webmail.js:1016
 msgid "Message sent"
 msgstr "Zpráva odeslána"
 
-#: static/modoboa_webmail/js/webmail.js:1243
+#: static/modoboa_webmail/js/webmail.js:1342
 #, javascript-format
 msgid "Moving %s message"
 msgid_plural "Moving %s messages"
 msgstr[0] "Přesunuji %s zprávu"
 msgstr[1] "Přesunuji %s zprávy"
 msgstr[2] "Přesunuji %s zpráv"
+
+#: static/modoboa_webmail/js/webmail.js:1415
+msgid "Contact added!"
+msgstr ""
+
+#: static/modoboa_webmail/js/webmail.js:1424
+msgid "A contact with this address already exists"
+msgstr ""

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Modoboa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-17 13:36+0100\n"
+"POT-Creation-Date: 2017-04-24 09:43+0200\n"
 "PO-Revision-Date: 2013-10-01 09:56+0000\n"
 "Last-Translator: Pedro Gracia <lasarux@neuroomante.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/modoboa/language/"
@@ -36,15 +36,15 @@ msgstr "A"
 msgid "Cc"
 msgstr "Cc"
 
-#: forms.py:95 forms.py:101 templates/modoboa_webmail/compose.html:13
-msgid "Enter one or more addresses separated by a comma."
+#: forms.py:94 forms.py:100 templates/modoboa_webmail/compose.html:13
+msgid "Enter one or more addresses."
 msgstr ""
 
 #: forms.py:98 templates/modoboa_webmail/compose.html:31
 msgid "Bcc"
 msgstr ""
 
-#: forms.py:105 lib/imapemail.py:300
+#: forms.py:105 lib/imapemail.py:310
 msgid "Subject"
 msgstr "Tema"
 
@@ -145,89 +145,91 @@ msgid "Enable/Disable HTML links display"
 msgstr "Activar/Desactivar el mostrar enlaces HTML"
 
 #: forms.py:326
-msgid "Show full email addresses"
-msgstr ""
-
-#: forms.py:327
-#, fuzzy
-#| msgid "The default mode used when displaying a message"
-msgid "Show full email addresses when displaying a message"
-msgstr "Modo por defecto usado cuando se muestra un mensaje"
-
-#: forms.py:332
 msgid "Number of displayed emails per page"
 msgstr "Número de emails mostrados por página"
 
-#: forms.py:333
+#: forms.py:327
 msgid "Sets the maximum number of messages displayed in a page"
 msgstr "Fija el número máximo de mensajes mostrados en una página"
 
-#: forms.py:338
+#: forms.py:332
 msgid "Listing refresh rate"
 msgstr "Tasa de refresco"
 
-#: forms.py:339
+#: forms.py:333
 msgid "Automatic folder refresh rate (in seconds)"
 msgstr "Tasa de refresco automática de la carpeta (en segundos)"
 
-#: forms.py:344
+#: forms.py:338
 #, fuzzy
 msgid "Mailboxes container's width"
 msgstr "Propietario de los mailboxes"
 
-#: forms.py:345
+#: forms.py:339
 msgid "The width of the mailbox list container"
 msgstr ""
 
-#: forms.py:348
+#: forms.py:342
 msgid "Mailboxes"
 msgstr "Mailboxes"
 
-#: forms.py:352
+#: forms.py:346
 msgid "Trash folder"
 msgstr "Carpeta de basura"
 
-#: forms.py:353
+#: forms.py:347
 msgid "Folder where deleted messages go"
 msgstr "Carpeta dónde van los mensajes eliminados"
 
-#: forms.py:358
+#: forms.py:352
 msgid "Sent folder"
 msgstr "Carpeta de enviados"
 
-#: forms.py:359
+#: forms.py:353
 msgid "Folder where copies of sent messages go"
 msgstr "Carpeta dónde van las copias de los correos enviados"
 
-#: forms.py:364
+#: forms.py:358
 msgid "Drafts folder"
 msgstr "Carpeta de borradores"
 
-#: forms.py:365
+#: forms.py:359
 msgid "Folder where drafts go"
 msgstr "Carpeta dónde van los borradores"
 
-#: forms.py:368
+#: forms.py:363
+#, fuzzy
+#| msgid "Sent folder"
+msgid "Junk folder"
+msgstr "Carpeta de enviados"
+
+#: forms.py:364
+#, fuzzy
+#| msgid "Folder where deleted messages go"
+msgid "Folder where junk messages should go"
+msgstr "Carpeta dónde van los mensajes eliminados"
+
+#: forms.py:367
 msgid "Composing messages"
 msgstr "Composición de mensajes"
 
-#: forms.py:372
+#: forms.py:371
 msgid "Default editor"
 msgstr "Editor por defecto"
 
-#: forms.py:374
+#: forms.py:373
 msgid "The default editor to use when composing a message"
 msgstr "Editor por defecto para usar cuando redacta un mensaje"
 
-#: forms.py:380
+#: forms.py:379
 msgid "Signature text"
 msgstr "Texto de la firma"
 
-#: forms.py:381
+#: forms.py:380
 msgid "User defined email signature"
 msgstr "Firma de correo definida por el usuario"
 
-#: forms.py:401
+#: forms.py:400
 msgid "Value must be a positive integer (> 0)"
 msgstr ""
 
@@ -235,15 +237,19 @@ msgstr ""
 msgid "Webmail"
 msgstr "Correo web"
 
-#: lib/imapemail.py:245
+#: lib/imapemail.py:51
+msgid "Add to contacts"
+msgstr ""
+
+#: lib/imapemail.py:255
 msgid "wrote:"
 msgstr "escribió:"
 
-#: lib/imapemail.py:302
+#: lib/imapemail.py:312
 msgid "Date"
 msgstr "Fecha"
 
-#: lib/imapemail.py:314 lib/imapemail.py:317
+#: lib/imapemail.py:324 lib/imapemail.py:327
 msgid "Original message"
 msgstr "Mensaje original"
 
@@ -264,15 +270,15 @@ msgstr ""
 msgid "Drafts"
 msgstr "Carpeta de borradores"
 
-#: lib/imaputils.py:550
+#: lib/imaputils.py:551
 msgid "Junk"
 msgstr ""
 
-#: lib/imaputils.py:552
+#: lib/imaputils.py:553
 msgid "Sent"
 msgstr ""
 
-#: lib/imaputils.py:554
+#: lib/imaputils.py:555
 msgid "Trash"
 msgstr ""
 
@@ -289,7 +295,7 @@ msgid "Uploading.."
 msgstr "Subiendo..."
 
 #: templates/modoboa_webmail/compose_menubar.html:9
-#: templates/modoboa_webmail/headers.html:4 views.py:286
+#: templates/modoboa_webmail/headers.html:11 views.py:305
 msgid "Attachments"
 msgstr "Adjuntos"
 
@@ -297,83 +303,88 @@ msgstr "Adjuntos"
 msgid "Parent mailbox"
 msgstr "Mailbox padre"
 
-#: templates/modoboa_webmail/index.html:43
+#: templates/modoboa_webmail/index.html:44
 msgid "Compose"
 msgstr ""
 
-#: templatetags/webmail_tags.py:24 templatetags/webmail_tags.py:73
+#: templatetags/webmail_tags.py:24 templatetags/webmail_tags.py:83
 msgid "Back"
 msgstr "Anterior"
 
-#: templatetags/webmail_tags.py:29
+#: templatetags/webmail_tags.py:30
 msgid "Reply"
 msgstr "Responder"
 
-#: templatetags/webmail_tags.py:34
+#: templatetags/webmail_tags.py:35
 msgid "Reply all"
 msgstr "Responder a todos"
 
-#: templatetags/webmail_tags.py:38
+#: templatetags/webmail_tags.py:40
 msgid "Forward"
 msgstr "Siguiente"
 
-#: templatetags/webmail_tags.py:45 templatetags/webmail_tags.py:92
+#: templatetags/webmail_tags.py:48 templatetags/webmail_tags.py:102
 msgid "Delete"
 msgstr "Eliminar"
 
-#: templatetags/webmail_tags.py:48
+#: templatetags/webmail_tags.py:55 templatetags/webmail_tags.py:111
+#, fuzzy
+msgid "Mark as spam"
+msgstr "Marcar mensajes"
+
+#: templatetags/webmail_tags.py:58
 msgid "Display options"
 msgstr "Opciones de pantalla"
 
-#: templatetags/webmail_tags.py:52
+#: templatetags/webmail_tags.py:62
 msgid "Activate links"
 msgstr "Activar enlaces"
 
-#: templatetags/webmail_tags.py:54
+#: templatetags/webmail_tags.py:65
 msgid "Disable links"
 msgstr "Desactivar enlaces"
 
-#: templatetags/webmail_tags.py:78
+#: templatetags/webmail_tags.py:88
 msgid "Send"
 msgstr "Enviar"
 
-#: templatetags/webmail_tags.py:98
+#: templatetags/webmail_tags.py:114
 msgid "Actions"
 msgstr "Acciones"
 
-#: templatetags/webmail_tags.py:102
+#: templatetags/webmail_tags.py:118
 #, fuzzy
 msgid "Mark as read"
 msgstr "Marcar mensajes"
 
-#: templatetags/webmail_tags.py:106
+#: templatetags/webmail_tags.py:123
 #, fuzzy
 msgid "Mark as unread"
 msgstr "Como no leído"
 
-#: templatetags/webmail_tags.py:116
+#: templatetags/webmail_tags.py:132
 msgid "Empty folder"
 msgstr "Vaciar la carpeta"
 
-#: templatetags/webmail_tags.py:189 views.py:168
+#: templatetags/webmail_tags.py:205 views.py:187
 msgid "Create a new mailbox"
 msgstr "Crear un nuevo mailbox"
 
-#: templatetags/webmail_tags.py:197
+#: templatetags/webmail_tags.py:213
 msgid "Edit the selected mailbox"
 msgstr "Editar el mailbox seleccionado"
 
-#: templatetags/webmail_tags.py:202
+#: templatetags/webmail_tags.py:218
 msgid "Remove the selected mailbox"
 msgstr "Eliminar el mailbox seleccionado"
 
-#: templatetags/webmail_tags.py:206
+#: templatetags/webmail_tags.py:222
 msgid "Compress folder"
 msgstr "Comprimir la carpeta"
 
-#: views.py:60 views.py:78 views.py:92 views.py:110 views.py:129 views.py:143
-#: views.py:221 views.py:244 views.py:447 views.py:495 views.py:512
-#: views.py:544 views.py:584
+#: views.py:60 views.py:78 views.py:92 views.py:110 views.py:130 views.py:148
+#: views.py:162 views.py:240 views.py:263 views.py:466 views.py:514
+#: views.py:529 views.py:568 views.py:608
 msgid "Invalid request"
 msgstr "Petición inválida"
 
@@ -384,50 +395,64 @@ msgid_plural "%(count)d messages deleted"
 msgstr[0] "%(count)d mensaje eliminado"
 msgstr[1] "%(count)d mensajes eliminados"
 
-#: views.py:131 views.py:380
+#: views.py:136
+#, fuzzy, python-format
+#| msgid "%(count)d message deleted"
+#| msgid_plural "%(count)d messages deleted"
+msgid "%(count)d message marked"
+msgid_plural "%(count)d messages marked"
+msgstr[0] "%(count)d mensaje eliminado"
+msgstr[1] "%(count)d mensajes eliminados"
+
+#: views.py:150 views.py:399
 msgid "Empty mailbox"
 msgstr "Mailbox vacío"
 
-#: views.py:161
+#: views.py:180
 msgid "Mailbox created"
 msgstr "Mailbox creado."
 
-#: views.py:171
+#: views.py:190
 msgid "Create"
 msgstr "Crear"
 
-#: views.py:187 views.py:223
+#: views.py:206 views.py:242
 msgid "Edit mailbox"
 msgstr "Editar el mailbox"
 
-#: views.py:190 views.py:226
+#: views.py:209 views.py:245
 msgid "Update"
 msgstr "Actualizar"
 
-#: views.py:203
+#: views.py:222
 msgid "Mailbox updated"
 msgstr "Mailbox actualizado"
 
-#: views.py:276
+#: views.py:295
 msgid "Failed to save attachment: "
 msgstr "Fallo al guardar el adjunto:"
 
-#: views.py:280
+#: views.py:299
 #, python-format
 msgid "Attachment is too big (limit: %s)"
 msgstr "EL adjunto es demasiado grande (límite: %s)"
 
-#: views.py:303
+#: views.py:322
 msgid "Bad query"
 msgstr "Consulta errónea"
 
-#: views.py:315
+#: views.py:334
 msgid "Failed to remove attachment: "
 msgstr "Fallo al eliminar el adjunto:"
 
-#: views.py:320
+#: views.py:339
 msgid "Unknown attachment"
 msgstr "Adjunto desconocido"
+
+#, fuzzy
+#~| msgid "The default mode used when displaying a message"
+#~ msgid "Show full email addresses when displaying a message"
+#~ msgstr "Modo por defecto usado cuando se muestra un mensaje"
 
 #~ msgid "Cci"
 #~ msgstr "Cco"

@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Antoine Nguyen <tonio@ngyn.org>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Modoboa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-03 21:35+0100\n"
-"PO-Revision-Date: 2016-11-09 16:14+0000\n"
+"POT-Creation-Date: 2017-04-24 09:43+0200\n"
+"PO-Revision-Date: 2017-04-24 07:45+0000\n"
 "Last-Translator: Antoine Nguyen <tonio@ngyn.org>\n"
 "Language-Team: French (http://www.transifex.com/tonio/modoboa/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -17,25 +18,33 @@ msgstr ""
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: static/modoboa_webmail/js/webmail.js:188
+#: static/modoboa_webmail/js/webmail.js:198
 msgid "No more message in this mailbox."
 msgstr "Plus aucun message dans cette boite aux lettres"
 
-#: static/modoboa_webmail/js/webmail.js:685
+#: static/modoboa_webmail/js/webmail.js:690
 msgid "Remove the selected mailbox?"
 msgstr "Supprimer la boite sélectionnée?"
 
-#: static/modoboa_webmail/js/webmail.js:698
+#: static/modoboa_webmail/js/webmail.js:703
 msgid "Mailbox removed"
 msgstr "Boite aux lettres supprimée"
 
-#: static/modoboa_webmail/js/webmail.js:973
+#: static/modoboa_webmail/js/webmail.js:1016
 msgid "Message sent"
 msgstr "Message envoyé"
 
-#: static/modoboa_webmail/js/webmail.js:1243
+#: static/modoboa_webmail/js/webmail.js:1342
 #, javascript-format
 msgid "Moving %s message"
 msgid_plural "Moving %s messages"
 msgstr[0] "Déplacement de %s message"
 msgstr[1] "Déplacement de %s messages"
+
+#: static/modoboa_webmail/js/webmail.js:1415
+msgid "Contact added!"
+msgstr "Contact ajouté !"
+
+#: static/modoboa_webmail/js/webmail.js:1424
+msgid "A contact with this address already exists"
+msgstr "Un contact avec cette adresse existe déjà"

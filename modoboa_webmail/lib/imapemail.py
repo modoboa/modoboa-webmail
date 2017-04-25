@@ -59,7 +59,7 @@ class ImapEmail(Email):
             result.append(address)
         return result
 
-    def fetch_headers(self):
+    def fetch_headers(self, raw_addresses=False):
         """Fetch message headers from server."""
         msg = self.imapc.fetchmail(
             self.mbox, self.mailid, readonly=False,
@@ -72,18 +72,19 @@ class ImapEmail(Email):
         headers_with_address = ("From", "To", "Cc")
         for hdr in self.headernames:
             label = hdr[0]
-            hdrvalue = self.get_header(msg, label)
+            hdrvalue = self.get_header(msg, label, raw=raw_addresses)
             if not hdrvalue:
                 continue
             if hdr[1]:
                 if contacts_plugin_installed and label in headers_with_address:
-                    hdrvalue = self._insert_contact_links(hdrvalue)
+                    if not raw_addresses:
+                        hdrvalue = self._insert_contact_links(hdrvalue)
                     hdrvalue = ", ".join(hdrvalue)
                 self.headers += [{"name": label, "value": hdrvalue}]
             label = re.sub("-", "_", label)
             setattr(self, label, hdrvalue)
 
-    def get_header(self, msg, hdrname):
+    def get_header(self, msg, hdrname, **kwargs):
         """Look for a particular header.
 
         We also try to decode the default value.
@@ -93,7 +94,8 @@ class ImapEmail(Email):
             return ""
         try:
             key = re.sub("-", "_", hdrname).lower()
-            hdrvalue = getattr(imapheader, "parse_%s" % key)(hdrvalue)
+            hdrvalue = getattr(imapheader, "parse_%s" % key)(
+                hdrvalue, **kwargs)
         except AttributeError:
             pass
         return hdrvalue
@@ -221,10 +223,11 @@ class ImapEmail(Email):
 class Modifier(ImapEmail):
     """Message modifier."""
 
-    def __init__(self, form, *args, **kwargs):
-        kwargs["dformat"] = "EDITOR"
-        super(Modifier, self).__init__(*args, **kwargs)
+    def __init__(self, form, request, *args, **kwargs):
+        kwargs["dformat"] = request.user.parameters.get_value("editor")
+        super(Modifier, self).__init__(request, *args, **kwargs)
         self.form = form
+        self.fetch_headers(raw_addresses=True)
         getattr(self, "_modify_%s" % self.dformat)()
 
     def _modify_plain(self):

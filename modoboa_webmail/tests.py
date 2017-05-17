@@ -139,7 +139,10 @@ class WebmailTestCase(ModoTestCase):
         self.assertEqual(response.status_code, 200)
 
         response = self.client.post(
-            url, {"to": "test@example.test", "subject": "test", "body": "Test"}
+            url, {
+                "from_": self.user.email, "to": "test@example.test",
+                "subject": "test", "body": "Test"
+            }
         )
         self.assertEqual(len(mail.outbox), 1)
 
@@ -151,6 +154,7 @@ class WebmailTestCase(ModoTestCase):
 
         response = self.client.post(
             url, {
+                "from_": self.user.email,
                 "to": "test@example.test", "subject": "test",
                 "body": "<p>Test</p>"
             }

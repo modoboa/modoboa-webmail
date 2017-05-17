@@ -145,13 +145,18 @@ class WebmailTestCase(ModoTestCase):
             }
         )
         self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(
+            mail.outbox[0].from_email, "user@test.com")
 
         # Try to send an email using HTML format
+        self.user.first_name = "Antoine"
+        self.user.last_name = "Nguyen"
         self.user.parameters.set_value("editor", "html")
         self.user.save()
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
+        mail.outbox = []
         response = self.client.post(
             url, {
                 "from_": self.user.email,
@@ -159,7 +164,9 @@ class WebmailTestCase(ModoTestCase):
                 "body": "<p>Test</p>"
             }
         )
-        self.assertEqual(len(mail.outbox), 2)
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(
+            mail.outbox[0].from_email, '"Antoine Nguyen" <user@test.com>')
 
     def test_signature(self):
         """Check signature in different formats."""

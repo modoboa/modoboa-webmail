@@ -449,11 +449,11 @@ def compose(request):
     """Compose email."""
     url = "?action=compose"
     if request.method == "POST":
-        form = ComposeMailForm(request.POST)
+        form = ComposeMailForm(request.user, request.POST)
         status, resp = send_mail(request, form, posturl=url)
         return resp
 
-    form = ComposeMailForm()
+    form = ComposeMailForm(request.user)
     return render_compose(request, form, url, insert_signature=True)
 
 
@@ -472,7 +472,7 @@ def new_compose_form(request, action, mbox, mailid):
 
     Valid for reply and forward actions only.
     """
-    form = ComposeMailForm()
+    form = ComposeMailForm(request.user)
     modclass = globals()["%sModifier" % action.capitalize()]
     email = modclass(form, request, "%s:%s" % (mbox, mailid), links="1")
     url = "?action=%s&mbox=%s&mailid=%s" % (action, mbox, mailid)
@@ -484,7 +484,7 @@ def reply(request):
     mbox, mailid = get_mail_info(request)
     if request.method == "POST":
         url = "?action=reply&mbox=%s&mailid=%s" % (mbox, mailid)
-        form = ComposeMailForm(request.POST)
+        form = ComposeMailForm(request.user, request.POST)
         status, resp = send_mail(request, form, url)
         if status:
             get_imapconnector(request).msg_answered(mbox, mailid)

@@ -6,7 +6,7 @@
  * @classdesc The javascript code that brings the webmail to life!
  */
 
-/* global $ gettext */
+/* global $ gettext CKEDITOR */
 
 var Webmail = function(options) {
     this.initialize(options);
@@ -1073,7 +1073,13 @@ Webmail.prototype = {
 
     addField: function(e, name) {
         e.preventDefault();
-        $('label[for=id_' + name + '-selectized]').parent().show();
+        var selector = 'label[for=id_' + name;
+
+        if (this.options.contactListUrl) {
+            selector += '-selectized';
+        }
+        selector += ']';
+        $(selector).parent().show();
         $(e.target).hide();
         this.resize_compose_body();
         if (this.editormode === 'html') {
@@ -1097,7 +1103,7 @@ Webmail.prototype = {
 
         this.page_update(resp);
         if (this.options.contactListUrl) {
-            this.$select = $('.selectize').selectize({
+            this.$select = $('.selectize-contact').selectize({
                 valueField: 'address',
                 searchField: 'address',
                 options: [],
@@ -1123,27 +1129,28 @@ Webmail.prototype = {
                 }
             });
         }
-        $("#add_cc").click($.proxy(function(e) { this.addField(e, "cc"); }, this));
-        $("#add_bcc").click($.proxy(function(e) { this.addField(e, "bcc"); }, this));
+        $('.selectize').selectize();
+        $('#add_cc').click($.proxy(function(e) { this.addField(e, 'cc'); }, this));
+        $('#add_bcc').click($.proxy(function(e) { this.addField(e, 'bcc'); }, this));
         this.editormode = resp.editor;
-        $('.django-ckeditor-widget').css("display", "");
-        if (resp.editor == "html") {
+        $('.django-ckeditor-widget').css('display', '');
+        if (resp.editor === 'html') {
             var instance = CKEDITOR.instances[this.editorid];
 
             $(window).resize($.proxy(this.resize_editor, this));
-            $('.django-ckeditor-widget').css("display", "");
+            $('.django-ckeditor-widget').css('display', '');
             if (instance) {
                 CKEDITOR.remove(instance);
             }
             CKEDITOR.replace(this.editorid, $('#' + this.editorid).data('config'));
-            CKEDITOR.on("instanceReady", $.proxy(function() {
+            CKEDITOR.on('instanceReady', $.proxy(function() {
                 this.resize_editor();
             }, this));
         } else {
-            $('.django-ckeditor-widget').css("height", "100%");
+            $('.django-ckeditor-widget').css('height', '100%');
         }
         if (resp.id !== undefined) {
-            this.navobject.setparam("id", resp.id).update(false, true);
+            this.navobject.setparam('id', resp.id).update(false, true);
         }
 
         this.resize_compose_body();

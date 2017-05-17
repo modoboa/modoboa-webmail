@@ -2,6 +2,7 @@
 
 """Webmail forms."""
 
+from email.header import Header
 from email.mime.image import MIMEImage
 import os
 import pkg_resources
@@ -13,6 +14,7 @@ import lxml.html
 from django import forms
 from django.conf import settings
 from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.core.validators import validate_email
 from django.utils.translation import ugettext_lazy as _
 
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
@@ -86,19 +88,23 @@ def make_body_images_inline(body):
 class ComposeMailForm(forms.Form):
     """Compose mail form."""
 
+    from_ = forms.ChoiceField(
+        label=_("From"), choices=[],
+        widget=forms.Select(attrs={"class": "selectize"})
+    )
     to = forms.CharField(
         label=_("To"), validators=[validate_email_list])
     cc = forms.CharField(
         label=_("Cc"), required=False, validators=[validate_email_list],
         widget=forms.TextInput(
             attrs={"placeholder": _("Enter one or more addresses."),
-                   "class": "selectize"})
+                   "class": "selectize-contact"})
     )
     bcc = forms.CharField(
         label=_("Bcc"), required=False, validators=[validate_email_list],
         widget=forms.TextInput(
             attrs={"placeholder": _("Enter one or more addresses."),
-                   "class": "selectize"})
+                   "class": "selectize-contact"})
     )
 
     subject = forms.CharField(
@@ -112,9 +118,22 @@ class ComposeMailForm(forms.Form):
             attrs={"class": "editor form-control"})
     )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, user, *args, **kwargs):
         """Custom constructor."""
         super(ComposeMailForm, self).__init__(*args, **kwargs)
+        from_addresses = [(user.email, user.email)]
+        for address in user.mailbox.alias_addresses:
+            try:
+                validate_email(address)
+                from_addresses += [(address, address)]
+            except forms.ValidationError:
+                pass
+        additional_sender_addresses = (
+            user.mailbox.senderaddress_set.values_list("address", flat=True))
+        from_addresses += [
+            (address, address) for address in additional_sender_addresses]
+        self.fields["from_"].choices = from_addresses
+        self.fields["from_"].initial = user.email
         self.field_widths = {
             "cc": "11",
             "bcc": "11",
@@ -176,6 +195,13 @@ class ComposeMailForm(forms.Form):
         )
         return msg
 
+    def _format_sender_address(self, user, address):
+        """Format address before message is sent."""
+        if user.first_name != "" or user.last_name != "":
+            return '"{}" <{}>'.format(
+                Header(user.fullname, "utf8").encode(), address)
+        return address
+
     def _build_msg(self, request):
         """Build message to send.
 
@@ -191,8 +217,9 @@ class ComposeMailForm(forms.Form):
                 "In-Reply-To": origmsgid
             })
         mode = request.user.parameters.get_value("editor")
-        return getattr(self, "_{}_msg".format(mode))(
-            request.user.encoded_address, headers)
+        sender = self._format_sender_address(
+            request.user, self.cleaned_data["from_"])
+        return getattr(self, "_{}_msg".format(mode))(sender, headers)
 
     def to_msg(self, request):
         """Convert form's content to an object ready to send."""

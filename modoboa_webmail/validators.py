@@ -17,4 +17,3 @@ class EmailListValidator(object):
         [validate_email(email) for name, email in addresses]
 
 validate_email_list = EmailListValidator()
-

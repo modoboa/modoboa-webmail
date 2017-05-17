@@ -4,12 +4,12 @@
   {% csrf_token %}
   <div id="compose-container">
     <div id="mailheader">
+      {% render_field form.from_ label_width="col-sm-1" %}
       <div class="form-group{% if form.errors.to %} has-error{% endif %}">
- 
 	{# handling to field #} 
         <label class="col-sm-1 control-label" for="id_to">{% trans "To" %}</label>
         <div class="col-sm-8">
-          <input id="id_to" name="to" class="form-control selectize" value="{% if form.to.value %}{{ form.to.value }}{% endif %}"
+          <input id="id_to" name="to" class="form-control selectize-contact" value="{% if form.to.value %}{{ form.to.value }}{% endif %}"
                   placeholder="{% trans "Enter one or more addresses." %}">
 	  {% if form.to.errors %}
 	  {% for error in form.to.errors %}

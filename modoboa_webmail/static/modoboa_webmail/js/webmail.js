@@ -322,9 +322,13 @@ Webmail.prototype = {
             state = true;
         }
         if (state) {
-            $("a[name=editmbox], a[name=removembox]").removeClass("disabled");
+            $('a[name=editmbox], a[name=removembox]').removeClass('disabled')
+                .css('pointer-events', 'auto')
+                .parent().removeClass('disabled');
         } else {
-            $("a[name=editmbox], a[name=removembox]").addClass("disabled");
+            $('a[name=editmbox], a[name=removembox]').addClass('disabled')
+                .css('pointer-events', 'none')
+                .parent().addClass('disabled');
         }
     },
 
@@ -342,7 +346,7 @@ Webmail.prototype = {
         }
         this.enable_mb_actions();
         for (var idx in this.options.ro_mboxes) {
-            if (curmb == this.options.ro_mboxes[idx]) {
+            if (curmb === this.options.ro_mboxes[idx]) {
                 this.enable_mb_actions(false);
                 break;
             }

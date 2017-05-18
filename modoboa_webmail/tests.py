@@ -202,7 +202,7 @@ class WebmailTestCase(ModoTestCase):
         """Test folder creation."""
         url = reverse("modoboa_webmail:folder_add")
         response = self.client.get(url)
-        self.assertContains(response, "Create a new mailbox")
+        self.assertContains(response, "Create a new folder")
 
         response = self.ajax_post(url, {"name": "Test"})
         self.assertIn("newmb", response)
@@ -215,13 +215,13 @@ class WebmailTestCase(ModoTestCase):
 
         url = "{}?name=Test".format(url)
         response = self.client.get(url)
-        self.assertContains(response, "Edit mailbox")
+        self.assertContains(response, "Edit folder")
 
         session = self.client.session
         session["webmail_navparams"] = {"inbox": "Test"}
         session.save()
         response = self.ajax_post(url, {"oldname": "Test", "name": "Toto"})
-        self.assertEqual(response["respmsg"], "Mailbox updated")
+        self.assertEqual(response["respmsg"], "Folder updated")
 
     def test_delete_folder(self):
         """Test folder removal."""

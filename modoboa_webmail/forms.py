@@ -362,11 +362,11 @@ class UserSettings(param_forms.UserParametersForm):
 
     mboxes_col_width = forms.IntegerField(
         initial=200,
-        label=_("Mailboxes container's width"),
-        help_text=_("The width of the mailbox list container")
+        label=_("Folder container's width"),
+        help_text=_("The width of the folder list container")
     )
 
-    sep2 = form_utils.SeparatorField(label=_("Mailboxes"))
+    sep2 = form_utils.SeparatorField(label=_("Folders"))
 
     trash_folder = forms.CharField(
         initial="Trash",

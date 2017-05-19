@@ -127,7 +127,7 @@ def listmailbox_menu(selection, folder, user):
     }]
     if folder == user.parameters.get_value("trash_folder"):
         entries[0]["class"] += " disabled"
-        entries[1]["menu"] += [
+        entries[2]["menu"] += [
             {"name": "empty",
              "label": _("Empty folder"),
              "url": u"{0}?name={1}".format(

@@ -6,7 +6,7 @@
  * @classdesc The javascript code that brings the webmail to life!
  */
 
-/* global $ gettext CKEDITOR */
+/* global $ gettext CKEDITOR History Poller simple_ajax_form_post */
 
 var Webmail = function(options) {
     this.initialize(options);
@@ -751,7 +751,7 @@ Webmail.prototype = {
             $parent = $ul;
             mailbox = $parent.attr("name") + this.options.hdelimiter + mailbox;
         } else {
-            $parent = $("#folders > div > ul");
+            $parent = $("#folders > ul");
         }
         var $li = this.inject_mailbox($parent, mailbox, "loadfolder");
         this.init_droppables($li);
@@ -1215,23 +1215,23 @@ Webmail.prototype = {
      * Mailbox form initialization
      */
     mboxform_cb: function() {
-        $("#mboxform").find("input").keypress(function(e) {
-            if (e.which == 13) e.preventDefault();
+        $('#mboxform').find('input').keypress(function(e) {
+            if (e.which === 13) { e.preventDefault(); }
         });
-        $(".submit").on('click', $.proxy(function(e) {
-            var $link = $("#folders2 li.active").children("a");
+        $('.submit').on('click', $.proxy(function(e) {
+            var $link = $('#folders2 li.active').children('a');
 
             simple_ajax_form_post(e, {
                 reload_on_success: false,
-                formid: "mboxform",
-                extradata: ($link.length) ? "parent_folder=" + $link.attr("href") : "",
-                success_cb: $.proxy(this.mboxform_success, this)
+                formid: 'mboxform',
+                extradata: ($link.length) ? 'parent_folder=' + $link.attr('href') : '',
+                success_cb: $.proxy(this.mboxformSuccess, this)
             });
         }, this));
     },
 
-    mboxform_success: function(data) {
-        $("body").notify('success', data.respmsg, 2000);
+    mboxformSuccess: function(data) {
+        $('body').notify('success', data.respmsg, 2000);
         if (data.oldmb === undefined) {
             this.add_mailbox_to_tree(data.parent, data.newmb);
         } else if (data.newmb) {

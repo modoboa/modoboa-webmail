@@ -120,19 +120,35 @@ def mark(request, name):
     })
 
 
-@login_required
-@needs_mailbox()
-def mark_as_junk(request):
-    """Mark a message as SPAM."""
+def _move_selection_to_folder(request, folder):
+    """Move selected messages to the given folder."""
     mbox = request.GET.get("mbox")
     selection = request.GET.getlist("selection[]")
     if mbox is None or selection is None:
         raise BadRequest(_("Invalid request"))
     selection = [item for item in selection if item.isdigit()]
     mbc = get_imapconnector(request)
-    mbc.move(",".join(selection), mbox,
-             request.user.parameters.get_value("junk_folder"))
-    count = len(selection)
+    mbc.move(",".join(selection), mbox, folder)
+    return len(selection)
+
+
+@login_required
+@needs_mailbox()
+def mark_as_junk(request):
+    """Mark a message as SPAM."""
+    count = _move_selection_to_folder(
+        request, request.user.parameters.get_value("junk_folder"))
+    message = ungettext("%(count)d message marked",
+                        "%(count)d messages marked",
+                        count) % {"count": count}
+    return render_to_json_response(message)
+
+
+@login_required
+@needs_mailbox()
+def mark_as_not_junk(request):
+    """Mark a message as not SPAM."""
+    count = _move_selection_to_folder(request, "INBOX")
     message = ungettext("%(count)d message marked",
                         "%(count)d messages marked",
                         count) % {"count": count}

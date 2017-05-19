@@ -155,15 +155,16 @@ Webmail.prototype = {
      * Setup an "infinite scroll" behaviour for the email list.
      */
     setup_infinite_scroll: function(data) {
-        var $container = $("#listing");
+        var $container = $('#listing');
         var that = this;
+        var currentMb = this.get_current_mailbox();
 
-        if ($container.data("infinite-scroll") !== undefined) {
-            if (data.pages && data.pages[0] != 1) {
+        if ($container.data('infinite-scroll') !== undefined) {
+            if (data.pages && data.pages[0] !== 1) {
                 $container.scrollTop(10);
             }
-            $container.infinite_scroll("reset_loaded_pages", data.pages);
-            $container.infinite_scroll("resume");
+            $container.infinite_scroll('reset_loaded_pages', data.pages);
+            $container.infinite_scroll('resume');
             return;
         }
 
@@ -171,25 +172,25 @@ Webmail.prototype = {
             initial_pages: data.pages,
             url: this.options.listing_url,
             calculate_bottom: function($element) {
-                return $("#emails").height() - $element.height();
+                return $('#emails').height() - $element.height();
             },
             get_args: function() {
-                var args = $.extend({}, that.navparams);
+                var args = $.extend({}, {mbox: currentMb}, that.navparams);
                 args.scroll = true;
                 return args;
             },
             process_results: function(data, direction) {
-                var $emails = $("#emails");
+                var $emails = $('#emails');
 
-                if (direction === "down") {
+                if (direction === 'down') {
                     $emails.html($emails.html() + data.listing);
                 } else {
-                    var row_id = $emails.children(".email").first().attr("id");
+                    var rowId = $emails.children('.email').first().attr('id');
 
                     $emails.html(data.listing + $emails.html());
 
-                    var $row = $("#" + row_id);
-                    $("#listing").scrollTop($row.offset().top);
+                    var $row = $('#' + rowId);
+                    $('#listing').scrollTop($row.offset().top);
                 }
             },
             end_of_list_reached: function($element) {

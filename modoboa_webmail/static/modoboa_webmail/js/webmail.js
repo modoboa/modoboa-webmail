@@ -1404,9 +1404,8 @@ Webmail.prototype = {
         var address = $span.attr('title');
         var name = '';
 
-        if (address === '') {
-            address = $span.html();
-            name = address;
+        if (!address) {
+            address = name = $span.html();
         } else {
             name = $span.html();
         }

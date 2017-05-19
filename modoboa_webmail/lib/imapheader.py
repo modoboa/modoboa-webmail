@@ -60,12 +60,12 @@ def to_unicode(value):
 def parse_address(value, **kwargs):
     """Parse an email address."""
     addr = EmailAddress(value)
+    if kwargs.get("raw"):
+        return to_unicode(addr.fulladdress)
     if addr.name:
-        if kwargs.get("raw"):
-            return to_unicode(addr.fulladdress)
         return u"<span title={}>{}</span>".format(
             to_unicode(addr.address), to_unicode(addr.name))
-    return to_unicode(addr.address)
+    return u"<span>{}</span>".format(to_unicode(addr.address))
 
 
 def parse_address_list(values, **kwargs):

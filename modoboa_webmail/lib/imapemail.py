@@ -77,9 +77,8 @@ class ImapEmail(Email):
                 continue
             if hdr[1]:
                 if label in headers_with_address:
-                    if contacts_plugin_installed:
-                        if not raw_addresses:
-                            hdrvalue = self._insert_contact_links(hdrvalue)
+                    if contacts_plugin_installed and not raw_addresses:
+                        hdrvalue = self._insert_contact_links(hdrvalue)
                     hdrvalue = ", ".join(hdrvalue)
                 self.headers += [{"name": label, "value": hdrvalue}]
             label = re.sub("-", "_", label)

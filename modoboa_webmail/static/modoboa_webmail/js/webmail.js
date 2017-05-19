@@ -195,7 +195,7 @@ Webmail.prototype = {
             end_of_list_reached: function($element) {
                 $element.append(
                     $("<div class='alert alert-info text-center' />").html(
-                        gettext("No more message in this mailbox.")
+                        gettext("No more message in this folder.")
                     )
                 );
             }
@@ -691,7 +691,7 @@ Webmail.prototype = {
         var $link = get_target(e, "a");
         e.preventDefault();
         if ($link.hasClass("disabled")) return;
-        if (!confirm(gettext("Remove the selected mailbox?"))) {
+        if (!confirm(gettext("Remove the selected folder?"))) {
             return;
         }
 
@@ -704,7 +704,7 @@ Webmail.prototype = {
         }).done($.proxy(function(data) {
             this.remove_mbox_from_tree(this.navobject.getparam("mbox"));
             this.poller.resume();
-            $("body").notify("success", gettext("Mailbox removed"), 2000);
+            $("body").notify("success", gettext("Folder removed"), 2000);
         }, this));
     },
 

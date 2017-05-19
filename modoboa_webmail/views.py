@@ -147,7 +147,7 @@ def empty(request):
     if name != request.user.parameters.get_value("trash_folder"):
         raise BadRequest(_("Invalid request"))
     get_imapconnector(request).empty(name)
-    content = u"<div class='alert alert-info'>%s</div>" % _("Empty mailbox")
+    content = u"<div class='alert alert-info'>%s</div>" % _("Empty folder")
     return render_to_json_response({
         'listing': content, 'mailbox': name, 'pages': [1]
     })
@@ -177,14 +177,14 @@ def newfolder(request, tplname="modoboa_webmail/folder.html"):
             pf = request.POST.get("parent_folder", None)
             mbc.create_folder(form.cleaned_data["name"], pf)
             return render_to_json_response({
-                'respmsg': _("Mailbox created"),
+                'respmsg': _("Folder created"),
                 'newmb': form.cleaned_data["name"], 'parent': pf
             })
 
         return render_to_json_response(
             {'form_errors': form.errors}, status=400)
 
-    ctx = {"title": _("Create a new mailbox"),
+    ctx = {"title": _("Create a new folder"),
            "formid": "mboxform",
            "action": reverse("modoboa_webmail:folder_add"),
            "action_label": _("Create"),
@@ -203,7 +203,7 @@ def newfolder(request, tplname="modoboa_webmail/folder.html"):
 def editfolder(request, tplname="modoboa_webmail/folder.html"):
     mbc = IMAPconnector(user=request.user.username,
                         password=request.session["password"])
-    ctx = {"title": _("Edit mailbox"),
+    ctx = {"title": _("Edit folder"),
            "formid": "mboxform",
            "action": reverse("modoboa_webmail:folder_change"),
            "action_label": _("Update"),
@@ -219,7 +219,7 @@ def editfolder(request, tplname="modoboa_webmail/folder.html"):
             oldname, oldparent = separate_mailbox(
                 request.POST["oldname"], sep=mbc.hdelimiter
             )
-            res = {'respmsg': _("Mailbox updated")}
+            res = {'respmsg': _("Folder updated")}
             if form.cleaned_data["name"] != oldname \
                     or (pf != oldparent):
                 newname = form.cleaned_data["name"] if pf is None \
@@ -239,7 +239,7 @@ def editfolder(request, tplname="modoboa_webmail/folder.html"):
     if name is None:
         raise BadRequest(_("Invalid request"))
     shortname, parent = separate_mailbox(name, sep=mbc.hdelimiter)
-    ctx = {"title": _("Edit mailbox"),
+    ctx = {"title": _("Edit folder"),
            "formid": "mboxform",
            "action": reverse("modoboa_webmail:folder_change"),
            "action_label": _("Update"),

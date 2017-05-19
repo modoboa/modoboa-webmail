@@ -65,10 +65,19 @@ def viewmail_menu(selection, folder, user, mail_id=None):
             "label": _("Disable links")
         }]
     }]
+    if folder == user.parameters.get_value("junk_folder"):
+        entries[3] = {
+            "name": "mark_as_not_junk",
+            "img": "fa fa-thumbs-up",
+            "class": "btn-success",
+            "url": u"{0}?mbox={1}&selection[]={2}".format(
+                reverse("modoboa_webmail:mail_mark_as_not_junk"),
+                folder, mail_id),
+            "title": _("Mark as not spam")
+        }
     menu = render_to_string('common/buttons_list.html',
                             {"selection": selection, "entries": entries,
                              "user": user, "extraclasses": "pull-left"})
-
     return menu
 
 
@@ -133,6 +142,14 @@ def listmailbox_menu(selection, folder, user):
              "url": u"{0}?name={1}".format(
                  reverse("modoboa_webmail:trash_empty"), folder)}
         ]
+    elif folder == user.parameters.get_value("junk_folder"):
+        entries[1] = {
+            "name": "mark_as_not_junk_multi",
+            "img": "fa fa-thumbs-up",
+            "class": "btn-success",
+            "url": reverse("modoboa_webmail:mail_mark_as_not_junk"),
+            "title": _("Mark as not spam")
+        }
     return render_to_string('modoboa_webmail/main_action_bar.html', {
         'selection': selection, 'entries': entries, 'user': user, 'css': "nav",
         'STATIC_URL': settings.STATIC_URL

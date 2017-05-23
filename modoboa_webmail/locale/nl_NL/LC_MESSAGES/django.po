@@ -1,24 +1,25 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Andrew <buddha@cryptolab.net>, 2014
+# Ronald Otto <ronald@tuxis.nl>, 2017
 # TuxBrother <vrijwilligerswerk@wij.rs>, 2014
-# Jeeptwister <peter@cpu.nl>, 2016
+# Tuxis Internet Engineering V.O.F. <info@tuxis.nl>, 2016
+# Tuxis Internet Engineering V.O.F. <info@tuxis.nl>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Modoboa\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-19 10:28+0200\n"
-"PO-Revision-Date: 2014-12-31 11:37+0000\n"
-"Last-Translator: TuxBrother <vrijwilligerswerk@wij.rs>\n"
-"Language-Team: Dutch (Netherlands) (http://www.transifex.com/projects/p/"
-"modoboa/language/nl_NL/)\n"
-"Language: nl_NL\n"
+"PO-Revision-Date: 2017-05-23 07:06+0000\n"
+"Last-Translator: Tuxis Internet Engineering V.O.F. <info@tuxis.nl>\n"
+"Language-Team: Dutch (Netherlands) (http://www.transifex.com/tonio/modoboa/language/nl_NL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: nl_NL\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: exceptions.py:22
@@ -31,23 +32,23 @@ msgstr "Onbekende actie"
 
 #: forms.py:92
 msgid "From"
-msgstr ""
+msgstr "Van"
 
 #: forms.py:96 templates/modoboa_webmail/compose.html:10
 msgid "To"
-msgstr "Naar"
+msgstr "Aan"
 
 #: forms.py:98 templates/modoboa_webmail/compose.html:26
 msgid "Cc"
-msgstr "CC"
+msgstr "Cc"
 
 #: forms.py:100 forms.py:106 templates/modoboa_webmail/compose.html:13
 msgid "Enter one or more addresses."
-msgstr ""
+msgstr "Voer één of meer adressen in."
 
 #: forms.py:104 templates/modoboa_webmail/compose.html:31
 msgid "Bcc"
-msgstr ""
+msgstr "Bcc"
 
 #: forms.py:111 lib/imapemail.py:313
 msgid "Subject"
@@ -63,11 +64,11 @@ msgstr "Algemeen"
 
 #: forms.py:275
 msgid "Maximum attachment size"
-msgstr "Maximum grootte van bijlage"
+msgstr "Maximale grootte van bijlage"
 
 #: forms.py:278
 msgid "Maximum attachment size in bytes (or KB, MB, GB if specified)"
-msgstr "Maximum grootte van een bijlage in bytes (of KB, MB, GB als opgegeven)"
+msgstr "Maximale grootte van een bijlage in bytes (of KB, MB, GB als opgegeven)"
 
 #: forms.py:281
 msgid "IMAP settings"
@@ -75,11 +76,11 @@ msgstr "IMAP instellingen"
 
 #: forms.py:284 forms.py:304
 msgid "Server address"
-msgstr "Server adres"
+msgstr "Serveradres"
 
 #: forms.py:286
 msgid "Address of your IMAP server"
-msgstr "Adres van uw IMAP server"
+msgstr "Adres van uw IMAP-server"
 
 #: forms.py:290
 msgid "Use a secured connection"
@@ -87,15 +88,15 @@ msgstr "Gebruik een beveiligde verbinding"
 
 #: forms.py:292
 msgid "Use a secured connection to access IMAP server"
-msgstr "Gebruik een beveiligde verbinding met de IMAP server (aanbevolen)"
+msgstr "Gebruik een beveiligde verbinding met de IMAP-server"
 
 #: forms.py:296 forms.py:320
 msgid "Server port"
-msgstr "Server poort"
+msgstr "Serverpoort"
 
 #: forms.py:298
 msgid "Listening port of your IMAP server"
-msgstr "Poort van uw IMAP server"
+msgstr "Poort van uw IMAP-server"
 
 #: forms.py:301
 msgid "SMTP settings"
@@ -103,11 +104,11 @@ msgstr "SMTP instellingen"
 
 #: forms.py:306
 msgid "Address of your SMTP server"
-msgstr "Adres van uw IMAP server"
+msgstr "Adres van uw IMAP-server"
 
 #: forms.py:310
 msgid "Secured connection mode"
-msgstr "Beveiligde verbinding gebruiken"
+msgstr "Modus van beveiligde verbinding"
 
 #: forms.py:311
 msgid "None"
@@ -115,11 +116,11 @@ msgstr "Geen"
 
 #: forms.py:315
 msgid "Use a secured connection to access SMTP server"
-msgstr "Gebruik een beveiligde verbinding met de SMTP server (aanbevolen)"
+msgstr "Gebruik een beveiligde verbinding met de SMTP-server"
 
 #: forms.py:322
 msgid "Listening port of your SMTP server"
-msgstr "Poort van de SMTP server"
+msgstr "Poort van de SMTP-server"
 
 #: forms.py:326
 msgid "Authentication required"
@@ -135,23 +136,23 @@ msgstr "Weergeven"
 
 #: forms.py:339
 msgid "Default message display mode"
-msgstr "Standaard bericht weergave"
+msgstr "Standaard berichtweergave"
 
 #: forms.py:341
 msgid "The default mode used when displaying a message"
-msgstr "De standaard mode wanneer een bericht weergegeven wordt"
+msgstr "De standaard modus wanneer een bericht weergegeven wordt"
 
 #: forms.py:347
 msgid "Enable HTML links display"
-msgstr "Activeer HTML links scherm"
+msgstr "Activeer weergave van HTML-koppelingen"
 
 #: forms.py:348
 msgid "Enable/Disable HTML links display"
-msgstr "Zet het weergeven van HTML links aan of uit"
+msgstr "(De)activeer weergave van HTML-koppelingen"
 
 #: forms.py:353
 msgid "Number of displayed emails per page"
-msgstr "Aantal weergegeven emails per pagina"
+msgstr "Aantal weergegeven e-mails per pagina"
 
 #: forms.py:354
 msgid "Sets the maximum number of messages displayed in a page"
@@ -159,27 +160,23 @@ msgstr "Stelt het maximum aantal weergegeven berichten per pagina in"
 
 #: forms.py:359
 msgid "Listing refresh rate"
-msgstr "Lijst automatisch vernieuwen"
+msgstr "Lijst vernieuwen frequentie"
 
 #: forms.py:360
 msgid "Automatic folder refresh rate (in seconds)"
 msgstr "Map automatisch vernieuwen (in seconden)"
 
 #: forms.py:365
-#, fuzzy
-#| msgid "Mailboxes container's width"
 msgid "Folder container's width"
-msgstr "Breedte van de mailbox container"
+msgstr "Mappenlijst wijdte"
 
 #: forms.py:366
-#, fuzzy
-#| msgid "The width of the mailbox list container"
 msgid "The width of the folder list container"
-msgstr "De breedte van de mailbox lijst container"
+msgstr "De wijdte van de mappenlijst"
 
 #: forms.py:369
 msgid "Folders"
-msgstr ""
+msgstr "Mappen"
 
 #: forms.py:373
 msgid "Trash folder"
@@ -191,7 +188,7 @@ msgstr "Map voor verwijderde berichten"
 
 #: forms.py:379
 msgid "Sent folder"
-msgstr "Verzonden"
+msgstr "Verzonden items"
 
 #: forms.py:380
 msgid "Folder where copies of sent messages go"
@@ -206,16 +203,12 @@ msgid "Folder where drafts go"
 msgstr "Map waar concepten heen gaan"
 
 #: forms.py:390
-#, fuzzy
-#| msgid "Sent folder"
 msgid "Junk folder"
-msgstr "Verzonden"
+msgstr "Ongewenste e-mail map"
 
 #: forms.py:391
-#, fuzzy
-#| msgid "Folder where deleted messages go"
 msgid "Folder where junk messages should go"
-msgstr "Map voor verwijderde berichten"
+msgstr "Map voor ongewenste e-mail"
 
 #: forms.py:394
 msgid "Composing messages"
@@ -231,11 +224,11 @@ msgstr "De standaard editor voor het schrijven van een bericht"
 
 #: forms.py:406
 msgid "Signature text"
-msgstr "Handtekening tekst"
+msgstr "Handtekeningtekst"
 
 #: forms.py:407
 msgid "User defined email signature"
-msgstr "Door gebruiker opgegeven email handtekening"
+msgstr "Door gebruiker opgegeven e-mailhandtekening"
 
 #: forms.py:427
 msgid "Value must be a positive integer (> 0)"
@@ -247,7 +240,7 @@ msgstr "Webmail"
 
 #: lib/imapemail.py:51
 msgid "Add to contacts"
-msgstr ""
+msgstr "Voeg toe aan contacten"
 
 #: lib/imapemail.py:258
 msgid "wrote:"
@@ -263,16 +256,16 @@ msgstr "Oorspronkelijk bericht"
 
 #: lib/imaputils.py:275
 msgid "Failed to retrieve hierarchy delimiter"
-msgstr "Mislukt om de hiërarchische scheiding te verkrijgen"
+msgstr "Mislukt om het hiërarchische scheidingsteken te verkrijgen"
 
 #: lib/imaputils.py:317
 #, python-format
 msgid "Connection to IMAP server failed: %s"
-msgstr "Verbinding met de IMAP server mislukt: %s"
+msgstr "Verbinding met de IMAP-server mislukt: %s"
 
 #: lib/imaputils.py:547
 msgid "Inbox"
-msgstr "Inbox"
+msgstr "Postvak in"
 
 #: lib/imaputils.py:549
 msgid "Drafts"
@@ -280,11 +273,11 @@ msgstr "Concepten"
 
 #: lib/imaputils.py:551
 msgid "Junk"
-msgstr "Spam"
+msgstr "Ongewenste e-mail"
 
 #: lib/imaputils.py:553
 msgid "Sent"
-msgstr "Verzonden"
+msgstr "Verzonden items"
 
 #: lib/imaputils.py:555
 msgid "Trash"
@@ -313,7 +306,7 @@ msgstr "Hoofd mailbox"
 
 #: templates/modoboa_webmail/index.html:44
 msgid "Compose"
-msgstr "Nieuw bericht"
+msgstr "Opstellen"
 
 #: templatetags/webmail_tags.py:24 templatetags/webmail_tags.py:92
 msgid "Back"
@@ -321,11 +314,11 @@ msgstr "Terug"
 
 #: templatetags/webmail_tags.py:30
 msgid "Reply"
-msgstr "Antwoorden"
+msgstr "Beantwoorden"
 
 #: templatetags/webmail_tags.py:35
 msgid "Reply all"
-msgstr "Allen antwoorden"
+msgstr "Allen beantwoorden"
 
 #: templatetags/webmail_tags.py:40
 msgid "Forward"
@@ -336,32 +329,28 @@ msgid "Delete"
 msgstr "Verwijderen"
 
 #: templatetags/webmail_tags.py:55 templatetags/webmail_tags.py:120
-#, fuzzy
-#| msgid "Mark as read"
 msgid "Mark as spam"
-msgstr "Markeer als gelezen"
+msgstr "Markeer als ongewenst"
 
 #: templatetags/webmail_tags.py:58
 msgid "Display options"
-msgstr "Weergave opties"
+msgstr "Weergaveopties"
 
 #: templatetags/webmail_tags.py:62
 msgid "Activate links"
-msgstr "Activeer links"
+msgstr "Activeer koppelingen"
 
 #: templatetags/webmail_tags.py:65
 msgid "Disable links"
-msgstr "Links uitschakelen"
+msgstr "Koppelingen uitschakelen"
 
 #: templatetags/webmail_tags.py:76 templatetags/webmail_tags.py:151
-#, fuzzy
-#| msgid "Mark as read"
 msgid "Mark as not spam"
-msgstr "Markeer als gelezen"
+msgstr "Als niet-ongewenst markeren"
 
 #: templatetags/webmail_tags.py:97
 msgid "Send"
-msgstr "Verzenden"
+msgstr "Versturen"
 
 #: templatetags/webmail_tags.py:123
 msgid "Actions"
@@ -380,22 +369,16 @@ msgid "Empty folder"
 msgstr "Lege map"
 
 #: templatetags/webmail_tags.py:222 views.py:203
-#, fuzzy
-#| msgid "Create a new mailbox"
 msgid "Create a new folder"
-msgstr "Nieuwe mailbox aanmaken"
+msgstr "Nieuwe map aanmaken"
 
 #: templatetags/webmail_tags.py:230
-#, fuzzy
-#| msgid "Edit the selected mailbox"
 msgid "Edit the selected folder"
-msgstr "Bewerk geselecteerde mailbox"
+msgstr "Geselecteerde map bewerken"
 
 #: templatetags/webmail_tags.py:235
-#, fuzzy
-#| msgid "Remove the selected mailbox"
 msgid "Remove the selected folder"
-msgstr "Verwijder geselecteerde mailbox"
+msgstr "Geselecteerde map verwijderen"
 
 #: templatetags/webmail_tags.py:239
 msgid "Compress folder"
@@ -415,43 +398,35 @@ msgstr[0] "%(count)d bericht verwijderd"
 msgstr[1] "%(count)d berichten verwijderd"
 
 #: views.py:141 views.py:152
-#, fuzzy, python-format
-#| msgid "%(count)d message deleted"
-#| msgid_plural "%(count)d messages deleted"
+#, python-format
 msgid "%(count)d message marked"
 msgid_plural "%(count)d messages marked"
-msgstr[0] "%(count)d bericht verwijderd"
-msgstr[1] "%(count)d berichten verwijderd"
+msgstr[0] "%(count)d berichten gemarkeerd"
+msgstr[1] "%(count)d berichten gemarkeerd"
 
 #: views.py:196
-#, fuzzy
-#| msgid "Mailbox created"
 msgid "Folder created"
-msgstr "Mailbox aangemaakt"
+msgstr "Map aangemaakt"
 
 #: views.py:206
 msgid "Create"
 msgstr "Aanmaken"
 
 #: views.py:222 views.py:258
-#, fuzzy
-#| msgid "Empty folder"
 msgid "Edit folder"
-msgstr "Lege map"
+msgstr "Map bewerken"
 
 #: views.py:225 views.py:261
 msgid "Update"
-msgstr "Toepassen"
+msgstr "Bijwerken"
 
 #: views.py:238
-#, fuzzy
-#| msgid "Mailbox updated"
 msgid "Folder updated"
-msgstr "Mailbox aangepast"
+msgstr "Map bijgewerkt"
 
 #: views.py:311
 msgid "Failed to save attachment: "
-msgstr "Het is niet gelukt om deze bijlage(n) op te slaan:"
+msgstr "Mislukt om deze bijlage(s) op te slaan:"
 
 #: views.py:315
 #, python-format
@@ -460,11 +435,11 @@ msgstr "Bijlage is te groot (maximaal toegestane grootte: %s)"
 
 #: views.py:338
 msgid "Bad query"
-msgstr "Verkeerde query"
+msgstr "Onjuist verzoek"
 
 #: views.py:350
 msgid "Failed to remove attachment: "
-msgstr "Het is niet gelukt om de bijlage te verwijderen:"
+msgstr "Bijlage verwijderen is mislukt:"
 
 #: views.py:355
 msgid "Unknown attachment"
@@ -472,21 +447,4 @@ msgstr "Onbekende bijlage"
 
 #: views.py:415
 msgid "Empty mailbox"
-msgstr "Mailbox leegmaken"
-
-#~ msgid "Mailboxes"
-#~ msgstr "Mailboxen"
-
-#~ msgid "Edit mailbox"
-#~ msgstr "Wijzing mailbox"
-
-#, fuzzy
-#~| msgid "The default mode used when displaying a message"
-#~ msgid "Show full email addresses when displaying a message"
-#~ msgstr "De standaard mode wanneer een bericht weergegeven wordt"
-
-#~ msgid "This field is required"
-#~ msgstr "Dit veld is verplicht"
-
-#~ msgid "Cci"
-#~ msgstr "BCc"
+msgstr "Map leegmaken"

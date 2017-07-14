@@ -241,7 +241,7 @@ class ForwardMailForm(ComposeMailForm):
         mbox = request.GET.get("mbox", None)
         mailid = request.GET.get("mailid", None)
         msg = super(ForwardMailForm, self)._build_msg(request)
-        origmsg = ImapEmail(request, False, "%s:%s" % (mbox, mailid))
+        origmsg = ImapEmail(request, "%s:%s" % (mbox, mailid))
         if origmsg.attachments:
             for attpart, fname in origmsg.attachments.items():
                 attdef, payload = origmsg.fetch_attachment(attpart)

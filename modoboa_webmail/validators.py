@@ -12,7 +12,7 @@ class EmailListValidator(object):
 
     def __call__(self, value):
         value = force_text(value)
-        emails = [unicode.strip(email) for email in value.split(",")]
+        emails = [email.strip() for email in value.split(",")]
         addresses = getaddresses(emails)
         [validate_email(email) for name, email in addresses]
 

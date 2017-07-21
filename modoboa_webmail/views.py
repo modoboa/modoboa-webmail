@@ -513,7 +513,7 @@ def forward(request):
     mbox, mailid = get_mail_info(request)
     if request.method == "POST":
         url = "?action=forward&mbox=%s&mailid=%s" % (mbox, mailid)
-        form = ForwardMailForm(request.POST)
+        form = ForwardMailForm(request.user, request.POST)
         status, resp = send_mail(request, form, url)
         if status:
             get_imapconnector(request).msg_forwarded(mbox, mailid)

@@ -329,7 +329,7 @@ class IMAPconnector(object):
             criterions = or_criterion(
                 criterions, '(%s "%s")' % (key, pattern))
         if six.PY3:
-            criterions = bytes(criterions, "utf-8")
+            criterions = bytearray(criterions, "utf-8")
         elif isinstance(criterions, unicode):
             criterions = criterions.encode("utf-8")
         self.criterions = [criterions]
@@ -347,11 +347,11 @@ class IMAPconnector(object):
         """
         if "order" in kwargs and kwargs["order"]:
             sign = kwargs["order"][:1]
-            criterion = bytes(kwargs["order"][1:].upper(), "utf-8")
+            criterion = kwargs["order"][1:].upper()
             if sign == '-':
-                criterion = b"REVERSE %s" % criterion
+                criterion = "REVERSE %s" % criterion
         else:
-            criterion = b"REVERSE DATE"
+            criterion = "REVERSE DATE"
         folder = kwargs["folder"] if "folder" in kwargs else None
 
         # FIXME: pourquoi suis je obligé de faire un SELECT ici?  un
@@ -361,8 +361,8 @@ class IMAPconnector(object):
         cmdname = "SORT" if six.PY3 else b"SORT"
         data = self._cmd(
             cmdname,
-            b"(%s)" % criterion, b"UTF-8", b"(NOT DELETED)",
-            *self.criterions)
+            bytearray("(%s)" % criterion, "utf-8"),
+            b"UTF-8", b"(NOT DELETED)", *self.criterions)
         self.messages = data[0].decode().split()
         self.getquota(folder)
         return len(self.messages)

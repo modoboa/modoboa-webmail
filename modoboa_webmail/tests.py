@@ -1,5 +1,7 @@
 """Webmail tests."""
 
+from __future__ import unicode_literals
+
 import os
 import shutil
 import tempfile
@@ -35,9 +37,9 @@ class IMAP4Mock(object):
 
     def _simple_command(self, name, *args, **kwargs):
         if name == "CAPABILITY":
-            self.untagged_responses["CAPABILITY"] = [""]
+            self.untagged_responses["CAPABILITY"] = [b""]
         elif name == "LIST":
-            self.untagged_responses["LIST"] = ["() \".\" \"INBOX\""]
+            self.untagged_responses["LIST"] = [b"() \".\" \"INBOX\""]
         return "OK", None
 
     def append(self, *args, **kwargs):
@@ -50,7 +52,7 @@ class IMAP4Mock(object):
         return "OK", None
 
     def list(self):
-        return "OK", ["() \".\" \"INBOX\""]
+        return "OK", [b"() \".\" \"INBOX\""]
 
     def rename(self, oldname, newname):
         return "OK", None

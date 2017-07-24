@@ -429,7 +429,7 @@ class IMAPconnector(object):
         for mb in data:
             flags, delimiter, name = self.list_response_pattern.match(
                 mb.decode()).groups()
-            name = name.strip('"').decode("imap4-utf-7")
+            name = bytearray(name.strip('"'), "utf-8").decode("imap4-utf-7")
             mdm_found = False
             for idx, mdm in enumerate(mailboxes):
                 if mdm["name"] == name:

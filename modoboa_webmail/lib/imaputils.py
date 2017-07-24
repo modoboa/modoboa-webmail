@@ -469,15 +469,17 @@ class IMAPconnector(object):
                 continue
             if type(mb) in [list, tuple]:
                 flags, delimiter, namelen = (
-                    self.list_response_pattern_literal.match(mb[0]).groups()
+                    self.list_response_pattern_literal.match(
+                        mb[0].decode()).groups()
                 )
                 name = mb[1][0:int(namelen)]
             else:
                 flags, delimiter, name, childinfo = (
                     self.listextended_response_pattern.match(
                         mb.decode()).groups())
-            flags = flags.split(' ')
-            # name = name.decode("imap4-utf-7")
+            flags = flags.split(" ")
+            name = bytearray(name, "utf-8")
+            name = name.decode("imap4-utf-7")
             mdm_found = False
             for idx, mdm in enumerate(mailboxes):
                 if mdm["name"] == name:

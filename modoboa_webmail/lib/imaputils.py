@@ -16,7 +16,7 @@ import time
 
 import six
 
-from django.utils.encoding import smart_text
+from django.utils.encoding import smart_bytes, smart_text
 from django.utils.translation import ugettext as _
 
 from modoboa.lib import imap_utf7  # noqa
@@ -319,12 +319,6 @@ class IMAPconnector(object):
         if criterion == u"both":
             criterion = u"from_addr, subject"
         criterions = ""
-        pattern = smart_text(pattern)
-        criterion = smart_text(criterion)
-        # if isinstance(pattern, unicode):
-        #     pattern = pattern.encode("utf-8")
-        # if isinstance(criterion, unicode):
-        #     criterion = criterion.encode("utf-8")
         for c in criterion.split(','):
             if c == "from_addr":
                 key = "FROM"
@@ -332,8 +326,12 @@ class IMAPconnector(object):
                 key = "SUBJECT"
             else:
                 continue
-            criterions = \
-                or_criterion(criterions, '(%s "%s")' % (key, pattern))
+            criterions = or_criterion(
+                criterions, '(%s "%s")' % (key, pattern))
+        if six.PY3:
+            criterions = bytearray(criterions, "utf-8")
+        elif isinstance(criterions, unicode):
+            criterions = criterions.encode("utf-8")
         self.criterions = [criterions]
 
     def messages_count(self, **kwargs):
@@ -349,19 +347,22 @@ class IMAPconnector(object):
         """
         if "order" in kwargs and kwargs["order"]:
             sign = kwargs["order"][:1]
-            criterion = kwargs["order"][1:].upper()
+            criterion = bytearray(kwargs["order"][1:].upper(), "utf-8")
             if sign == '-':
-                criterion = "REVERSE %s" % criterion
+                criterion = b"REVERSE %s" % criterion
         else:
-            criterion = "REVERSE DATE"
+            criterion = b"REVERSE DATE"
         folder = kwargs["folder"] if "folder" in kwargs else None
 
         # FIXME: pourquoi suis je obligé de faire un SELECT ici?  un
         # EXAMINE plante mais je pense que c'est du à une mauvaise
         # lecture des réponses de ma part...
         self.select_mailbox(folder, readonly=False)
-        data = self._cmd("SORT", "(%s)" % criterion, "UTF-8", "(NOT DELETED)",
-                         *self.criterions)
+        cmdname = "SORT" if six.PY3 else b"SORT"
+        data = self._cmd(
+            cmdname,
+            b"(%s)" % criterion, b"UTF-8", b"(NOT DELETED)",
+            *self.criterions)
         self.messages = data[0].decode().split()
         self.getquota(folder)
         return len(self.messages)

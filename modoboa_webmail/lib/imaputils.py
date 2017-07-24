@@ -16,7 +16,7 @@ import time
 
 import six
 
-from django.utils.encoding import smart_bytes, smart_text
+from django.utils.encoding import smart_text
 from django.utils.translation import ugettext as _
 
 from modoboa.lib import imap_utf7  # noqa
@@ -329,7 +329,7 @@ class IMAPconnector(object):
             criterions = or_criterion(
                 criterions, '(%s "%s")' % (key, pattern))
         if six.PY3:
-            criterions = bytearray(criterions, "utf-8")
+            criterions = bytes(criterions, "utf-8")
         elif isinstance(criterions, unicode):
             criterions = criterions.encode("utf-8")
         self.criterions = [criterions]
@@ -347,7 +347,7 @@ class IMAPconnector(object):
         """
         if "order" in kwargs and kwargs["order"]:
             sign = kwargs["order"][:1]
-            criterion = bytearray(kwargs["order"][1:].upper(), "utf-8")
+            criterion = bytes(kwargs["order"][1:].upper(), "utf-8")
             if sign == '-':
                 criterion = b"REVERSE %s" % criterion
         else:

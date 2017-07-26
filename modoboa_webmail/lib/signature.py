@@ -1,8 +1,11 @@
 """Tools to deal with message signatures."""
 
+from django.utils.encoding import python_2_unicode_compatible
 
+
+@python_2_unicode_compatible
 class EmailSignature(object):
-    """User signature
+    """User signature.
 
     :param user: User object
     """
@@ -24,5 +27,5 @@ class EmailSignature(object):
         self._sig = content
         return
 
-    def __unicode__(self):
+    def __str__(self):
         return self._sig

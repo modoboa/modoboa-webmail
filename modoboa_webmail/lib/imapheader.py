@@ -2,10 +2,13 @@
 Set of functions used to parse and transform email headers.
 """
 
+from __future__ import unicode_literals
+
 import datetime
 import email
 
 import chardet
+import six
 
 from django.utils import timezone
 from django.utils.formats import date_format
@@ -40,7 +43,10 @@ DATETIME_FORMATS = {
 
 def to_unicode(value):
     """Try to convert a string to unicode."""
-    if value is None or isinstance(value, unicode):
+    condition = (
+        value is None or isinstance(value, six.text_type)
+    )
+    if condition:
         return value
     try:
         value = value.decode("utf-8")

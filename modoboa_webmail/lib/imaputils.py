@@ -3,13 +3,20 @@
 :mod:`imaputils` --- Extra IMAPv4 utilities
 -------------------------------------------
 """
+
+from __future__ import unicode_literals
+
 import email
+from functools import wraps
 import imaplib
 import re
+import socket
 import ssl
 import time
-from functools import wraps
 
+import six
+
+from django.utils.encoding import smart_text
 from django.utils.translation import ugettext as _
 
 from modoboa.lib import imap_utf7  # noqa
@@ -158,11 +165,10 @@ class BodyStructure(object):
         return None
 
 
+@six.add_metaclass(ConnectionsManager)
 class IMAPconnector(object):
 
     """The IMAPv4 connector."""
-
-    __metaclass__ = ConnectionsManager
 
     list_base_pattern = (
         r'\((?P<flags>.*?)\) "(?P<delimiter>.*)" "?(?P<name>[^"]*)"?'
@@ -225,39 +231,6 @@ class IMAPconnector(object):
             res.append(self.m.untagged_responses.pop(r))
         return res
 
-    def __find_content_in_bodystruct(self, bodystruct, mtype, stype, prefix=""):
-        """Retrieve the number (index) of a specific part
-
-        This part number will generally be used inside a FETCH request
-        to specify a ``BODY.PEEK`` section.
-
-        :param bodystruct: a BODYSTRUCTURE list
-        :param mtype: the MIME main type (like text)
-        :param stype: the MIME sub type (like plain)
-        :param prefix: the prefix that will be added to the current part number
-        :return: a tuple (index (None on error), encoding (string), size (int))
-        """
-        if type(bodystruct[0]) in [list, tuple]:
-            cpt = 1
-            for part in bodystruct[0]:
-                nprefix = "%s" % cpt if prefix == "" else "%s.%d" % (
-                    prefix, cpt)
-                index, encoding, size = \
-                    self.__find_content_in_bodystruct(
-                        part,
-                        mtype,
-                        stype,
-                        nprefix)
-                if index is not None:
-                    return (index, encoding, size)
-                cpt += 1
-        else:
-            if bodystruct[0].lower() == mtype and \
-               bodystruct[1].lower() == stype:
-                return ("1" if not len(prefix) else prefix,
-                        bodystruct[5], int(bodystruct[6]))
-        return (None, None, 0)
-
     @property
     def hdelimiter(self):
         """Return the default hierachy delimiter.
@@ -268,8 +241,8 @@ class IMAPconnector(object):
         :return: a string
         """
         if self.__hdelimiter is None:
-            data = self._cmd("LIST", "", "")
-            m = self.list_response_pattern.match(data[0])
+            data = self._cmd("LIST", '""', '""')
+            m = self.list_response_pattern.match(data[0].decode())
             if m is None:
                 raise InternalError(
                     _("Failed to retrieve hierarchy delimiter"))
@@ -302,12 +275,8 @@ class IMAPconnector(object):
         :param user: username
         :param passwd: password
         """
-        import socket
-
-        if isinstance(user, unicode):
-            user = user.encode("utf-8")
-        if isinstance(passwd, unicode):
-            passwd = passwd.encode("utf-8")
+        user = smart_text(user)
+        passwd = smart_text(passwd)
         try:
             if self.conf["imap_secured"]:
                 self.m = imaplib.IMAP4_SSL(self.address, self.port)
@@ -320,11 +289,12 @@ class IMAPconnector(object):
         data = self._cmd("LOGIN", user, passwd)
         self.m.state = "AUTH"
         if "CAPABILITY" in self.m.untagged_responses:
-            self.capabilities = \
-                self.m.untagged_responses.pop('CAPABILITY')[0].split()
+            self.capabilities = (
+                self.m.untagged_responses.pop('CAPABILITY')[0]
+                .decode().split())
         else:
             data = self._cmd("CAPABILITY")
-            self.capabilities = data[0].split()
+            self.capabilities = data[0].decode().split()
 
     def logout(self):
         """Logout from server."""
@@ -349,10 +319,6 @@ class IMAPconnector(object):
         if criterion == u"both":
             criterion = u"from_addr, subject"
         criterions = ""
-        if isinstance(pattern, unicode):
-            pattern = pattern.encode("utf-8")
-        if isinstance(criterion, unicode):
-            criterion = criterion.encode("utf-8")
         for c in criterion.split(','):
             if c == "from_addr":
                 key = "FROM"
@@ -360,8 +326,12 @@ class IMAPconnector(object):
                 key = "SUBJECT"
             else:
                 continue
-            criterions = \
-                or_criterion(criterions, '(%s "%s")' % (key, pattern))
+            criterions = or_criterion(
+                criterions, '(%s "%s")' % (key, pattern))
+        if six.PY3:
+            criterions = bytearray(criterions, "utf-8")
+        elif isinstance(criterions, unicode):
+            criterions = criterions.encode("utf-8")
         self.criterions = [criterions]
 
     def messages_count(self, **kwargs):
@@ -388,9 +358,12 @@ class IMAPconnector(object):
         # EXAMINE plante mais je pense que c'est du à une mauvaise
         # lecture des réponses de ma part...
         self.select_mailbox(folder, readonly=False)
-        data = self._cmd("SORT", "(%s)" % criterion, "UTF-8", "(NOT DELETED)",
-                         *self.criterions)
-        self.messages = data[0].split()
+        cmdname = "SORT" if six.PY3 else b"SORT"
+        data = self._cmd(
+            cmdname,
+            bytearray("(%s)" % criterion, "utf-8"),
+            b"UTF-8", b"(NOT DELETED)", *self.criterions)
+        self.messages = data[0].decode().split()
         self.getquota(folder)
         return len(self.messages)
 
@@ -406,7 +379,7 @@ class IMAPconnector(object):
             if self.current_mailbox == name and not force:
                 return
         self.current_mailbox = name
-        name = name.encode("imap4-utf-7")
+        name = self._encode_mbox_name(name)
         if readonly:
             self._cmd("EXAMINE", name)
         else:
@@ -419,16 +392,18 @@ class IMAPconnector(object):
         :param mailbox: the mailbox's name
         :return: an integer
         """
-        data = self._cmd("STATUS", mailbox.encode("imap4-utf-7"), "(UNSEEN)")
-        m = self.unseen_pattern.match(data[-1])
+        data = self._cmd(
+            "STATUS", self._encode_mbox_name(mailbox), "(UNSEEN)")
+        m = self.unseen_pattern.match(data[-1].decode())
         if m is None:
             return 0
         return int(m.group(1))
 
     def _encode_mbox_name(self, folder):
+        """Encode folder name (str) to imap4-utf-7 and quote it."""
         if not folder:
             return "INBOX"
-        return folder.encode("imap4-utf-7")
+        return b'"' + folder.encode("imap4-utf-7") + b'"'
 
     def _parse_mailbox_name(self, descr, prefix, delimiter, parts):
         if not len(parts):
@@ -454,8 +429,8 @@ class IMAPconnector(object):
         newmboxes = []
         for mb in data:
             flags, delimiter, name = self.list_response_pattern.match(
-                mb).groups()
-            name = name.strip('"').decode("imap4-utf-7")
+                mb.decode()).groups()
+            name = bytearray(name.strip('"'), "utf-8").decode("imap4-utf-7")
             mdm_found = False
             for idx, mdm in enumerate(mailboxes):
                 if mdm["name"] == name:
@@ -483,23 +458,28 @@ class IMAPconnector(object):
     def _listmboxes(self, topmailbox, mailboxes, until_mailbox=None):
         """Retrieve mailboxes list."""
         pattern = (
-            "{0}{1}%".format(topmailbox.encode("imap4-utf-7"), self.hdelimiter)
+            "{0}{1}%".format(
+                topmailbox.encode("imap4-utf-7").decode(), self.hdelimiter)
             if topmailbox else "%"
         )
-        resp = self._cmd("LIST", "", pattern, "RETURN", "(CHILDREN)")
+        resp = self._cmd(
+            "LIST", '""', pattern, "RETURN", "(CHILDREN STATUS (MESSAGES))")
         newmboxes = []
         for mb in resp:
             if not mb:
                 continue
-            if type(mb) in [str, unicode]:
-                flags, delimiter, name, childinfo = \
-                    self.listextended_response_pattern.match(mb).groups()
-            else:
+            if type(mb) in [list, tuple]:
                 flags, delimiter, namelen = (
-                    self.list_response_pattern_literal.match(mb[0]).groups()
+                    self.list_response_pattern_literal.match(
+                        mb[0].decode()).groups()
                 )
                 name = mb[1][0:int(namelen)]
-            flags = flags.split(' ')
+            else:
+                flags, delimiter, name, childinfo = (
+                    self.listextended_response_pattern.match(
+                        mb.decode()).groups())
+            flags = flags.split(" ")
+            name = bytearray(name, "utf-8")
             name = name.decode("imap4-utf-7")
             mdm_found = False
             for idx, mdm in enumerate(mailboxes):
@@ -511,9 +491,9 @@ class IMAPconnector(object):
                 descr = dict(name=name)
                 newmboxes += [descr]
 
-            if r'\Marked' in flags or r'\UnMarked' not in flags:
+            if '\\Marked' in flags or '\\UnMarked' not in flags:
                 descr["send_status"] = True
-            if r'\HasChildren' in flags:
+            if '\\HasChildren' in flags:
                 if r'\NonExistent' in flags:
                     descr["removed"] = True
                 descr["path"] = name
@@ -608,23 +588,22 @@ class IMAPconnector(object):
         self._add_flag(mailbox, mailid, r'(\Answered)')
 
     def move(self, msgset, oldmailbox, newmailbox):
-        """Move messages between mailboxes
-
-        """
+        """Move messages between mailboxes."""
         self.select_mailbox(oldmailbox, False)
-        self._cmd("COPY", msgset, newmailbox.encode("imap4-utf-7"))
+        self._cmd("COPY", msgset, self._encode_mbox_name(newmailbox))
         self._cmd("STORE", msgset, "+FLAGS", r'(\Deleted \Seen)')
 
     def push_mail(self, folder, msg):
         now = imaplib.Time2Internaldate(time.time())
+        msg = bytes(msg) if six.PY3 else str(msg)
         self.m.append(
-            self._encode_mbox_name(folder), r'(\Seen)', now, str(msg))
+            self._encode_mbox_name(folder), r'(\Seen)', now, msg)
 
     def empty(self, mbox):
         self.select_mailbox(mbox, False)
         resp = self._cmd("SEARCH", "ALL")
-        seq = ",".join(resp[0].split())
-        if seq == "":
+        seq = b",".join(resp[0].split())
+        if seq == b"":
             return
         self._cmd("STORE", seq, "+FLAGS", r'(\Deleted)')
         self._cmd("EXPUNGE")
@@ -675,10 +654,10 @@ class IMAPconnector(object):
             self.quota_limit = self.quota_current = None
             return
 
-        quotadef = data[1][0]
+        quotadef = data[1][0].decode()
         m = re.search(r"\(STORAGE (\d+) (\d+)\)", quotadef)
         if not m:
-            print "Problem while parsing quota def"
+            print("Problem while parsing quota def")
             return
         self.quota_limit = int(m.group(2))
         self.quota_current = int(m.group(1))

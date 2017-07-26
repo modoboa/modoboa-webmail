@@ -7,6 +7,7 @@ import email
 
 import chardet
 from rfc6266 import parse_headers
+import six
 
 from django.conf import settings
 from django.core.files.base import ContentFile
@@ -141,13 +142,14 @@ class ImapEmail(Email):
                 content = decode_payload(
                     part["encoding"], data[int(self.mailid)]["BODY[%s]" % pnum]
                 )
-                charset = self._find_content_charset(part)
-                if charset is not None:
-                    try:
-                        content = content.decode(charset)
-                    except (UnicodeDecodeError, LookupError):
-                        result = chardet.detect(content)
-                        content = content.decode(result["encoding"])
+                if not isinstance(content, six.text_type):
+                    charset = self._find_content_charset(part)
+                    if charset is not None:
+                        try:
+                            content = content.decode(charset)
+                        except (UnicodeDecodeError, LookupError):
+                            result = chardet.detect(content)
+                            content = content.decode(result["encoding"])
                 bodyc += content
             self._fetch_inlines()
             self._body = getattr(self, "viewmail_%s" % self.mformat)(
@@ -194,7 +196,7 @@ class ImapEmail(Email):
 
     def _fetch_inlines(self):
         """Store inline images on filesystem to display them."""
-        for cid, params in self.bs.inlines.iteritems():
+        for cid, params in list(self.bs.inlines.items()):
             if re.search(r"\.\.", cid):
                 continue
             fname = "modoboa_webmail/%s_%s" % (self.mailid, cid)

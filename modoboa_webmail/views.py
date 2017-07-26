@@ -1,7 +1,8 @@
 # coding: utf-8
-"""
-Webmail extension views.
-"""
+
+"""Webmail extension views."""
+
+from __future__ import unicode_literals
 
 import os
 
@@ -424,14 +425,14 @@ def render_compose(request, form, posturl, email=None, insert_signature=False):
     """Render the compose form."""
     resp = {}
     if email is None:
-        body = u""
-        textheader = u""
+        body = ""
+        textheader = ""
     else:
         body = email.body
         textheader = email.textheader
     if insert_signature:
         signature = EmailSignature(request.user)
-        body += unicode(signature)
+        body = "{}{}".format(body, signature)
     randid = None
     if "id" not in request.GET:
         if "compose_mail" in request.session:
@@ -446,7 +447,7 @@ def render_compose(request, form, posturl, email=None, insert_signature=False):
         resp["menuargs"] = {"attachment_counter": len(attachment_list)}
 
     if textheader:
-        body = u"{}\n{}".format(textheader, body)
+        body = "{}\n{}".format(textheader, body)
     form.fields["body"].initial = body
     content = render_to_string("modoboa_webmail/compose.html", {
         "form": form, "posturl": posturl

@@ -2,12 +2,14 @@
 
 """Webmail forms."""
 
+from __future__ import unicode_literals
+
 from email.header import Header
 from email.mime.image import MIMEImage
 import os
 import pkg_resources
-import urllib
-from urlparse import urlparse
+
+from six.moves.urllib.parse import urlparse, unquote
 
 import lxml.html
 
@@ -68,7 +70,7 @@ def make_body_images_inline(body):
         if src is None:
             continue
         o = urlparse(src)
-        path = urllib.unquote(os.path.join(settings.BASE_DIR, o.path[1:]))
+        path = unquote(os.path.join(settings.BASE_DIR, o.path[1:]))
         if not os.path.exists(path):
             continue
         fname = os.path.basename(path)
@@ -82,7 +84,7 @@ def make_body_images_inline(body):
         )
         part["Content-Disposition"] = "inline"
         parts.append(part)
-    return lxml.html.tostring(html), parts
+    return lxml.html.tostring(html, encoding="unicode"), parts
 
 
 class ComposeMailForm(forms.Form):
@@ -199,7 +201,7 @@ class ComposeMailForm(forms.Form):
         """Format address before message is sent."""
         if user.first_name != "" or user.last_name != "":
             return '"{}" <{}>'.format(
-                Header(user.fullname, "utf8").encode(), address)
+                Header(user.fullname, "utf8"), address)
         return address
 
     def _build_msg(self, request):

@@ -1,4 +1,8 @@
+# coding: utf-8
+
 """Webmail tests."""
+
+from __future__ import unicode_literals
 
 import os
 import shutil
@@ -13,6 +17,16 @@ from django.core.urlresolvers import reverse
 from modoboa.admin import factories as admin_factories
 from modoboa.core import models as core_models
 from modoboa.lib.tests import ModoTestCase
+
+
+BODYSTRUCTURE_SAMPLE_WITH_FLAGS = [
+    (b'19 (UID 19 FLAGS (\\Seen) BODYSTRUCTURE (("text" "plain" ("charset" "ISO-8859-1" "format" "flowed") NIL NIL "7bit" 2 1 NIL NIL NIL NIL)("message" "rfc822" ("name*" "ISO-8859-1\'\'%5B%49%4E%53%43%52%49%50%54%49%4F%4E%5D%20%52%E9%63%E9%70%74%69%6F%6E%20%64%65%20%76%6F%74%72%65%20%64%6F%73%73%69%65%72%20%64%27%69%6E%73%63%72%69%70%74%69%6F%6E%20%46%72%65%65%20%48%61%75%74%20%44%E9%62%69%74") NIL NIL "8bit" 3632 ("Wed, 13 Dec 2006 20:30:02 +0100" {70}',  # noqa
+     b"[INSCRIPTION] R\xe9c\xe9ption de votre dossier d'inscription Free Haut D\xe9bit"),  # noqa
+    (b' (("Free Haut Debit" NIL "inscription" "freetelecom.fr")) (("Free Haut Debit" NIL "inscription" "freetelecom.fr")) ((NIL NIL "hautdebit" "freetelecom.fr")) ((NIL NIL "nguyen.antoine" "wanadoo.fr")) NIL NIL NIL "<20061213193125.9DA0919AC@dgroup2-2.proxad.net>") ("text" "plain" ("charset" "iso-8859-1") NIL NIL "8bit" 1428 38 NIL ("inline" NIL) NIL NIL) 76 NIL ("inline" ("filename*" "ISO-8859-1\'\'%5B%49%4E%53%43%52%49%50%54%49%4F%4E%5D%20%52%E9%63%E9%70%74%69%6F%6E%20%64%65%20%76%6F%74%72%65%20%64%6F%73%73%69%65%72%20%64%27%69%6E%73%63%72%69%70%74%69%6F%6E%20%46%72%65%65%20%48%61%75%74%20%44%E9%62%69%74")) NIL NIL) "mixed" ("boundary" "------------040706080908000209030901") NIL NIL NIL) BODY[HEADER.FIELDS (DATE FROM TO CC SUBJECT)] {266}',  # noqa
+     b'Date: Tue, 19 Dec 2006 19:50:13 +0100\r\nFrom: Antoine Nguyen <nguyen.antoine@wanadoo.fr>\r\nTo: Antoine Nguyen <tonio@koalabs.org>\r\nSubject: [Fwd: [INSCRIPTION] =?ISO-8859-1?Q?R=E9c=E9ption_de_votre_?=\r\n =?ISO-8859-1?Q?dossier_d=27inscription_Free_Haut_D=E9bit=5D?=\r\n\r\n'
+    ),
+    b')'
+]
 
 
 def get_gif():
@@ -35,9 +49,9 @@ class IMAP4Mock(object):
 
     def _simple_command(self, name, *args, **kwargs):
         if name == "CAPABILITY":
-            self.untagged_responses["CAPABILITY"] = [""]
+            self.untagged_responses["CAPABILITY"] = [b""]
         elif name == "LIST":
-            self.untagged_responses["LIST"] = ["() \".\" \"INBOX\""]
+            self.untagged_responses["LIST"] = [b"() \".\" \"INBOX\""]
         return "OK", None
 
     def append(self, *args, **kwargs):
@@ -50,10 +64,16 @@ class IMAP4Mock(object):
         return "OK", None
 
     def list(self):
-        return "OK", ["() \".\" \"INBOX\""]
+        return "OK", [b"() \".\" \"INBOX\""]
 
     def rename(self, oldname, newname):
         return "OK", None
+
+    def uid(self, command, *args):
+        if command == "SORT":
+            return "OK", [b"19"]
+        elif command == "FETCH":
+            return "OK", BODYSTRUCTURE_SAMPLE_WITH_FLAGS
 
 
 class WebmailTestCase(ModoTestCase):
@@ -84,6 +104,29 @@ class WebmailTestCase(ModoTestCase):
     def tearDown(self):
         """Cleanup."""
         shutil.rmtree(self.workdir)
+
+    def test_listmailbox(self):
+        """Check listmailbox action."""
+        url = reverse("modoboa_webmail:index")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(
+            "{}?action=listmailbox".format(url),
+            HTTP_X_REQUESTED_WITH="XMLHttpRequest"
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(
+            "nguyen.antoine@wanadoo.fr", response.json()["listing"])
+
+        response = self.client.get(
+            "{}?action=listmailbox&pattern=Réception&criteria=Subject"
+            .format(url),
+            HTTP_X_REQUESTED_WITH="XMLHttpRequest"
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(
+            "nguyen.antoine@wanadoo.fr", response.json()["listing"])
 
     def test_attachments(self):
         """Check attachments."""

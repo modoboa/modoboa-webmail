@@ -1,6 +1,11 @@
+from __future__ import unicode_literals
+
+from email import encoders
+from email.mime.base import MIMEBase
 import os
 
 from rfc6266 import build_header
+import six
 
 from django.conf import settings
 from django.core.files.uploadhandler import FileUploadHandler, SkipFile
@@ -71,9 +76,6 @@ def create_mail_attachment(attdef, payload=None):
     :param attdef: a dictionary containing the attachment definition
     :return: a MIMEBase object
     """
-    from email import Encoders
-    from email.mime.base import MIMEBase
-
     if "content-type" in attdef:
         maintype, subtype = attdef["content-type"].split("/")
     elif "Content-Type" in attdef:
@@ -88,10 +90,10 @@ def create_mail_attachment(attdef, payload=None):
             res.set_payload(fp.read())
     else:
         res.set_payload(payload)
-    Encoders.encode_base64(res)
-    if isinstance(attdef['fname'], str):
-        attdef['fname'] = attdef['fname'].decode('utf-8')
-    res['Content-Disposition'] = build_header(attdef['fname'])
+    encoders.encode_base64(res)
+    if isinstance(attdef["fname"], six.binary_type):
+        attdef["fname"] = attdef["fname"].decode("utf-8")
+    res["Content-Disposition"] = build_header(attdef["fname"])
     return res
 
 

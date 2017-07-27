@@ -458,7 +458,7 @@ class IMAPconnector(object):
     def _listmboxes(self, topmailbox, mailboxes, until_mailbox=None):
         """Retrieve mailboxes list."""
         pattern = (
-            "{0}{1}%".format(
+            '"{0}{1}%"'.format(
                 topmailbox.encode("imap4-utf-7").decode(), self.hdelimiter)
             if topmailbox else "%"
         )

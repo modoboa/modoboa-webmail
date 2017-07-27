@@ -18,7 +18,7 @@ before_install:
   - if [[ $DB = 'MYSQL' ]]; then pip install -q mysqlclient; fi
 
 install:
-  - pip install -e git+https://github.com/tonioo/modoboa@refactor/python3_fixes#egg=modoboa
+  - pip install -e git+https://github.com/modoboa/modoboa#egg=modoboa
   - pip install -q factory-boy testfixtures
   - python setup.py -q develop
 

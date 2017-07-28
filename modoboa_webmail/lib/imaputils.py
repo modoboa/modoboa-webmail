@@ -546,8 +546,9 @@ class IMAPconnector(object):
                     continue
                 del mb["send_status"]
                 key = "path" if "path" in mb else "name"
-                if not mb.get("removed", False):
-                    count = self.unseen_messages(mb[key])
+                if mb.get("removed", False):
+                    continue
+                count = self.unseen_messages(mb[key])
                 if count == 0:
                     continue
                 mb["unseen"] = count

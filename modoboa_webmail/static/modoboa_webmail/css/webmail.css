@@ -137,6 +137,11 @@
     padding-top: 10px;
 }
 
+.flag {
+    cursor: pointer;
+    margin-left: 10px;
+}
+
 div.email:hover { 
     background-color: #f5f5f5;
 }

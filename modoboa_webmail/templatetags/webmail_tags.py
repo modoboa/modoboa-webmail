@@ -132,6 +132,16 @@ def listmailbox_menu(selection, folder, user):
             "label": _("Mark as unread"),
             "url": u"{0}?status=unread".format(
                 reverse("modoboa_webmail:mail_mark", args=[folder]))
+        }, {
+            "name": "mark-flagged",
+            "label": _("Mark as flagged"),
+            "url": u"{0}?status=flagged".format(
+                reverse("modoboa_webmail:mail_mark", args=[folder]))
+        }, {
+            "name": "mark-unflagged",
+            "label": _("Mark as unflagged"),
+            "url": u"{0}?status=unflagged".format(
+                reverse("modoboa_webmail:mail_mark", args=[folder]))
         }]
     }]
     if folder == user.parameters.get_value("trash_folder"):

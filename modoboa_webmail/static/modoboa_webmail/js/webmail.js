@@ -136,6 +136,7 @@ Webmail.prototype = {
         $document.on("click", "a[name=removembox]", $.proxy(this.remove_mbox, this));
 
         $document.on("click", "div.openable", $.proxy(this.viewmail_loader, this));
+        $document.on('click', 'span.flag', $.proxy(this.toggleFlaggedStatus, this));
 
         $document.on("click", "a[name=reply]", $.proxy(this.reply_loader, this));
         $document.on("click", "a[name=replyall]", $.proxy(this.reply_loader, this));
@@ -933,6 +934,29 @@ Webmail.prototype = {
         }).done($.proxy(this.toggleJunkStateCallback, this));
     },
 
+    toggleFlaggedStatus: function(evt) {
+        var $target = get_target(evt);
+        var url, status, oldClass, newClass;
+
+        if ($target.hasClass('fa-star-o')) {
+            url = $('a[name=mark-flagged').attr('href');
+            status = 'flagged';
+            newClass = 'fa-star';
+            oldClass = 'fa-star-o';
+        } else {
+            url = $('a[name=mark-unflagged').attr('href');
+            status = 'unflagged';
+            newClass = 'fa-star-o';
+            oldClass = 'fa-star';
+        }
+        $.ajax({
+            url: url,
+            data: 'ids=' + $target.parents('div.email').attr('id')
+        }).done($.proxy(function(data) {
+            $target.removeClass(oldClass).addClass(newClass);
+        }, this));
+    },
+    
     display_mode: function(e, value) {
         e.preventDefault();
         this.navobject.setparam("links", value).update();
@@ -1199,8 +1223,14 @@ Webmail.prototype = {
     mark_callback: function(data) {
         if (data.action === "read") {
             this.htmltable.current_selection().removeClass("unseen");
-        } else {
+        } else if (data.action == "unread") {
             this.htmltable.current_selection().addClass("unseen");
+        } else if (data.action == "flagged") {
+            this.htmltable.current_selection().find(".flag")
+                .removeClass("fa-star-o").addClass("fa-star");
+        } else {
+            this.htmltable.current_selection().find(".flag")
+                .removeClass("fa-star").addClass("fa-star-o");
         }
         if (data.unseen !== undefined && data.mbox) {
             this.set_unseen_messages(data.mbox, data.unseen);

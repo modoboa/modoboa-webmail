@@ -555,7 +555,7 @@ class IMAPconnector(object):
         return md_mailboxes
 
     def _add_flag(self, mbox, msgset, flag):
-        """Add flag(s) to a messages set
+        """Add flag to a messages set.
 
         :param mbox: the mailbox containing the messages
         :param msgset: messages set (uid)
@@ -564,14 +564,23 @@ class IMAPconnector(object):
         self.select_mailbox(mbox, False)
         self._cmd("STORE", msgset, "+FLAGS", flag)
 
+    def _remove_flag(self, mbox, msgset, flag):
+        """Remove flag from a message set.
+
+        :param mbox: the mailbox containing the messages
+        :param msgset: messages set (uid)
+        :param flag: the flag to remove
+        """
+        self.select_mailbox(mbox, False)
+        self._cmd("STORE", msgset, "-FLAGS", flag)
+
     def mark_messages_unread(self, mbox, msgset):
         """Mark a set of messages as unread
 
         :param mbox: the mailbox containing the messages
         :param msgset: messages set (uid)
         """
-        self.select_mailbox(mbox, False)
-        self._cmd("STORE", msgset, "-FLAGS", r'(\Seen)')
+        self._remove_flag(mbox, msgset, r'(\Seen)')
 
     def mark_messages_read(self, mbox, msgset):
         """Mark a set of messages as unread
@@ -580,6 +589,22 @@ class IMAPconnector(object):
         :param msgset: messages set (uid)
         """
         self._add_flag(mbox, msgset, r'(\Seen)')
+
+    def mark_messages_flagged(self, mbox, msgset):
+        """Mark a set of messages as flagged.
+
+        :param mbox: the mailbox containing the messages
+        :param msgset: messages set (uid)
+        """
+        self._add_flag(mbox, msgset, r'(\Flagged)')
+
+    def mark_messages_unflagged(self, mbox, msgset):
+        """Mark a set of messages as unflagged.
+
+        :param mbox: the mailbox containing the messages
+        :param msgset: messages set (uid)
+        """
+        self._remove_flag(mbox, msgset, r'(\Flagged)')
 
     def msg_forwarded(self, mailbox, mailid):
         self._add_flag(mailbox, mailid, '($Forwarded)')
@@ -720,6 +745,8 @@ class IMAPconnector(object):
                 msg['answered'] = True
             if r'$Forwarded' in data[int(uid)]['FLAGS']:
                 msg['forwarded'] = True
+            if r'\Flagged' in data[int(uid)]['FLAGS']:
+                msg['flagged'] = True
             bstruct = BodyStructure(data[int(uid)]['BODYSTRUCTURE'])
             if bstruct.has_attachments():
                 msg['attachments'] = True

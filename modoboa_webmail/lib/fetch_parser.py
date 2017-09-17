@@ -14,6 +14,9 @@ from __future__ import print_function
 
 import re
 
+import chardet
+import six
+
 
 class ParseError(Exception):
     """Generic parsing error"""
@@ -209,8 +212,29 @@ class FetchResponseParser(object):
             "unexpected {} found while looking for data_item near {}"
             .format(ttype, tvalue))
 
+    def __convert_to_str(self, chunk):
+        """Convert chunk to str and guess encoding."""
+        condition = (
+            six.PY2 and isinstance(chunk, six.text_type) or
+            six.PY3 and isinstance(chunk, six.binary_type)
+        )
+        if not condition:
+            return chunk
+        try:
+            chunk = chunk.decode("utf-8")
+        except UnicodeDecodeError:
+            pass
+        else:
+            return chunk
+        try:
+            result = chardet.detect(chunk)
+        except UnicodeDecodeError:
+            raise RuntimeError("Can't find string encoding")
+        return chunk.decode(result["encoding"])
+
     def parse_chunk(self, chunk):
         """Parse chunk."""
+        chunk = self.__convert_to_str(chunk)
         if self.__next_literal_len:
             literal = chunk[:self.__next_literal_len]
             chunk = chunk[self.__next_literal_len:]

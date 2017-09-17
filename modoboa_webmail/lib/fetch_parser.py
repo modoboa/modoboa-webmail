@@ -69,7 +69,7 @@ class Lexer(object):
             yield (m.lastgroup, m.group(m.lastgroup))
 
 
-class Parser(object):
+class FetchResponseParser(object):
     """A token generator.
 
     By *token*, I mean: *literal*, *quoted* or anything else until the

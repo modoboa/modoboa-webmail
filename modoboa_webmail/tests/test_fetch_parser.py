@@ -4,7 +4,7 @@
 
 import unittest
 
-from modoboa_webmail.lib.fetch_parser2 import Parser
+from modoboa_webmail.lib.fetch_parser import FetchResponseParser
 
 from . import data
 
@@ -14,7 +14,7 @@ class FetchParserTestCase(unittest.TestCase):
 
     def test_parse_bodystructure(self):
         """Test the parsing of several responses containing BS."""
-        p = Parser()
+        p = FetchResponseParser()
         r = p.parse(data.BODYSTRUCTURE_SAMPLE_1)
         r = p.parse(data.BODYSTRUCTURE_SAMPLE_2)
         r = p.parse(data.BODYSTRUCTURE_SAMPLE_3)

@@ -9,7 +9,6 @@ from .imaputils import (
 from .signature import EmailSignature
 from .utils import decode_payload, WebmailNavigationParameters
 from .sendmail import send_mail
-from .fetch_parser import parse_fetch_response
 
 
 __all__ = [
@@ -25,7 +24,6 @@ __all__ = [
     'create_mail_attachment',
     'decode_payload',
     'get_imapconnector',
-    'parse_fetch_response',
     'save_attachment',
     'send_mail',
     'separate_mailbox',

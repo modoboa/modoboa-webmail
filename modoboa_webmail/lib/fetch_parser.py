@@ -21,13 +21,13 @@ class ParseError(Exception):
 
 
 class Lexer(object):
-    """
-    The lexical analysis part.
+    """The lexical analysis part.
+
     This class provides a simple way to define tokens (with patterns)
-    to be detected.
-    Patterns are provided into a list of 2-uple. Each 2-uple consists
-    of a token name and an associated pattern, example:
-      [("left_bracket", r'\['),]
+    to be detected. Patterns are provided using a list of 2-uple. Each
+    2-uple consists of a token name and an associated pattern.
+
+    Example: [("left_bracket", r'\['),]
     """
 
     def __init__(self, definitions):
@@ -197,8 +197,12 @@ class FetchResponseParser(object):
         elif ttype == "right_parenthesis":
             self.__depth -= 1
             assert self.__depth == 0
-            self.result[int(self.__current_message.pop("UID"))] = (
-                self.__current_message)
+            # FIXME: sometimes, FLAGS are returned outside the UID
+            # scope (see sample 1 in tests). For now, we just ignore
+            # them but we need a better solution!
+            if "UID" in self.__current_message:
+                self.result[int(self.__current_message.pop("UID"))] = (
+                    self.__current_message)
             self.__current_message = {}
             return
         raise ParseError(

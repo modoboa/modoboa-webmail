@@ -40,11 +40,11 @@ class Lexer(object):
             parts.append("(?P<%s>%s)" % (name, part))
         self.regexpString = "|".join(parts)
         self.regexp = re.compile(self.regexpString, re.MULTILINE)
-        self.wsregexp = re.compile(r'\s+', re.M)
+        self.wsregexp = re.compile(r"\s+", re.M)
 
     def curlineno(self):
         """Return the current line number"""
-        return self.text[:self.pos].count('\n') + 1
+        return self.text[:self.pos].count("\n") + 1
 
     def scan(self, text):
         """Analyze some data.
@@ -165,6 +165,9 @@ class FetchResponseParser(object):
                     self.__bs_stack[0].append({"struct": part})
             else:
                 # End of BODYSTRUCTURE
+                if not isinstance(self.__bs_stack[0][0], list):
+                    # Special case for non multipart structures
+                    self.__bs_stack[0] = {"struct": self.__bs_stack[0]}
                 self.__set_part_numbers(self.__bs_stack)
                 self.__current_message[self.__cur_data_item] = self.__bs_stack
                 self.__bs_stack = []

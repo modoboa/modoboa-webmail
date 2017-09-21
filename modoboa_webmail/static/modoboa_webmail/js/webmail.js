@@ -165,8 +165,6 @@ Webmail.prototype = {
      */
     setup_infinite_scroll: function(data) {
         var $container = $('#listing');
-        var that = this;
-        var currentMb = this.get_current_mailbox();
 
         if ($container.data('infinite-scroll') !== undefined) {
             if (data.pages && data.pages[0] !== 1) {
@@ -183,11 +181,12 @@ Webmail.prototype = {
             calculate_bottom: function($element) {
                 return $('#emails').height() - $element.height();
             },
-            get_args: function() {
-                var args = $.extend({}, {mbox: currentMb}, that.navparams);
+            get_args: $.proxy(function() {
+                var currentMb = this.get_current_mailbox();
+                var args = $.extend({}, {mbox: currentMb}, this.navparams);
                 args.scroll = true;
                 return args;
-            },
+            }, this),
             process_results: function(data, direction) {
                 var $emails = $('#emails');
 

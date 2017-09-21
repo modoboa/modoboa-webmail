@@ -25,7 +25,7 @@ from modoboa.lib.exceptions import InternalError
 from modoboa.parameters import tools as param_tools
 
 from ..exceptions import ImapError, WebmailInternalError
-from .fetch_parser import parse_fetch_response
+from .fetch_parser import FetchResponseParser
 
 # imaplib.Debug = 4
 
@@ -138,22 +138,17 @@ class BodyStructure(object):
         self.attachments += [params]
 
     def load_from_definition(self, definition, multisubtype=None):
-        if isinstance(definition, dict):
-            struct = definition["struct"]
-            pnum = definition["partnum"]
-        elif isinstance(definition[0], dict):
-            struct = definition[0]["struct"]
-            pnum = definition[0]["partnum"]
-        else:
-            struct = definition
-            pnum = None
-
-        if isinstance(struct[0], list):
-            for part in struct[0]:
-                self.load_from_definition(part, struct[1])
-            return
-
-        self.__store_part(struct, pnum, multisubtype)
+        for mp in definition:
+            if isinstance(mp, list):
+                if isinstance(mp[0], list):
+                    self.load_from_definition(mp, mp[1])
+                else:
+                    self.load_from_definition(mp)
+            elif isinstance(mp, dict):
+                if isinstance(mp["struct"][0], list):
+                    self.load_from_definition(mp["struct"][0], mp["struct"][1])
+                    continue
+                self.__store_part(mp["struct"], mp["partnum"], multisubtype)
 
     def has_attachments(self):
         return len(self.attachments)
@@ -211,7 +206,7 @@ class IMAPconnector(object):
             if typ == "NO":
                 raise ImapError(data)
             if name == 'FETCH':
-                return parse_fetch_response(data)
+                return FetchResponseParser().parse(data)
             return data
 
         try:

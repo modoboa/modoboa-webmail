@@ -1,4 +1,5 @@
 # coding: utf-8
+
 """Simple parser for FETCH responses.
 
 The ``imaplib`` module doesn't parse IMAP responses, it returns raw
@@ -7,274 +8,274 @@ messages (we don't want to overload the server), a parser is required.
 
 Python 2/3 compatibility note: this parser excepts bytes objects when
 run with Python3 and str (not unicode) ones with Python2.
-
 """
 
-# from __future__ import unicode_literals
+from __future__ import print_function
+
+import re
 
 import chardet
 import six
 
 
 class ParseError(Exception):
+    """Generic parsing error"""
     pass
 
 
-class Token(object):
+class Lexer(object):
+    """The lexical analysis part.
 
-    def __init__(self, value):
-        self.value = value
+    This class provides a simple way to define tokens (with patterns)
+    to be detected. Patterns are provided using a list of 2-uple. Each
+    2-uple consists of a token name and an associated pattern.
+
+    Example: [("left_bracket", r'\['),]
+    """
+
+    def __init__(self, definitions):
+        self.definitions = definitions
+        parts = []
+        for name, part in definitions:
+            parts.append("(?P<%s>%s)" % (name, part))
+        self.regexpString = "|".join(parts)
+        self.regexp = re.compile(self.regexpString, re.MULTILINE)
+        self.wsregexp = re.compile(r"\s+", re.M)
+
+    def curlineno(self):
+        """Return the current line number"""
+        return self.text[:self.pos].count("\n") + 1
+
+    def scan(self, text):
+        """Analyze some data.
+
+        Analyse the passed content. Each time a token is recognized, a
+        2-uple containing its name and the parsed value is raised
+        (using yield).
+
+        :param text: a string containing the data to parse
+        :raises: ParseError
+        """
+        self.pos = 0
+        self.text = text
+        while self.pos < len(text):
+            m = self.wsregexp.match(text, self.pos)
+            if m is not None:
+                self.pos = m.end()
+                continue
+
+            m = self.regexp.match(text, self.pos)
+            if m is None:
+                raise ParseError("unknown token {}".format(text[self.pos:]))
+
+            self.pos = m.end()
+            yield (m.lastgroup, m.group(m.lastgroup))
 
 
-class Literal(Token):
-
-    def __init__(self, value):
-        super(Literal, self).__init__(value)
-        self.next_token_len = int(self.value[1:-1])
-
-
-def parse_next_token(buf):
-    """Look for the next *token*
+class FetchResponseParser(object):
+    """A token generator.
 
     By *token*, I mean: *literal*, *quoted* or anything else until the
     next ' ' or ')' character (number, NIL and others should fall into
     this last category).
-
-    :param buf: the buffer to parse
-    :return: the position of the token's last caracter into ``buf``
     """
-    end = -1
-    klass = Token
-    if buf[0] == '{':
-        # Literal
-        end = buf.find('}')
-        klass = Literal
-    elif buf[0] == '"':
-        # quoted
-        end = buf.find('"', 1)
-    else:
-        for pos, c in enumerate(buf):
-            if c in [' ', ')']:
-                end = pos - 1
-                break
-        if end == -1:
-            raise ParseError(
-                "End of buffer reached while looking for a token end")
-    end += 1
-    token = klass(buf[:end])
-    return token, end
 
+    rules = [
+        ("left_parenthesis", r'\('),
+        ("right_parenthesis", r'\)'),
+        ("string", r'"([^"\\]|\\.)*"'),
+        ("nil", r'NIL'),
+        ("data_item",
+         r"(?P<name>[A-Z][A-Z\.0-9]+)"
+         r"(?P<section>\[.*\])?(?P<origin_octet>\<\d+\>)?"),
+        ("number", r'[0-9]+'),
+        ("literal_marker", r'{\d+}'),
+        ("flag", r'(\\|\$)?[a-zA-Z]+'),
+    ]
 
-def parse_bodystructure(buf, depth=0, prefix=""):
-    """Special parser for BODYSTRUCTURE response
+    def __init__(self):
+        """Constructor."""
+        self.lexer = Lexer(self.rules)
+        self.__reset_parser()
 
-    This function tries to transform a BODYSTRUCTURE response sent by
-    the server into the corresponding list structure.
+    def __reset_parser(self):
+        """Reset parser states."""
+        self.result = {}
+        self.__current_message = {}
+        self.__next_literal_len = 0
+        self.__cur_data_item = None
+        self.__args_parsing_func = None
+        self.__expected = None
+        self.__depth = 0
+        self.__bs_stack = []
 
-    :param buf: the buffer to parse
-    :return: a list object and the position of the last scanned
-             character into ``buf``
-    """
-    ret = []
-    pos = 1  # skip the first ')'
-    nb_bodystruct = 0
-    pnum = 1
-    while pos < len(buf):
-        c = buf[pos]
-        if c == '(':
-            nprefix = "%s.%s" % (prefix, pnum) if prefix != "" else "%s" % pnum
-            subret, end = parse_bodystructure(buf[pos:], depth + 1, nprefix)
-            pnum += 1
-            if nb_bodystruct == 0:
-                ret.append(subret)
-            elif nb_bodystruct == 1:
-                newret = [ret.pop(-1), subret]
-                ret.append(newret)
-            else:
-                ret[-1].append(subret)
-            pos += end + 1
-            nb_bodystruct += 1
-            continue
+    def set_expected(self, *args):
+        """Indicate next expected token types."""
+        self.__expected = args
 
-        if c == ')':
-            partnum = None
-            if depth:
-                # FIXME : the following is buggy because it doesn't
-                # make a difference between a content-disposition with
-                # multiple args beeing parsed and a mime part! (see
-                # the last example at the end of the file)
-                if isinstance(ret[0], list) or len(ret) >= 7:
-                    partnum = prefix
-            if partnum is not None:
-                return [{"partnum": partnum, "struct": ret}], pos
-            return ret, pos
-        if c == ' ':
-            pos += 1
-            continue
-        nb_bodystruct = 0
-        token, end = parse_next_token(buf[pos:])
-        pos += end
-        if isinstance(token, Literal):
-            ret.append(buf[pos:pos + token.next_token_len].strip('"'))
-            pos += token.next_token_len
+    def __default_args_parser(self, ttype, tvalue):
+        """Default arguments parser."""
+        self.__current_message[self.__cur_data_item] = tvalue
+        self.__args_parsing_func = None
+
+    def __flags_args_parser(self, ttype, tvalue):
+        """FLAGS arguments parser."""
+        if ttype == "left_parenthesis":
+            self.__current_message[self.__cur_data_item] = []
+            self.__depth += 1
+        elif ttype == "flag":
+            self.__current_message[self.__cur_data_item].append(tvalue)
+            self.set_expected("flag", "right_parenthesis")
+        elif ttype == "right_parenthesis":
+            self.__args_parsing_func = None
+            self.__depth -= 1
         else:
-            ret.append(token.value.strip('"'))
+            raise ParseError(
+                "Unexpected token found: {}".format(ttype))
 
-    raise ParseError(
-        "End of buffer reached while looking for a BODY/BODYSTRUCTURE end")
+    def __set_part_numbers(self, bs, prefix=""):
+        """Set part numbers."""
+        cpt = 1
+        for mp in bs:
+            if isinstance(mp, list):
+                self.__set_part_numbers(mp, prefix)
+            elif isinstance(mp, dict):
+                if isinstance(mp["struct"][0], list):
+                    nprefix = "{}{}.".format(prefix, cpt)
+                    self.__set_part_numbers(mp["struct"][0], nprefix)
+                mp["partnum"] = "{}{}".format(prefix, cpt)
+                cpt += 1
 
+    def __bstruct_args_parser(self, ttype, tvalue):
+        """BODYSTRUCTURE arguments parser."""
+        if ttype == "left_parenthesis":
+            self.__bs_stack = [[]] + self.__bs_stack
+            return
+        if ttype == "right_parenthesis":
+            if len(self.__bs_stack) > 1:
+                part = self.__bs_stack.pop(0)
+                # Check if we are parsing a list of mime part or a
+                # list or arguments.
+                condition = (
+                    len(self.__bs_stack[0]) > 0 and
+                    not isinstance(self.__bs_stack[0][0], dict))
+                if condition:
+                    self.__bs_stack[0].append(part)
+                else:
+                    self.__bs_stack[0].append({"struct": part})
+            else:
+                # End of BODYSTRUCTURE
+                if not isinstance(self.__bs_stack[0][0], list):
+                    # Special case for non multipart structures
+                    self.__bs_stack[0] = {"struct": self.__bs_stack[0]}
+                self.__set_part_numbers(self.__bs_stack)
+                self.__current_message[self.__cur_data_item] = self.__bs_stack
+                self.__bs_stack = []
+                self.__args_parsing_func = None
+            return
+        if ttype == "string":
+            tvalue = tvalue.strip('"')
+            # Check if previous element was a mime part. If so, we are
+            # dealing with a 'multipart' mime part...
+            condition = (
+                len(self.__bs_stack[0]) and
+                isinstance(self.__bs_stack[0][-1], dict))
+            if condition:
+                self.__bs_stack[0] = [self.__bs_stack[0]] + [tvalue]
+                return
+        elif ttype == "number":
+            tvalue = int(tvalue)
+        self.__bs_stack[0].append(tvalue)
 
-def convert_to_str(chunk):
-    """Convert a list of bytes to str and guess encoding."""
-    buf = ""
-    if not isinstance(chunk, (list, tuple)):
-        chunk = (chunk, )
-    for part in chunk:
+    def __parse_data_item(self, ttype, tvalue):
+        """Find next data item."""
+        if ttype == "data_item":
+            self.__cur_data_item = tvalue
+            if tvalue == "BODYSTRUCTURE":
+                self.set_expected("left_parenthesis")
+                self.__args_parsing_func = self.__bstruct_args_parser
+            elif tvalue == "FLAGS":
+                self.set_expected("left_parenthesis")
+                self.__args_parsing_func = self.__flags_args_parser
+            else:
+                self.__args_parsing_func = self.__default_args_parser
+            return
+        elif ttype == "right_parenthesis":
+            self.__depth -= 1
+            assert self.__depth == 0
+            # FIXME: sometimes, FLAGS are returned outside the UID
+            # scope (see sample 1 in tests). For now, we just ignore
+            # them but we need a better solution!
+            if "UID" in self.__current_message:
+                self.result[int(self.__current_message.pop("UID"))] = (
+                    self.__current_message)
+            self.__current_message = {}
+            return
+        raise ParseError(
+            "unexpected {} found while looking for data_item near {}"
+            .format(ttype, tvalue))
+
+    def __convert_to_str(self, chunk):
+        """Convert chunk to str and guess encoding."""
         condition = (
-            six.PY2 and isinstance(part, six.text_type) or
-            six.PY3 and isinstance(part, six.binary_type)
+            six.PY2 and isinstance(chunk, six.text_type) or
+            six.PY3 and isinstance(chunk, six.binary_type)
         )
         if not condition:
-            buf += part
-            continue
+            return chunk
         try:
-            buf += part.decode("utf-8")
+            chunk = chunk.decode("utf-8")
         except UnicodeDecodeError:
             pass
         else:
-            continue
+            return chunk
         try:
-            result = chardet.detect(part)
+            result = chardet.detect(chunk)
         except UnicodeDecodeError:
             raise RuntimeError("Can't find string encoding")
-        buf += part.decode(result["encoding"])
-    return buf
+        return chunk.decode(result["encoding"])
 
+    def parse_chunk(self, chunk):
+        """Parse chunk."""
+        chunk = self.__convert_to_str(chunk)
+        if self.__next_literal_len:
+            literal = chunk[:self.__next_literal_len]
+            chunk = chunk[self.__next_literal_len:]
+            self.__next_literal_len = 0
+            if self.__cur_data_item != "BODYSTRUCTURE":
+                self.__current_message[self.__cur_data_item] = literal
+                self.__args_parsing_func = None
+            else:
+                self.__args_parsing_func("literal", literal)
+        for ttype, tvalue in self.lexer.scan(chunk):
+            if self.__expected is not None:
+                if ttype not in self.__expected:
+                    raise ParseError(
+                        "unexpected {} found while looking for {}"
+                        .format(ttype, "|".join(self.__expected)))
+                self.__expected = None
+            if ttype == "literal_marker":
+                self.__next_literal_len = int(tvalue[1:-1])
+                continue
+            elif self.__depth == 0:
+                if ttype == "number":
+                    # We should start here with a message ID
+                    self.set_expected("left_parenthesis")
+                if ttype == "left_parenthesis":
+                    self.__depth += 1
+                continue
+            elif self.__args_parsing_func is None:
+                self.__parse_data_item(ttype, tvalue)
+                continue
+            self.__args_parsing_func(ttype, tvalue)
 
-def parse_response_chunk(chunk):
-    """Parse a piece of response..."""
-    buf = convert_to_str(chunk)
-    parts = buf.split(" ", 3)
-    result = {}
-    response = parts[3]
-    while len(response):
-        if response.startswith('BODY') and response[4] == '[':
-            end = response.find(']', 5)
-            if response[end + 1] == '<':
-                end = response.find('>', end + 1)
-            end += 1
-        else:
-            end = response.find(' ')
-        cmdname = response[:end]
-        response = response[end + 1:]
-
-        end = 0
-        if cmdname in ['BODY', 'BODYSTRUCTURE', 'FLAGS']:
-            parendepth = 0
-            instring = False
-            for pos, c in enumerate(response):
-                if not instring and c == '"':
-                    instring = True
-                    continue
-                if instring and c == '"':
-                    if pos and response[pos - 1] != '\\':
-                        instring = False
-                        continue
-                if not instring and c == '(':
-                    parendepth += 1
-                    continue
-                if not instring and c == ')':
-                    parendepth -= 1
-                    if parendepth == 0:
-                        end = pos + 1
-                        break
-        else:
-            token, end = parse_next_token(response)
-            if isinstance(token, Literal):
-                response = response[end:]
-                end = token.next_token_len
-
-        result[cmdname] = response[:end]
-        response = response[end + 1:]
-        try:
-            func = globals()["parse_{}".format(cmdname.lower())]
-            result[cmdname] = func(result[cmdname])[0]
-        except KeyError:
-            pass
-    return int(parts[2]), result
-
-
-def parse_fetch_response(data):
-    """Parse a FETCH response, previously issued by a UID command
-
-    We extract the message number, the UID and its value and consider
-    what remains as the response data.
-
-    :param data: the data returned by the ``imaplib`` command
-    :return: a dictionnary
-    """
-    result = {}
-    cpt = 0
-    if len(data) == 1:
-        key, value = parse_response_chunk(data[0])
-        result[key] = value
-    else:
-        while cpt < len(data):
-            content = ()
-            while cpt < len(data) and data[cpt] != b")":
-                if type(data[cpt]) in [bytes, str]:
-                    # FIXME : probably an unsolicited response
-                    cpt += 1
-                    continue
-                content += data[cpt]
-                cpt += 1
-            cpt += 1
-            key, value = parse_response_chunk(content)
-            result[key] = value
-    return result
-
-
-def dump_bodystructure(bs, depth=0):
-    if depth:
-        print(" " * (depth * 4), )
-    if isinstance(bs[0], dict):
-        print("%s :" % bs[0]["partnum"], )
-        struct = bs[0]["struct"]
-    else:
-        struct = bs
-
-    if isinstance(struct[0], list):
-        print("multipart/%s" % struct[1])
-        for part in struct[0]:
-            dump_bodystructure(part, depth + 1)
-    else:
-        print("%s/%s" % (struct[0], struct[1]))
-
-
-if __name__ == "__main__":
-    # resp = [(b'855 (UID 46931 BODYSTRUCTURE ((("text" "plain" ("charset" "iso-8859-1") NIL NIL "quoted-printable" 886 32 NIL NIL NIL NIL)("text" "html" ("charset" "us-ascii") NIL NIL "quoted-printable" 1208 16 NIL NIL NIL NIL) "alternative" ("boundary" "----=_NextPart_001_0003_01CCC564.B2F64FF0") NIL NIL NIL)("application" "octet-stream" ("name" "Carte Verte_2.pdf") NIL NIL "base64" 285610 NIL ("attachment" ("filename" "Carte Verte_2.pdf")) NIL NIL) "mixed" ("boundary" "----=_NextPart_000_0002_01CCC564.B2F64FF0") NIL NIL NIL) BODY[HEADER.FIELDS (DATE FROM TO CC SUBJECT)] {153}', b'From: <Service.client10@maaf.fr>\r\nTo: <TONIO@NGYN.ORG>\r\nCc: \r\nSubject: Notre contact du 28/12/2011 - 192175092\r\nDate: Wed, 28 Dec 2011 13:29:17 +0100\r\n\r\n'), b')']
-
-#    resp = [('856 (UID 46936 BODYSTRUCTURE (("text" "plain" ("charset" "ISO-8859-1") NIL NIL "quoted-printable" 724 22 NIL NIL NIL NIL)("text" "html" ("charset" "ISO-8859-1") NIL NIL "quoted-printable" 2662 48 NIL NIL NIL NIL) "alternative" ("boundary" "----=_Part_1326887_254624357.1325083973970") NIL NIL NIL) BODY[HEADER.FIELDS (DATE FROM TO CC SUBJECT)] {258}', 'Date: Wed, 28 Dec 2011 15:52:53 +0100 (CET)\r\nFrom: =?ISO-8859-1?Q?Malakoff_M=E9d=E9ric?= <communication@communication.malakoffmederic.com>\r\nTo: Antoine Nguyen <tonio@ngyn.org>\r\nSubject: =?ISO-8859-1?Q?Votre_inscription_au_grand_Jeu_Malakoff_M=E9d=E9ric?=\r\n\r\n'), ')']
-
-    # resp = [
-    #     (b'856 (UID 11111 BODYSTRUCTURE ((("text" "plain" ("charset" "UTF-8") NIL NIL "7bit" 0 0 NIL NIL NIL NIL) "mixed" ("boundary" "----=_Part_407172_3159001.1321948277321") NIL NIL NIL)("application" "octet-stream" ("name" "26274308.pdf") NIL NIL "base64" 14906 NIL ("attachment" ("filename" "26274308.pdf")) NIL NIL) "mixed" ("boundary" "----=_Part_407171_9686991.1321948277321") NIL NIL NIL)',
-    #      ),
-    #     b')']
-
-    # resp = [
-    #     (
-    #         b'19 (UID 19 FLAGS (\\Seen) BODYSTRUCTURE (("text" "plain" ("charset" "ISO-8859-1" "format" "flowed") NIL NIL "7bit" 2 1 NIL NIL NIL NIL)("message" "rfc822" ("name*" "ISO-8859-1\'\'%5B%49%4E%53%43%52%49%50%54%49%4F%4E%5D%20%52%E9%63%E9%70%74%69%6F%6E%20%64%65%20%76%6F%74%72%65%20%64%6F%73%73%69%65%72%20%64%27%69%6E%73%63%72%69%70%74%69%6F%6E%20%46%72%65%65%20%48%61%75%74%20%44%E9%62%69%74") NIL NIL "8bit" 3632 ("Wed, 13 Dec 2006 20:30:02 +0100" {70}',
-    #         b"[INSCRIPTION] R\xe9c\xe9ption de votre dossier d'inscription Free Haut D\xe9bit"
-    #     ),
-    #     (
-    #         b' (("Free Haut Debit" NIL "inscription" "freetelecom.fr")) (("Free Haut Debit" NIL "inscription" "freetelecom.fr")) ((NIL NIL "hautdebit" "freetelecom.fr")) ((NIL NIL "nguyen.antoine" "wanadoo.fr")) NIL NIL NIL "<20061213193125.9DA0919AC@dgroup2-2.proxad.net>") ("text" "plain" ("charset" "iso-8859-1") NIL NIL "8bit" 1428 38 NIL ("inline" NIL) NIL NIL) 76 NIL ("inline" ("filename*" "ISO-8859-1\'\'%5B%49%4E%53%43%52%49%50%54%49%4F%4E%5D%20%52%E9%63%E9%70%74%69%6F%6E%20%64%65%20%76%6F%74%72%65%20%64%6F%73%73%69%65%72%20%64%27%69%6E%73%63%72%69%70%74%69%6F%6E%20%46%72%65%65%20%48%61%75%74%20%44%E9%62%69%74")) NIL NIL) "mixed" ("boundary" "------------040706080908000209030901") NIL NIL NIL) BODY[HEADER.FIELDS (DATE FROM TO CC SUBJECT)] {266}',
-    #         b'Date: Tue, 19 Dec 2006 19:50:13 +0100\r\nFrom: Antoine Nguyen <nguyen.antoine@wanadoo.fr>\r\nTo: Antoine Nguyen <tonio@koalabs.org>\r\nSubject: [Fwd: [INSCRIPTION] =?ISO-8859-1?Q?R=E9c=E9ption_de_votre_?=\r\n =?ISO-8859-1?Q?dossier_d=27inscription_Free_Haut_D=E9bit=5D?=\r\n\r\n'
-    #     ),
-    #     b')'
-    # ]
-
-    resp = [(b'123 (UID 3 BODYSTRUCTURE (((("text" "plain" ("charset" "iso-8859-1") NIL NIL "quoted-printable" 1266 30 NIL NIL NIL NIL)("text" "html" ("charset" "iso-8859-1") NIL NIL "quoted-printable" 8830 227 NIL NIL NIL NIL) "alternative" ("boundary" "_000_152AC7ECD1F8AB43A9AD95DBDDCA3118082C09GKIMA24cmcicfr_") NIL NIL NIL)("image" "png" ("name" "image005.png") "<image005.png@01CC6CAA.4FADC490>" "image005.png" "base64" 7464 NIL ("inline" ("filename" "image005.png" "size" "5453" "creation-date" "Tue, 06 Sep 2011 13:33:49 GMT" "modification-date" "Tue, 06 Sep 2011 13:33:49 GMT")) NIL NIL)("image" "jpeg" ("name" "image006.jpg") "<image006.jpg@01CC6CAA.4FADC490>" "image006.jpg" "base64" 2492 NIL ("inline" ("filename" "image006.jpg" "size" "1819" "creation-date" "Tue, 06 Sep 2011 13:33:49 GMT" "modification-date" "Tue, 06 Sep 2011 13:33:49 GMT")) NIL NIL) "related" ("boundary" "_006_152AC7ECD1F8AB43A9AD95DBDDCA3118082C09GKIMA24cmcicfr_" "type" "multipart/alternative") NIL NIL NIL)("application" "pdf" ("name" "bilan assurance CIC.PDF") NIL "bilan assurance CIC.PDF" "base64" 459532 NIL ("attachment" ("filename" "bilan assurance CIC.PDF" "size" "335811" "creation-date" "Fri, 16 Sep 2011 12:45:23 GMT" "modification-date" "Fri, 16 Sep 2011 12:45:23 GMT")) NIL NIL)(("text" "plain" ("charset" "utf-8") NIL NIL "quoted-printable" 1389 29 NIL NIL NIL NIL)("text" "html" ("charset" "utf-8") NIL NIL "quoted-printable" 1457 27 NIL NIL NIL NIL) "alternative" ("boundary" "===============0775904800==") ("inline" NIL) NIL NIL) "mixed" ("boundary" "_007_152AC7ECD1F8AB43A9AD95DBDDCA3118082C09GKIMA24cmcicfr_") NIL ("fr-FR") NIL)',), b')']
-
-    # resp = [('856 (UID 11111 BODYSTRUCTURE ((("text" "plain" ("charset" "UTF-8") NIL NIL "7bit" 0 0 NIL NIL NIL NIL) "mixed" ("boundary" "----=_Part_407172_3159001.1321948277321") NIL NIL NIL)("application" "octet-stream" ("name" "26274308.pdf") NIL NIL "base64" 14906 NIL ("attachment" ("filename" "(26274308.pdf")) NIL NIL) "mixed" ("boundary" "----=_Part_407171_9686991.1321948277321") NIL NIL NIL)',), ')']
-
-    print(parse_fetch_response(resp))
+    def parse(self, data):
+        """Parse received data."""
+        self.__reset_parser()
+        for chunk in data:
+            if isinstance(chunk, tuple):
+                for schunk in chunk:
+                    self.parse_chunk(schunk)
+            else:
+                self.parse_chunk(chunk)
+        return self.result

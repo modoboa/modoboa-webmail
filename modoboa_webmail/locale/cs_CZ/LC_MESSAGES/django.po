@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Modoboa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-19 10:28+0200\n"
+"POT-Creation-Date: 2017-09-21 18:59+0200\n"
 "PO-Revision-Date: 2015-01-06 10:05+0000\n"
 "Last-Translator: Miroslav Abrahám <miris@kunago.com>\n"
 "Language-Team: Czech (Czech Republic) (http://www.transifex.com/projects/p/"
@@ -27,216 +27,216 @@ msgstr "Odpověď serveru"
 msgid "Unknown action"
 msgstr "Neznámá akce"
 
-#: forms.py:92
+#: forms.py:94
 msgid "From"
 msgstr ""
 
-#: forms.py:96 templates/modoboa_webmail/compose.html:10
+#: forms.py:98 templates/modoboa_webmail/compose.html:10
 msgid "To"
 msgstr "Komu"
 
-#: forms.py:98 templates/modoboa_webmail/compose.html:26
+#: forms.py:100 templates/modoboa_webmail/compose.html:26
 msgid "Cc"
 msgstr "Kopie"
 
-#: forms.py:100 forms.py:106 templates/modoboa_webmail/compose.html:13
+#: forms.py:102 forms.py:108 templates/modoboa_webmail/compose.html:13
 msgid "Enter one or more addresses."
 msgstr ""
 
-#: forms.py:104 templates/modoboa_webmail/compose.html:31
+#: forms.py:106 templates/modoboa_webmail/compose.html:31
 msgid "Bcc"
 msgstr ""
 
-#: forms.py:111 lib/imapemail.py:313
+#: forms.py:113 lib/imapemail.py:314
 msgid "Subject"
 msgstr "Předmět"
 
-#: forms.py:266
+#: forms.py:268
 msgid "Select a file"
 msgstr "Vybrat soubor"
 
-#: forms.py:272
+#: forms.py:274
 msgid "General"
 msgstr "Obecné"
 
-#: forms.py:275
+#: forms.py:277
 msgid "Maximum attachment size"
 msgstr "Maximální velikost přílohy"
 
-#: forms.py:278
+#: forms.py:280
 msgid "Maximum attachment size in bytes (or KB, MB, GB if specified)"
 msgstr ""
 "Maximální velikost přílohy v Bajtech (nebo KB, MB, GB, pokud je uvedeno)"
 
-#: forms.py:281
+#: forms.py:283
 msgid "IMAP settings"
 msgstr "Nastavení IMAP"
 
-#: forms.py:284 forms.py:304
+#: forms.py:286 forms.py:306
 msgid "Server address"
 msgstr "Adresa serveru"
 
-#: forms.py:286
+#: forms.py:288
 msgid "Address of your IMAP server"
 msgstr "Adresa vašeho IMAP serveru"
 
-#: forms.py:290
+#: forms.py:292
 msgid "Use a secured connection"
 msgstr "Použít zabezpečené připojení"
 
-#: forms.py:292
+#: forms.py:294
 msgid "Use a secured connection to access IMAP server"
 msgstr "Použít zabezpečené připojení pro přístup k IMAP serveru"
 
-#: forms.py:296 forms.py:320
+#: forms.py:298 forms.py:322
 msgid "Server port"
 msgstr "Port serveru"
 
-#: forms.py:298
+#: forms.py:300
 msgid "Listening port of your IMAP server"
 msgstr "Port, na kterém naslouchá váš IMAP server"
 
-#: forms.py:301
+#: forms.py:303
 msgid "SMTP settings"
 msgstr "Nastavení SMTP"
 
-#: forms.py:306
+#: forms.py:308
 msgid "Address of your SMTP server"
 msgstr "Adresa vašeho SMTP serveru"
 
-#: forms.py:310
+#: forms.py:312
 msgid "Secured connection mode"
 msgstr "Režim zabezpečeného připojení"
 
-#: forms.py:311
+#: forms.py:313
 msgid "None"
 msgstr "Nic"
 
-#: forms.py:315
+#: forms.py:317
 msgid "Use a secured connection to access SMTP server"
 msgstr "Použít zabezpečené připojení pro přístup k SMTP serveru"
 
-#: forms.py:322
+#: forms.py:324
 msgid "Listening port of your SMTP server"
 msgstr "Port, na kterém naslouchá váš SMTP server"
 
-#: forms.py:326
+#: forms.py:328
 msgid "Authentication required"
 msgstr "Ověření vyžadováno"
 
-#: forms.py:328
+#: forms.py:330
 msgid "Server needs authentication"
 msgstr "Server vyžaduje ověření"
 
-#: forms.py:335
+#: forms.py:337
 msgid "Display"
 msgstr "Zobrazení"
 
-#: forms.py:339
+#: forms.py:341
 msgid "Default message display mode"
 msgstr "Výchozí režim zobrazení zprávy"
 
-#: forms.py:341
+#: forms.py:343
 msgid "The default mode used when displaying a message"
 msgstr "Výchozí režim, který se použije pro zobrazení zprávy"
 
-#: forms.py:347
+#: forms.py:349
 msgid "Enable HTML links display"
 msgstr "Povolit zobrazení HTML odkazů"
 
-#: forms.py:348
+#: forms.py:350
 msgid "Enable/Disable HTML links display"
 msgstr "Povolit/Zakázat zobrazení HTML odkazů"
 
-#: forms.py:353
+#: forms.py:355
 msgid "Number of displayed emails per page"
 msgstr "Počet zobrazených zpráv na stránce"
 
-#: forms.py:354
+#: forms.py:356
 msgid "Sets the maximum number of messages displayed in a page"
 msgstr "Nastavuje maximální počet zobrazených zpráv na stránce"
 
-#: forms.py:359
+#: forms.py:361
 msgid "Listing refresh rate"
 msgstr "Automatické obnovení stránky"
 
-#: forms.py:360
+#: forms.py:362
 msgid "Automatic folder refresh rate (in seconds)"
 msgstr "Automatické načítání obsahu složky (v sekundách)"
 
-#: forms.py:365
+#: forms.py:367
 #, fuzzy
 #| msgid "Mailboxes container's width"
 msgid "Folder container's width"
 msgstr "Šířka sloupce schránek"
 
-#: forms.py:366
+#: forms.py:368
 #, fuzzy
 #| msgid "The width of the mailbox list container"
 msgid "The width of the folder list container"
 msgstr "Šířka sloupce schránek"
 
-#: forms.py:369
+#: forms.py:371
 msgid "Folders"
 msgstr ""
 
-#: forms.py:373
+#: forms.py:375
 msgid "Trash folder"
 msgstr "Složka koše"
 
-#: forms.py:374
+#: forms.py:376
 msgid "Folder where deleted messages go"
 msgstr "Složka pro smazané zprávy"
 
-#: forms.py:379
+#: forms.py:381
 msgid "Sent folder"
 msgstr "Složka odeslané pošty"
 
-#: forms.py:380
+#: forms.py:382
 msgid "Folder where copies of sent messages go"
 msgstr "Složka pro kopie odeslaných zpráv"
 
-#: forms.py:385
+#: forms.py:387
 msgid "Drafts folder"
 msgstr "Složka konceptů"
 
-#: forms.py:386
+#: forms.py:388
 msgid "Folder where drafts go"
 msgstr "Složka pro koncepty zpráv"
 
-#: forms.py:390
+#: forms.py:392
 #, fuzzy
 #| msgid "Sent folder"
 msgid "Junk folder"
 msgstr "Složka odeslané pošty"
 
-#: forms.py:391
+#: forms.py:393
 #, fuzzy
 #| msgid "Folder where deleted messages go"
 msgid "Folder where junk messages should go"
 msgstr "Složka pro smazané zprávy"
 
-#: forms.py:394
+#: forms.py:396
 msgid "Composing messages"
 msgstr "Vytváření zpráv"
 
-#: forms.py:398
+#: forms.py:400
 msgid "Default editor"
 msgstr "Výchozí editor"
 
-#: forms.py:400
+#: forms.py:402
 msgid "The default editor to use when composing a message"
 msgstr "Výchozí editor textu, který se použije pro vytváření zpráv"
 
-#: forms.py:406
+#: forms.py:408
 msgid "Signature text"
 msgstr "Text podpisu"
 
-#: forms.py:407
+#: forms.py:409
 msgid "User defined email signature"
 msgstr "Emailový podpis uživatele"
 
-#: forms.py:427
+#: forms.py:429
 msgid "Value must be a positive integer (> 0)"
 msgstr "Hodnota musí být kladné číslo (> 0)"
 
@@ -244,48 +244,48 @@ msgstr "Hodnota musí být kladné číslo (> 0)"
 msgid "Webmail"
 msgstr "Webmail"
 
-#: lib/imapemail.py:51
+#: lib/imapemail.py:53
 msgid "Add to contacts"
 msgstr ""
 
-#: lib/imapemail.py:258
+#: lib/imapemail.py:261
 msgid "wrote:"
 msgstr "napsal/a:"
 
-#: lib/imapemail.py:315
+#: lib/imapemail.py:316
 msgid "Date"
 msgstr "Datum"
 
-#: lib/imapemail.py:327 lib/imapemail.py:330
+#: lib/imapemail.py:328 lib/imapemail.py:331
 msgid "Original message"
 msgstr "Původní zpráva"
 
-#: lib/imaputils.py:275
+#: lib/imaputils.py:243
 msgid "Failed to retrieve hierarchy delimiter"
 msgstr "Nebylo možné zjistit hierarchický oddělovač"
 
-#: lib/imaputils.py:317
+#: lib/imaputils.py:281
 #, python-format
 msgid "Connection to IMAP server failed: %s"
 msgstr "Spojení se serverem IMAP selhalo: %s"
 
-#: lib/imaputils.py:547
+#: lib/imaputils.py:522
 msgid "Inbox"
 msgstr ""
 
-#: lib/imaputils.py:549
+#: lib/imaputils.py:524
 msgid "Drafts"
 msgstr "Složka konceptů"
 
-#: lib/imaputils.py:551
+#: lib/imaputils.py:526
 msgid "Junk"
 msgstr ""
 
-#: lib/imaputils.py:553
+#: lib/imaputils.py:528
 msgid "Sent"
 msgstr ""
 
-#: lib/imaputils.py:555
+#: lib/imaputils.py:530
 msgid "Trash"
 msgstr ""
 
@@ -302,7 +302,7 @@ msgid "Uploading.."
 msgstr "Nahrávám.."
 
 #: templates/modoboa_webmail/compose_menubar.html:9
-#: templates/modoboa_webmail/headers.html:11 views.py:321
+#: templates/modoboa_webmail/headers.html:11 views.py:322
 msgid "Attachments"
 msgstr "Přílohy"
 
@@ -352,7 +352,7 @@ msgstr "Povolit odkazy"
 msgid "Disable links"
 msgstr "Zakákaz odkazy"
 
-#: templatetags/webmail_tags.py:76 templatetags/webmail_tags.py:151
+#: templatetags/webmail_tags.py:76 templatetags/webmail_tags.py:161
 #, fuzzy
 #| msgid "Mark as read"
 msgid "Mark as not spam"
@@ -374,39 +374,51 @@ msgstr "Označit jako přečtené"
 msgid "Mark as unread"
 msgstr "Označit jako nepřečtené"
 
-#: templatetags/webmail_tags.py:141 views.py:166
+#: templatetags/webmail_tags.py:137
+#, fuzzy
+#| msgid "Mark as read"
+msgid "Mark as flagged"
+msgstr "Označit jako přečtené"
+
+#: templatetags/webmail_tags.py:142
+#, fuzzy
+#| msgid "Mark as unread"
+msgid "Mark as unflagged"
+msgstr "Označit jako nepřečtené"
+
+#: templatetags/webmail_tags.py:151 views.py:167
 msgid "Empty folder"
 msgstr "Vyprázdnit složku"
 
-#: templatetags/webmail_tags.py:222 views.py:203
+#: templatetags/webmail_tags.py:232 views.py:204
 #, fuzzy
 #| msgid "Create a new mailbox"
 msgid "Create a new folder"
 msgstr "Vytvořit novou schránku"
 
-#: templatetags/webmail_tags.py:230
+#: templatetags/webmail_tags.py:240
 #, fuzzy
 #| msgid "Edit the selected mailbox"
 msgid "Edit the selected folder"
 msgstr "Upravit vybranou schránku"
 
-#: templatetags/webmail_tags.py:235
+#: templatetags/webmail_tags.py:245
 #, fuzzy
 #| msgid "Remove the selected mailbox"
 msgid "Remove the selected folder"
 msgstr "Odstranit označené schránky"
 
-#: templatetags/webmail_tags.py:239
+#: templatetags/webmail_tags.py:249
 msgid "Compress folder"
 msgstr "Stlačit složku"
 
-#: views.py:60 views.py:78 views.py:92 views.py:110 views.py:128 views.py:164
-#: views.py:178 views.py:256 views.py:279 views.py:482 views.py:530
-#: views.py:545 views.py:584 views.py:624
+#: views.py:61 views.py:79 views.py:93 views.py:111 views.py:129 views.py:165
+#: views.py:179 views.py:257 views.py:280 views.py:483 views.py:531
+#: views.py:546 views.py:585 views.py:625
 msgid "Invalid request"
 msgstr "Neplatný požadavek"
 
-#: views.py:98
+#: views.py:99
 #, python-format
 msgid "%(count)d message deleted"
 msgid_plural "%(count)d messages deleted"
@@ -414,7 +426,7 @@ msgstr[0] "%(count)d zpráva smazána"
 msgstr[1] "%(count)d zprávy smazány"
 msgstr[2] "%(count)d zpráv smazáno"
 
-#: views.py:141 views.py:152
+#: views.py:142 views.py:153
 #, fuzzy, python-format
 #| msgid "%(count)d message deleted"
 #| msgid_plural "%(count)d messages deleted"
@@ -424,54 +436,54 @@ msgstr[0] "%(count)d zpráva smazána"
 msgstr[1] "%(count)d zprávy smazány"
 msgstr[2] "%(count)d zpráv smazáno"
 
-#: views.py:196
+#: views.py:197
 #, fuzzy
 #| msgid "Mailbox created"
 msgid "Folder created"
 msgstr "Schránka vytvořena"
 
-#: views.py:206
+#: views.py:207
 msgid "Create"
 msgstr "Vytvořit"
 
-#: views.py:222 views.py:258
+#: views.py:223 views.py:259
 #, fuzzy
 #| msgid "Empty folder"
 msgid "Edit folder"
 msgstr "Vyprázdnit složku"
 
-#: views.py:225 views.py:261
+#: views.py:226 views.py:262
 msgid "Update"
 msgstr "Aktualizovat"
 
-#: views.py:238
+#: views.py:239
 #, fuzzy
 #| msgid "Mailbox updated"
 msgid "Folder updated"
 msgstr "Schránka aktualizována"
 
-#: views.py:311
+#: views.py:312
 msgid "Failed to save attachment: "
 msgstr "Nebylo možné uložit přílohu:"
 
-#: views.py:315
+#: views.py:316
 #, python-format
 msgid "Attachment is too big (limit: %s)"
 msgstr "Příloha je příliš velká (omezení: %s)"
 
-#: views.py:338
+#: views.py:339
 msgid "Bad query"
 msgstr "Neplatný dotaz"
 
-#: views.py:350
+#: views.py:351
 msgid "Failed to remove attachment: "
 msgstr "Nebylo možné odstranit přílohu:"
 
-#: views.py:355
+#: views.py:356
 msgid "Unknown attachment"
 msgstr "Neznámá příloha"
 
-#: views.py:415
+#: views.py:416
 msgid "Empty mailbox"
 msgstr "Vyprázdnit schránku"
 

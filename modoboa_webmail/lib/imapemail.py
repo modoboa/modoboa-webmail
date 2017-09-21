@@ -13,6 +13,7 @@ from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.core.urlresolvers import reverse
+from django.utils.html import escape
 from django.utils.translation import ugettext as _
 
 from modoboa.core.extensions import exts_pool
@@ -297,9 +298,7 @@ class ReplyModifier(Modifier):
 
 class ForwardModifier(Modifier):
 
-    """
-    Modify a message so it can be forwarded.
-    """
+    """Modify a message so it can be forwarded."""
 
     def __init__(self, *args, **kwargs):
         super(ForwardModifier, self).__init__(*args, **kwargs)
@@ -310,17 +309,17 @@ class ForwardModifier(Modifier):
         return getattr(self, "%s_%s" % (name, self.dformat))
 
     def _header(self):
-        self.textheader = self.__getfunc("_header_begin")() + "\n"
-        self.textheader += \
-            self.__getfunc("_header_line")(_("Subject"), self.subject)
-        self.textheader += \
-            self.__getfunc("_header_line")(_("Date"), self.Date)
+        self.textheader = "{}\n".format(self.__getfunc("_header_begin")())
+        self.textheader += (
+            self.__getfunc("_header_line")(_("Subject"), self.subject))
+        self.textheader += (
+            self.__getfunc("_header_line")(_("Date"), self.Date))
         for hdr in ["From", "To", "Reply-To"]:
             try:
                 key = re.sub("-", "_", hdr)
                 value = getattr(self, key)
-                self.textheader += \
-                    self.__getfunc("_header_line")(_(hdr), value)
+                self.textheader += (
+                    self.__getfunc("_header_line")(_(hdr), value))
             except AttributeError:
                 pass
         self.textheader += self.__getfunc("_header_end")()
@@ -335,7 +334,7 @@ class ForwardModifier(Modifier):
         return "%s: %s\n" % (key, value)
 
     def _header_line_html(self, key, value):
-        return "<p>%s: %s</p>" % (key, value)
+        return "<p>%s: %s</p>" % (key, escape(value))
 
     def _header_end_plain(self):
         return "\n"

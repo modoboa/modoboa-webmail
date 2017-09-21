@@ -47,9 +47,10 @@ class FetchParserTestCase(unittest.TestCase):
         """."""
         r = self.parser.parse(bs)
         fp = six.StringIO()
-        output = dump_bodystructure(fp, r[r.keys()[0]]["BODYSTRUCTURE"])
+        output = dump_bodystructure(fp, r[list(r.keys())[0]]["BODYSTRUCTURE"])
         fp.close()
         self.assertEqual(output, expected)
+        return r
 
     def test_parse_bodystructure(self):
         """Test the parsing of several responses containing BS."""

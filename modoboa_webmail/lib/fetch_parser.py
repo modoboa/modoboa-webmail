@@ -269,25 +269,6 @@ class FetchResponseParser(object):
                 continue
             self.__args_parsing_func(ttype, tvalue)
 
-    def _dump_bodystructure(self, bs, depth=0):
-        """Dump a parsed BODYSTRUCTURE."""
-        indentation = " " * (depth * 4)
-        for mp in bs:
-            if isinstance(mp, list):
-                if isinstance(mp[0], list):
-                    print("{}multipart/{}".format(
-                        indentation, mp[1]))
-                    self._dump_bodystructure(mp, depth + 1)
-                else:
-                    self._dump_bodystructure(mp, depth)
-            elif isinstance(mp, dict):
-                if isinstance(mp["struct"][0], list):
-                    print("{}multipart/{}".format(
-                        indentation, mp["struct"][1]))
-                    self._dump_bodystructure(mp["struct"][0], depth + 1)
-                else:
-                    print("{}{}/{}".format(indentation, *mp["struct"][:2]))
-
     def parse(self, data):
         """Parse received data."""
         self.__reset_parser()

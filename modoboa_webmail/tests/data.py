@@ -43,3 +43,8 @@ BODYSTRUCTURE_SAMPLE_7 = [
     ,
     b')'
 ]
+
+BODYSTRUCTURE_SAMPLE_8 = [
+    (b'1 (UID 947 BODYSTRUCTURE ("text" "html" ("charset" "utf-8") NIL NIL "8bit" 889 34 NIL NIL NIL NIL) BODY[HEADER.FIELDS (FROM TO CC DATE SUBJECT)] {80}', 'From: Antoine Nguyen <tonio@ngyn.org>\r\nDate: Sat, 26 Mar 2016 11:45:49 +0100\r\n\r\n'),
+    b')'
+]

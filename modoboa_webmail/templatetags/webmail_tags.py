@@ -259,10 +259,13 @@ def mboxes_menu():
 @register.filter
 def parse_imap_header(value, header):
     """Simple template tag to display a IMAP header."""
+    safe = True
     try:
         value = getattr(imapheader, "parse_%s" % header)(value)
     except AttributeError:
         pass
     if header == "from":
         value = value[0]
-    return mark_safe(value)
+    elif header == "subject":
+        safe = False
+    return value if not safe else mark_safe(value)

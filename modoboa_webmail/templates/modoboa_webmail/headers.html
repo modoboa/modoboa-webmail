@@ -3,7 +3,8 @@
 <table id="emailheaders" class="table table-condensed">
   {% for hdr in headers %}
     <tr>
-      <th>{{ hdr.name|localize_header_name }}</th><td>{{ hdr.value|safe }}</td>
+      <th>{{ hdr.name|localize_header_name }}</th>
+      <td>{% if hdr.safe %}{{ hdr.value|safe }}{% else %}{{ hdr.value }}{% endif %}</td>
     </tr>
   {% endfor %}
   {% if attachments %}

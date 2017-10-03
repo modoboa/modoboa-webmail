@@ -77,12 +77,15 @@ class ImapEmail(Email):
             hdrvalue = self.get_header(msg, label, raw=raw_addresses)
             if not hdrvalue:
                 continue
+            safe = False
             if hdr[1]:
                 if label in headers_with_address:
                     if contacts_plugin_installed and not raw_addresses:
                         hdrvalue = self._insert_contact_links(hdrvalue)
                     hdrvalue = ", ".join(hdrvalue)
-                self.headers += [{"name": label, "value": hdrvalue}]
+                    safe = True
+                self.headers += [
+                    {"name": label, "value": hdrvalue, "safe": safe}]
             label = re.sub("-", "_", label)
             setattr(self, label, hdrvalue)
 
@@ -124,6 +127,11 @@ class ImapEmail(Email):
     @property
     def headers_as_text(self):
         return " ".join(self.headers_as_list)
+
+    def viewmail_plain(self, content, **kwargs):
+        """Return the plain/text version of the email."""
+        content = escape(content)
+        return super(ImapEmail, self).viewmail_plain(content, **kwargs)
 
     @property
     def body(self):

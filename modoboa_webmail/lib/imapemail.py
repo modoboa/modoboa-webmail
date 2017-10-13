@@ -71,7 +71,7 @@ class ImapEmail(Email):
         self.fetch_body_structure(msg)
         msg = email.message_from_string(headers)
         contacts_plugin_installed = exts_pool.get_extension("modoboa_contacts")
-        headers_with_address = ("From", "To", "Cc")
+        headers_with_address = ("From", "To", "Cc", "Reply-To")
         for hdr in self.headernames:
             label = hdr[0]
             hdrvalue = self.get_header(msg, label, raw=raw_addresses)

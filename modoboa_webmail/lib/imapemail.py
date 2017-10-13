@@ -311,13 +311,13 @@ class ForwardModifier(Modifier):
     def __init__(self, *args, **kwargs):
         super(ForwardModifier, self).__init__(*args, **kwargs)
         self._header()
-        self.form.fields["subject"].initial = "Fwd: %s" % self.subject
+        self.form.fields["subject"].initial = u"Fwd: %s" % self.subject
 
     def __getfunc(self, name):
         return getattr(self, "%s_%s" % (name, self.dformat))
 
     def _header(self):
-        self.textheader = "{}\n".format(self.__getfunc("_header_begin")())
+        self.textheader = u"{}\n".format(self.__getfunc("_header_begin")())
         self.textheader += (
             self.__getfunc("_header_line")(_("Subject"), self.subject))
         self.textheader += (
@@ -333,19 +333,19 @@ class ForwardModifier(Modifier):
         self.textheader += self.__getfunc("_header_end")()
 
     def _header_begin_plain(self):
-        return "----- %s -----" % _("Original message")
+        return u"----- %s -----" % _("Original message")
 
     def _header_begin_html(self):
-        return "----- %s -----" % _("Original message")
+        return u"----- %s -----" % _("Original message")
 
     def _header_line_plain(self, key, value):
-        return "%s: %s\n" % (key, value)
+        return u"%s: %s\n" % (key, value)
 
     def _header_line_html(self, key, value):
-        return "<p>%s: %s</p>" % (key, escape(value))
+        return u"<p>%s: %s</p>" % (key, escape(value))
 
     def _header_end_plain(self):
-        return "\n"
+        return u"\n"
 
     def _header_end_html(self):
-        return ""
+        return u""

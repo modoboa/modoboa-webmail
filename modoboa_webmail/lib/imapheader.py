@@ -11,6 +11,7 @@ import chardet
 import six
 
 from django.utils import timezone
+from django.utils.html import escape
 from django.utils.formats import date_format
 
 from modoboa.lib.email_utils import EmailAddress
@@ -70,7 +71,7 @@ def parse_address(value, **kwargs):
         return to_unicode(addr.fulladdress)
     if addr.name:
         return u"<span title={}>{}</span>".format(
-            to_unicode(addr.address), to_unicode(addr.name))
+            to_unicode(addr.address), escape(to_unicode(addr.name)))
     return u"<span>{}</span>".format(to_unicode(addr.address))
 
 

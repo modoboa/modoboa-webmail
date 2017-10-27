@@ -9,8 +9,9 @@
 	{# handling to field #} 
         <label class="col-sm-1 control-label" for="id_to">{% trans "To" %}</label>
         <div class="col-sm-8">
-          <input id="id_to" name="to" class="form-control selectize-contact" value="{% if form.to.value %}{{ form.to.value }}{% endif %}"
-                  placeholder="{% trans "Enter one or more addresses." %}">
+          <input id="id_to" name="to" class="form-control selectize-contact"
+                 value='{% if form.to.value %}{{ form.to.value }}{% endif %}'
+                 placeholder="{% trans "Enter one or more addresses." %}">
 	  {% if form.to.errors %}
 	  {% for error in form.to.errors %}
 	  <p class="help-block">{{ error }}</p>

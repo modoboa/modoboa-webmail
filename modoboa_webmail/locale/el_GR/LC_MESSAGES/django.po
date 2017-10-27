@@ -1,0 +1,455 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Giannis Kapetanakis <bilias@edu.physics.uoc.gr>, 2016
+# Kostas Moumouris <moumouriskostas@gmail.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Modoboa\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-09-21 18:59+0200\n"
+"PO-Revision-Date: 2017-10-12 19:29+0000\n"
+"Last-Translator: Kostas Moumouris <moumouriskostas@gmail.com>\n"
+"Language-Team: Greek (Greece) (http://www.transifex.com/tonio/modoboa/language/el_GR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el_GR\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: exceptions.py:22
+msgid "Server response"
+msgstr "Απάντηση εξυπηρετητή"
+
+#: exceptions.py:37
+msgid "Unknown action"
+msgstr "Άγνωστη ενέργεια"
+
+#: forms.py:94
+msgid "From"
+msgstr "Από"
+
+#: forms.py:98 templates/modoboa_webmail/compose.html:10
+msgid "To"
+msgstr "Προς"
+
+#: forms.py:100 templates/modoboa_webmail/compose.html:26
+msgid "Cc"
+msgstr "Cc"
+
+#: forms.py:102 forms.py:108 templates/modoboa_webmail/compose.html:13
+msgid "Enter one or more addresses."
+msgstr "Εισάγετε μία ή περισσότερες διευθύνσεις"
+
+#: forms.py:106 templates/modoboa_webmail/compose.html:31
+msgid "Bcc"
+msgstr "Κρυφή Κοιν"
+
+#: forms.py:113 lib/imapemail.py:314
+msgid "Subject"
+msgstr "Τίτλος"
+
+#: forms.py:268
+msgid "Select a file"
+msgstr "Επιλέξτε αρχείο"
+
+#: forms.py:274
+msgid "General"
+msgstr "Γενικά"
+
+#: forms.py:277
+msgid "Maximum attachment size"
+msgstr "Μέγιστο μέγεθος συνημμένου"
+
+#: forms.py:280
+msgid "Maximum attachment size in bytes (or KB, MB, GB if specified)"
+msgstr "Μέγιστο μέγεθος συνημμένου σε bytes (ή KB, MB, GB εάν οριστεί)"
+
+#: forms.py:283
+msgid "IMAP settings"
+msgstr "Ρυθμίσεις IMAP"
+
+#: forms.py:286 forms.py:306
+msgid "Server address"
+msgstr "Διεύθυνση εξυπηρετητή"
+
+#: forms.py:288
+msgid "Address of your IMAP server"
+msgstr "Η διεύθυνση του εξυπηρετητή IMAP"
+
+#: forms.py:292
+msgid "Use a secured connection"
+msgstr "Χρήση ασφαλής σύνδεσης"
+
+#: forms.py:294
+msgid "Use a secured connection to access IMAP server"
+msgstr "Χρήση ασφαλής σύνδεσης με τον εξυπηρετητή IMAP"
+
+#: forms.py:298 forms.py:322
+msgid "Server port"
+msgstr "Πόρτα εξυπηρετητή"
+
+#: forms.py:300
+msgid "Listening port of your IMAP server"
+msgstr "Η πόρτα λειτουργίας του εξυπηρετητή IMAP"
+
+#: forms.py:303
+msgid "SMTP settings"
+msgstr "Ρυθμίσεις SMTP"
+
+#: forms.py:308
+msgid "Address of your SMTP server"
+msgstr "Η διεύθυνση του εξυπηρετητή SMTP"
+
+#: forms.py:312
+msgid "Secured connection mode"
+msgstr "Τύπος ασφαλής σύνδεσης"
+
+#: forms.py:313
+msgid "None"
+msgstr "Κανένα"
+
+#: forms.py:317
+msgid "Use a secured connection to access SMTP server"
+msgstr "Χρήση ασφαλής σύνδεσης με τον εξυπηρετητή SMTP"
+
+#: forms.py:324
+msgid "Listening port of your SMTP server"
+msgstr "Η πόρτα λειτουργίας του εξυπηρετητή SMTP"
+
+#: forms.py:328
+msgid "Authentication required"
+msgstr "Απαιτείται πιστοποίηση"
+
+#: forms.py:330
+msgid "Server needs authentication"
+msgstr "Ο εξυπηρετητής απαιτεί πιστοποίηση"
+
+#: forms.py:337
+msgid "Display"
+msgstr "Εμφάνιση"
+
+#: forms.py:341
+msgid "Default message display mode"
+msgstr "Προεπιλεγμένη λειτουργία εμφάνισης μηνυμάτων"
+
+#: forms.py:343
+msgid "The default mode used when displaying a message"
+msgstr "Η προεπιλεγμένη λειτουργία που χρησιμοποιείται κατά την εμφάνιση ενός μηνύματος"
+
+#: forms.py:349
+msgid "Enable HTML links display"
+msgstr "Ενεργοποιήσει εμφάνισης συνδέσεων HTML"
+
+#: forms.py:350
+msgid "Enable/Disable HTML links display"
+msgstr "Ενεργοποίηση/απενεργοποίηση προβολής HTML συνδέσεων"
+
+#: forms.py:355
+msgid "Number of displayed emails per page"
+msgstr "Αριθμός email ανά σελίδα"
+
+#: forms.py:356
+msgid "Sets the maximum number of messages displayed in a page"
+msgstr "Ορισμός μέγιστου αριθμού μηνυμάτων ανά σελίδα"
+
+#: forms.py:361
+msgid "Listing refresh rate"
+msgstr "Ρυθμός ανανέωσης εμφάνισης"
+
+#: forms.py:362
+msgid "Automatic folder refresh rate (in seconds)"
+msgstr "Αυτόματος ρυθμός ανανέωσης φακέλου (σε δευτερόλεπτα)"
+
+#: forms.py:367
+msgid "Folder container's width"
+msgstr "Βάθος Φακέλου"
+
+#: forms.py:368
+msgid "The width of the folder list container"
+msgstr "The width of the folder list container"
+
+#: forms.py:371
+msgid "Folders"
+msgstr "Φάκελοι"
+
+#: forms.py:375
+msgid "Trash folder"
+msgstr "Φάκελος Διαγραμμένων"
+
+#: forms.py:376
+msgid "Folder where deleted messages go"
+msgstr "Ο φάκελος που αποθηκεύονται τα διεγραμμένα μηνύματα"
+
+#: forms.py:381
+msgid "Sent folder"
+msgstr "Φάκελος Απεσταλμένων"
+
+#: forms.py:382
+msgid "Folder where copies of sent messages go"
+msgstr "Ο φάκελος που αποθηκεύονται τα απεσταλμένα μηνύματα"
+
+#: forms.py:387
+msgid "Drafts folder"
+msgstr "Φάκελος Πρόχειρων"
+
+#: forms.py:388
+msgid "Folder where drafts go"
+msgstr "Ο φάκελος που αποθηκεύονται τα πρόχειρα"
+
+#: forms.py:392
+msgid "Junk folder"
+msgstr "Φάκελος ανεπιθύμητων"
+
+#: forms.py:393
+msgid "Folder where junk messages should go"
+msgstr "Φάκελος που θα πηγαίνουν τα ανεπιθύμητα "
+
+#: forms.py:396
+msgid "Composing messages"
+msgstr "Δημιουργία μηνυμάτων"
+
+#: forms.py:400
+msgid "Default editor"
+msgstr "Προεπιλεγμένος κειμενογράφος"
+
+#: forms.py:402
+msgid "The default editor to use when composing a message"
+msgstr "Ο προεπιλεγμένος κειμενογράφος για την δημιουργία μηνυμάτων"
+
+#: forms.py:408
+msgid "Signature text"
+msgstr "Κείμενο υπογραφής"
+
+#: forms.py:409
+msgid "User defined email signature"
+msgstr "Προεπιλεγμένη υπογραφή χρήστη"
+
+#: forms.py:429
+msgid "Value must be a positive integer (> 0)"
+msgstr "Η τιμή πρέπει να είναι θετικός ακέραιος (> 0)"
+
+#: handlers.py:20
+msgid "Webmail"
+msgstr "Webmail"
+
+#: lib/imapemail.py:53
+msgid "Add to contacts"
+msgstr "Προσθήκη στις επαφές"
+
+#: lib/imapemail.py:261
+msgid "wrote:"
+msgstr "έγγραψε:"
+
+#: lib/imapemail.py:316
+msgid "Date"
+msgstr "Ημερομηνία"
+
+#: lib/imapemail.py:328 lib/imapemail.py:331
+msgid "Original message"
+msgstr "Αρχικό μήνυμα"
+
+#: lib/imaputils.py:243
+msgid "Failed to retrieve hierarchy delimiter"
+msgstr " Αποτυχία κατά την ανάκτηση της οροθετημένης ιεραρχίας "
+
+#: lib/imaputils.py:281
+#, python-format
+msgid "Connection to IMAP server failed: %s"
+msgstr "Παρουσιάστηκε σφάλμα στη σύνδεση με τον εξυπηρετητή IMAP: %s"
+
+#: lib/imaputils.py:522
+msgid "Inbox"
+msgstr "Εισερχόμενα"
+
+#: lib/imaputils.py:524
+msgid "Drafts"
+msgstr "Πρόχειρα"
+
+#: lib/imaputils.py:526
+msgid "Junk"
+msgstr "Ανεπιθύμητα"
+
+#: lib/imaputils.py:528
+msgid "Sent"
+msgstr "Απεσταλμένα"
+
+#: lib/imaputils.py:530
+msgid "Trash"
+msgstr "Σκουπιδοτενεκές"
+
+#: modo_extension.py:18
+msgid "Simple IMAP webmail"
+msgstr "Απλό IMAP webmail"
+
+#: templates/modoboa_webmail/attachments.html:8
+msgid "Attach"
+msgstr "Επισύναψη"
+
+#: templates/modoboa_webmail/attachments.html:12
+msgid "Uploading.."
+msgstr "Μεταφόρτωση.."
+
+#: templates/modoboa_webmail/compose_menubar.html:9
+#: templates/modoboa_webmail/headers.html:11 views.py:322
+msgid "Attachments"
+msgstr "Συνημμένα"
+
+#: templates/modoboa_webmail/folder.html:6
+msgid "Parent mailbox"
+msgstr "Γονικό γραμματοκιβώτιο"
+
+#: templates/modoboa_webmail/index.html:44
+msgid "Compose"
+msgstr "Δημιουργία"
+
+#: templatetags/webmail_tags.py:24 templatetags/webmail_tags.py:92
+msgid "Back"
+msgstr "Πίσω"
+
+#: templatetags/webmail_tags.py:30
+msgid "Reply"
+msgstr "Απάντηση"
+
+#: templatetags/webmail_tags.py:35
+msgid "Reply all"
+msgstr "Απάντηση σε όλους"
+
+#: templatetags/webmail_tags.py:40
+msgid "Forward"
+msgstr "Προώθηση"
+
+#: templatetags/webmail_tags.py:48 templatetags/webmail_tags.py:111
+msgid "Delete"
+msgstr "Διαγραφή"
+
+#: templatetags/webmail_tags.py:55 templatetags/webmail_tags.py:120
+msgid "Mark as spam"
+msgstr "Χαρακτηρισμός ως ανεπιθύμητο "
+
+#: templatetags/webmail_tags.py:58
+msgid "Display options"
+msgstr "Ρυθμίσεις εμφάνισης"
+
+#: templatetags/webmail_tags.py:62
+msgid "Activate links"
+msgstr "Ενεργοί σύνδεσμοι"
+
+#: templatetags/webmail_tags.py:65
+msgid "Disable links"
+msgstr "Απενεργοποιημένοι σύνδεσμοι"
+
+#: templatetags/webmail_tags.py:76 templatetags/webmail_tags.py:161
+msgid "Mark as not spam"
+msgstr "Αποχαρακτηρισμός ως ανεπιθύμητο"
+
+#: templatetags/webmail_tags.py:97
+msgid "Send"
+msgstr "Αποστολή"
+
+#: templatetags/webmail_tags.py:123
+msgid "Actions"
+msgstr "Ενέργειες"
+
+#: templatetags/webmail_tags.py:127
+msgid "Mark as read"
+msgstr "Χαρακτηρισμός ως διαβασμένο"
+
+#: templatetags/webmail_tags.py:132
+msgid "Mark as unread"
+msgstr "Χαρακτηρισμός ως νέο"
+
+#: templatetags/webmail_tags.py:137
+msgid "Mark as flagged"
+msgstr "Χαρακτηρισμός ως επισημασμένο"
+
+#: templatetags/webmail_tags.py:142
+msgid "Mark as unflagged"
+msgstr "Αποχαρακτηρισμός ως επισημασμένο"
+
+#: templatetags/webmail_tags.py:151 views.py:167
+msgid "Empty folder"
+msgstr "Άδειασμα φακέλου "
+
+#: templatetags/webmail_tags.py:232 views.py:204
+msgid "Create a new folder"
+msgstr "Δημιουργία νέου φακέλου"
+
+#: templatetags/webmail_tags.py:240
+msgid "Edit the selected folder"
+msgstr "Επεξεργασία επιλεγμένου φακέλου"
+
+#: templatetags/webmail_tags.py:245
+msgid "Remove the selected folder"
+msgstr "Κατάργηση επιλεγμένου φακέλου"
+
+#: templatetags/webmail_tags.py:249
+msgid "Compress folder"
+msgstr "Συμπίεση φακέλου"
+
+#: views.py:61 views.py:79 views.py:93 views.py:111 views.py:129 views.py:165
+#: views.py:179 views.py:257 views.py:280 views.py:483 views.py:531
+#: views.py:546 views.py:585 views.py:625
+msgid "Invalid request"
+msgstr "Λάθος αίτημα"
+
+#: views.py:99
+#, python-format
+msgid "%(count)d message deleted"
+msgid_plural "%(count)d messages deleted"
+msgstr[0] "%(count)d μήνυμα διαγράφηκε"
+msgstr[1] "%(count)d μηνύματα διαγράφηκαν"
+
+#: views.py:142 views.py:153
+#, python-format
+msgid "%(count)d message marked"
+msgid_plural "%(count)d messages marked"
+msgstr[0] "%(count)dμηνύματα χαρακτηρίστηκαν"
+msgstr[1] "%(count)dμηνύματα χαρακτηρίστηκαν"
+
+#: views.py:197
+msgid "Folder created"
+msgstr "Ο φάκελος δημιουγήθηκε"
+
+#: views.py:207
+msgid "Create"
+msgstr "Δημιουργία"
+
+#: views.py:223 views.py:259
+msgid "Edit folder"
+msgstr "Επεξεργασία φακέλου"
+
+#: views.py:226 views.py:262
+msgid "Update"
+msgstr "Ενημέρωση"
+
+#: views.py:239
+msgid "Folder updated"
+msgstr "Ο φάκελος ενημερώθηκε"
+
+#: views.py:312
+msgid "Failed to save attachment: "
+msgstr "Σφάλμα κατά την αποθήκευση του συνημμένου:"
+
+#: views.py:316
+#, python-format
+msgid "Attachment is too big (limit: %s)"
+msgstr "Το συνημμένο είναι πολύ μεγάλο (όριο: %s)"
+
+#: views.py:339
+msgid "Bad query"
+msgstr "Λάθος ερώτημα"
+
+#: views.py:351
+msgid "Failed to remove attachment: "
+msgstr "Σφάλμα κατά την αφαίρεση του συνημμένου:"
+
+#: views.py:356
+msgid "Unknown attachment"
+msgstr "Άγνωστο συνημμένο"
+
+#: views.py:416
+msgid "Empty mailbox"
+msgstr "Άδειασμα γραμματοκιβωτίου"

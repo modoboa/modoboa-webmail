@@ -22,10 +22,18 @@ BODYSTRUCTURE_SAMPLE_3 = [
     b' "base64" 94130 NIL ("attachment" ("filename" "=?iso-8859-1?Q?CV=5FAude=5FGIRODON=5FNGUYEN=5Fao=FBt2017_g=E9n=E9rique.pd?= =?iso-8859-1?Q?f?=" "size" "68787" "creation-date" "Wed, 13 Sep 2017 08:50:03 GMT" "modification-date" "Wed, 13 Sep 2017 08:50:03 GMT")) NIL NIL) "mixed" ("boundary" "_004_HE1PR10MB1642F2B8BA7FF8EAC0FC7AECD86E0HE1PR10MB1642EURP_") NIL ("fr-FR") NIL))'
 ]
 
+BODYSTRUCTURE_4 = b'BODYSTRUCTURE ((("text" "plain" ("charset" "iso-8859-1") NIL NIL "quoted-printable" 886 32 NIL NIL NIL NIL)("text" "html" ("charset" "us-ascii") NIL NIL "quoted-printable" 1208 16 NIL NIL NIL NIL) "alternative" ("boundary" "----=_NextPart_001_0003_01CCC564.B2F64FF0") NIL NIL NIL)("application" "octet-stream" ("name" "Carte Verte_2.pdf") NIL NIL "base64" 285610 NIL ("attachment" ("filename" "Carte Verte_2.pdf")) NIL NIL) "mixed" ("boundary" "----=_NextPart_000_0002_01CCC564.B2F64FF0") NIL NIL NIL)'
+
 BODYSTRUCTURE_SAMPLE_4 = [
-    (b'855 (UID 46931 BODYSTRUCTURE ((("text" "plain" ("charset" "iso-8859-1") NIL NIL "quoted-printable" 886 32 NIL NIL NIL NIL)("text" "html" ("charset" "us-ascii") NIL NIL "quoted-printable" 1208 16 NIL NIL NIL NIL) "alternative" ("boundary" "----=_NextPart_001_0003_01CCC564.B2F64FF0") NIL NIL NIL)("application" "octet-stream" ("name" "Carte Verte_2.pdf") NIL NIL "base64" 285610 NIL ("attachment" ("filename" "Carte Verte_2.pdf")) NIL NIL) "mixed" ("boundary" "----=_NextPart_000_0002_01CCC564.B2F64FF0") NIL NIL NIL) BODY[HEADER.FIELDS (DATE FROM TO CC SUBJECT)] {153}', b'From: <Service.client10@maaf.fr>\r\nTo: <TONIO@NGYN.ORG>\r\nCc: \r\nSubject: Notre contact du 28/12/2011 - 192175092\r\nDate: Wed, 28 Dec 2011 13:29:17 +0100\r\n\r\n'),
+    (b'855 (UID 46931 ' + BODYSTRUCTURE_4 + b' BODY[HEADER.FIELDS (FROM TO CC DATE SUBJECT REPLY-TO MESSAGE-ID)] {235}', b'From: <Service.client10@maaf.fr>\r\nTo: <TONIO@NGYN.ORG>\r\nCc: \r\nSubject: Notre contact du 28/12/2011 - 192175092\r\nDate: Wed, 28 Dec 2011 13:29:17 +0100\r\nMessage-ID: <CABY0dkJspTaFn7v-1OG1nc9M0Qxn+VUTpcXzxyGNBnSnZtqMrw@mail.gmail.com>\r\n\r\n'),
     b')'
 ]
+
+BODYSTRUCTURE_ONLY_4 = [
+    (b'855 (UID 46931 ' + BODYSTRUCTURE_4), ')']
+
+BODY_PLAIN_4 = [
+    (b'855 (UID 46931 BODY[1.1] {25}', b'This is a test message.\r\n'), b')']
 
 BODYSTRUCTURE_SAMPLE_5 = [
     (b'856 (UID 46936 BODYSTRUCTURE (("text" "plain" ("charset" "ISO-8859-1") NIL NIL "quoted-printable" 724 22 NIL NIL NIL NIL)("text" "html" ("charset" "ISO-8859-1") NIL NIL "quoted-printable" 2662 48 NIL NIL NIL NIL) "alternative" ("boundary" "----=_Part_1326887_254624357.1325083973970") NIL NIL NIL) BODY[HEADER.FIELDS (DATE FROM TO CC SUBJECT)] {258}', 'Date: Wed, 28 Dec 2011 15:52:53 +0100 (CET)\r\nFrom: =?ISO-8859-1?Q?Malakoff_M=E9d=E9ric?= <communication@communication.malakoffmederic.com>\r\nTo: Antoine Nguyen <tonio@ngyn.org>\r\nSubject: =?ISO-8859-1?Q?Votre_inscription_au_grand_Jeu_Malakoff_M=E9d=E9ric?=\r\n\r\n'),

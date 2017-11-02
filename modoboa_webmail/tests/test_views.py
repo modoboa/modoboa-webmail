@@ -18,6 +18,8 @@ from modoboa.admin import factories as admin_factories
 from modoboa.core import models as core_models
 from modoboa.lib.tests import ModoTestCase
 
+from . import data as tests_data
+
 
 BODYSTRUCTURE_SAMPLE_WITH_FLAGS = [
     (b'19 (UID 19 FLAGS (\\Seen) BODYSTRUCTURE (("text" "plain" ("charset" "ISO-8859-1" "format" "flowed") NIL NIL "7bit" 2 1 NIL NIL NIL NIL)("message" "rfc822" ("name*" "ISO-8859-1\'\'%5B%49%4E%53%43%52%49%50%54%49%4F%4E%5D%20%52%E9%63%E9%70%74%69%6F%6E%20%64%65%20%76%6F%74%72%65%20%64%6F%73%73%69%65%72%20%64%27%69%6E%73%63%72%69%70%74%69%6F%6E%20%46%72%65%65%20%48%61%75%74%20%44%E9%62%69%74") NIL NIL "8bit" 3632 ("Wed, 13 Dec 2006 20:30:02 +0100" {70}',  # noqa
@@ -73,7 +75,18 @@ class IMAP4Mock(object):
         if command == "SORT":
             return "OK", [b"19"]
         elif command == "FETCH":
-            return "OK", BODYSTRUCTURE_SAMPLE_WITH_FLAGS
+            uid = args[0]
+            data = BODYSTRUCTURE_SAMPLE_WITH_FLAGS
+            if int(uid) == 46931:
+                if args[1] == "(BODYSTRUCTURE)":
+                    data = tests_data.BODYSTRUCTURE_ONLY_4
+                elif "HEADER.FIELDS" in args[1]:
+                    data = tests_data.BODYSTRUCTURE_SAMPLE_4
+                else:
+                    data = tests_data.BODY_PLAIN_4
+            return "OK", data
+        elif command == "STORE":
+            return "OK", []
 
 
 class WebmailTestCase(ModoTestCase):
@@ -276,3 +289,25 @@ class WebmailTestCase(ModoTestCase):
         session["webmail_navparams"] = {"inbox": "Test"}
         session.save()
         self.ajax_get(url)
+
+    def test_reply_to_email(self):
+        """Test reply form."""
+        url = "{}?action=reply&mbox=INBOX&mailid=46931".format(
+            reverse("modoboa_webmail:index"))
+        session = self.client.session
+        session["lastaction"] = "compose"
+        session.save()
+        response = self.ajax_get(url)
+        self.assertIn('id="id_origmsgid"', response["listing"])
+
+        response = self.client.post(
+            url, {
+                "from_": self.user.email, "to": "test@example.test",
+                "subject": "test", "body": "Test",
+                "origmsgid": "<id@localhost>"
+            }
+        )
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(
+            mail.outbox[0].from_email, "user@test.com")
+        self.assertIn("References", mail.outbox[0].extra_headers)

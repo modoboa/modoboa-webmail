@@ -2,6 +2,7 @@
 
 <form class="form-horizontal" method="POST" action="{{ posturl }}" id="composemail">
   {% csrf_token %}
+  {{ form.origmsgid }}
   <div id="compose-container">
     <div id="mailheader">
       {% render_field form.from_ label_width="col-sm-1" %}

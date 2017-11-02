@@ -114,7 +114,8 @@ class ComposeMailForm(forms.Form):
         max_length=255,
         required=False
     )
-    origmsgid = forms.CharField(label="", required=False)
+    origmsgid = forms.CharField(
+        label="", required=False, widget=forms.HiddenInput())
     body = forms.CharField(
         required=False, widget=CKEditorUploadingWidget(
             attrs={"class": "editor form-control"})
@@ -210,7 +211,8 @@ class ComposeMailForm(forms.Form):
         Can be overidden by children.
         """
         headers = {
-            "User-Agent": pkg_resources.get_distribution("modoboa").version
+            "User-Agent": "Modoboa {}".format(
+                pkg_resources.get_distribution("modoboa").version)
         }
         origmsgid = self.cleaned_data.get("origmsgid")
         if origmsgid:

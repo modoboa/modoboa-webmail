@@ -3,30 +3,26 @@ cache: pip
 python:
   - "2.7"
   - "3.4"
+  - "3.6"
 
 env:
   - DB="POSTGRESQL"
-  - DB="MYSQL"
 
 services:
-  - mysql
   - postgres
 
 before_install:
   - pip install codecov
   - if [[ $DB = 'POSTGRESQL' ]]; then pip install -q psycopg2; fi
-  - if [[ $DB = 'MYSQL' ]]; then pip install -q mysqlclient; fi
-
-install:
   - pip install -e git+https://github.com/modoboa/modoboa#egg=modoboa
   - pip install -q factory-boy testfixtures
+
+install:
+  - pip install -r requirements.txt
   - python setup.py -q develop
 
 before_script:
   - if [[ $DB = 'POSTGRESQL' ]]; then psql -c 'create database modoboa_test;' -U postgres; fi
-  - if [[ $DB = 'MYSQL' ]]; then mysql -e "create database IF NOT EXISTS modoboa_test;" -uroot; fi
-  - if [[ $DB = 'MYSQL' ]]; then mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'modoboa'@'localhost' IDENTIFIED BY 'modoboa';" -uroot; fi
-
 script:
   - cd test_project
   - coverage run --source ../modoboa_webmail manage.py test modoboa_webmail
@@ -34,3 +30,18 @@ script:
 after_success:
   - codecov
 
+before_deploy:
+  - cd ../modoboa_webmail
+  - django-admin compilemessages
+  - cd ..
+
+deploy:
+  provider: pypi
+  user: tonio
+  password:
+    secure: vDpojbQnBdmXXfzJdwWhLbVHyFXpSC0glYNk42rbfzdwQnAA9rbXxzX683OcBZPhqozHwCkazOQmDzzBU/Vue4hgAz5U5rLemMQp288urVUQrt2IPwfWyXe+Cgu9CebiwhWDh4tgWBiFvNySmpuP0xJRVi0oKkWoEM+dcfsTa7OSuCx/e8eRA35fWIo7/xyxc1Gl1sdg0J+TwQJV6EyUxvhTzqP0PoZSGLkOHE+SOZJyM8UAo48VV5+uFqKVae33tsIhJBJu6/LvWFFu0Yedr/DqjZ8OY5tTU86Bn+MblBM8LmKpKI1XNxgULL7+GXS1c1YIo5Wbw8esEHJq5ro7eqXe/KnDar8l4/+MPExlQsmjkOxwvWAF45VMfFm5oVXZYsD8giD+a6EFT6ELDOKb973fDLKZLmNToZRNWkbBDTrcd/ppElswTORMkHhew/W7UuXtEQxNKWcUETuuViyPNMFrTy3SZ8oIuG2hqbx3wIrj34PlxSJGHSRlE7aLwG5whnkgkEFN9bfvfqpsowrHnqbBfgUJt07uV0bKEjwqEz55PALRhDjRoGkvtDkPJjnJvwY+ieC2VKyLNzZBi2iw/Mh6peyK0oTgCzdpUvSLRuiNzpWf+jpGE0aOWxcwcdEA6a4aTJXivMgg5/4Jbvs+NbjNgTfXdOApMWkxu2aCNWI=
+  server: https://upload.pypi.org/legacy/
+  skip_cleanup: true
+  on:
+    tags: true
+    python: '3.6'

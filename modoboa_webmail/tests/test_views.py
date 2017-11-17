@@ -75,15 +75,20 @@ class IMAP4Mock(object):
         if command == "SORT":
             return "OK", [b"19"]
         elif command == "FETCH":
-            uid = args[0]
+            uid = int(args[0])
             data = BODYSTRUCTURE_SAMPLE_WITH_FLAGS
-            if int(uid) == 46931:
+            if uid == 46931:
                 if args[1] == "(BODYSTRUCTURE)":
                     data = tests_data.BODYSTRUCTURE_ONLY_4
                 elif "HEADER.FIELDS" in args[1]:
                     data = tests_data.BODYSTRUCTURE_SAMPLE_4
                 else:
                     data = tests_data.BODY_PLAIN_4
+            elif uid == 33:
+                if args[1] == "(BODYSTRUCTURE)":
+                    data = tests_data.BODYSTRUCTURE_EMPTY_MAIL
+                else:
+                    data = tests_data.EMPTY_BODY
             return "OK", data
         elif command == "STORE":
             return "OK", []
@@ -311,3 +316,10 @@ class WebmailTestCase(ModoTestCase):
         self.assertEqual(
             mail.outbox[0].from_email, "user@test.com")
         self.assertIn("References", mail.outbox[0].extra_headers)
+
+    def test_getmailcontent_empty_mail(self):
+        """Try to display an empty email."""
+        url = "{}?action=reply&mbox=INBOX&mailid=33".format(
+            reverse("modoboa_webmail:mailcontent_get"))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)

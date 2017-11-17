@@ -532,7 +532,7 @@ def getmailcontent(request):
     email = ImapEmail(
         request,
         "%s:%s" % (mbox, mailid), dformat="DISPLAYMODE",
-        links=int(request.GET["links"])
+        links=int(request.GET.get("links", "0"))
     )
     return render(request, "common/viewmail.html", {
         "mailbody": email.body if email.body else ""

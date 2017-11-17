@@ -143,11 +143,14 @@ class ImapEmail(Email):
         if self._body is None:
             self.fetch_body_structure()
             bodyc = u""
-            for part in self.bs.contents[self.mformat]:
+            parts = self.bs.contents.get(self.mformat, [])
+            for part in parts:
                 pnum = part["pnum"]
                 data = self.imapc._cmd(
                     "FETCH", self.mailid, "(BODY.PEEK[%s])" % pnum
                 )
+                if not data:
+                    continue
                 content = decode_payload(
                     part["encoding"], data[int(self.mailid)]["BODY[%s]" % pnum]
                 )

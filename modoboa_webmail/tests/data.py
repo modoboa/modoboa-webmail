@@ -56,3 +56,9 @@ BODYSTRUCTURE_SAMPLE_8 = [
     (b'1 (UID 947 BODYSTRUCTURE ("text" "html" ("charset" "utf-8") NIL NIL "8bit" 889 34 NIL NIL NIL NIL) BODY[HEADER.FIELDS (FROM TO CC DATE SUBJECT)] {80}', 'From: Antoine Nguyen <tonio@ngyn.org>\r\nDate: Sat, 26 Mar 2016 11:45:49 +0100\r\n\r\n'),
     b')'
 ]
+
+BODYSTRUCTURE_EMPTY_MAIL = [
+    b'33 (UID 33 BODYSTRUCTURE (("text" "plain" ("charset" "us-ascii") NIL NIL "quoted-printable" 0 0 NIL NIL NIL NIL)("application" "zip" ("name" "hotmail.com!ngyn.org!1435428000!1435514400.zip") NIL NIL "base64" 978 NIL ("attachment" ("filename" "hotmail.com!ngyn.org!1435428000!1435514400.zip")) NIL NIL) "mixed" ("boundary" "--boundary_32281_b52cf564-2a50-4f96-aeb0-ef5f83b05463") NIL NIL NIL))'
+]
+
+EMPTY_BODY = [(b'33 (UID 33 BODY[1] {0}', b''), b')']

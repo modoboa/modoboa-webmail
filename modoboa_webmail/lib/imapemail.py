@@ -149,7 +149,7 @@ class ImapEmail(Email):
                 data = self.imapc._cmd(
                     "FETCH", self.mailid, "(BODY.PEEK[%s])" % pnum
                 )
-                if not data:
+                if not data or not int(self.mailid) in data:
                     continue
                 content = decode_payload(
                     part["encoding"], data[int(self.mailid)]["BODY[%s]" % pnum]

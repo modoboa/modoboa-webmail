@@ -56,6 +56,7 @@ MODOBOA_APPS = (
     'modoboa.core',
     'modoboa.lib',
     'modoboa.admin',
+    'modoboa.transport',
     'modoboa.relaydomains',
     'modoboa.limits',
     'modoboa.parameters',

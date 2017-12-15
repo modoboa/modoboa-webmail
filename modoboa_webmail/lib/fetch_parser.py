@@ -90,7 +90,7 @@ class FetchResponseParser(object):
          r"(?P<section>\[.*\])?(?P<origin_octet>\<\d+\>)?"),
         ("number", r'[0-9]+'),
         ("literal_marker", r'{\d+}'),
-        ("flag", r'(\\|\$)?[a-zA-Z0-9]+'),
+        ("flag", r'(\\|\$)?[a-zA-Z0-9\-_]+'),
     ]
 
     def __init__(self):

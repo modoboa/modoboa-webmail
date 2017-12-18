@@ -24,4 +24,5 @@ class Webmail(ModoExtension):
         param_tools.registry.add("global", forms.ParametersForm, "Webmail")
         param_tools.registry.add("user", forms.UserSettings, "Webmail")
 
+
 exts_pool.register_extension(Webmail)

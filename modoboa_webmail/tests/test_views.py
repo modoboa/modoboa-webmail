@@ -98,7 +98,7 @@ class WebmailTestCase(ModoTestCase):
     """Check webmail backend."""
 
     @classmethod
-    def setUpTestData(cls):
+    def setUpTestData(cls):  # noqa
         """Create some users."""
         super(WebmailTestCase, cls).setUpTestData()
         admin_factories.populate_database()

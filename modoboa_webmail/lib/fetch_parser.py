@@ -37,7 +37,7 @@ class Lexer(object):
         self.definitions = definitions
         parts = []
         for name, part in definitions:
-            parts.append("(?P<%s>%s)" % (name, part))
+            parts.append(r"(?P<%s>%s)" % (name, part))
         self.regexpString = "|".join(parts)
         self.regexp = re.compile(self.regexpString, re.MULTILINE)
         self.wsregexp = re.compile(r"\s+", re.M)

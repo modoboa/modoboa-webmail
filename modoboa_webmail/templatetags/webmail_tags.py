@@ -251,9 +251,11 @@ def mboxes_menu():
          "url": reverse("modoboa_webmail:folder_compress")}
     ]
 
-    return render_to_string('common/menu.html', dict(
-        entries=entries, css="dropdown-menu"
-    ))
+    context = {
+        "entries": entries,
+        "css": "dropdown-menu",
+    }
+    return render_to_string('common/menu.html', context)
 
 
 @register.filter

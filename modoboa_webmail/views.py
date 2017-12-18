@@ -584,7 +584,7 @@ def check_unseen_messages(request):
     if not mboxes:
         raise BadRequest(_("Invalid request"))
     mboxes = mboxes.split(",")
-    counters = dict()
+    counters = {}
     imapc = get_imapconnector(request)
     for mb in mboxes:
         counters[mb] = imapc.unseen_messages(mb)
@@ -623,7 +623,7 @@ def index(request):
     else:
         if request.is_ajax():
             raise BadRequest(_("Invalid request"))
-        response = dict(selection="webmail")
+        response = {"selection": "webmail"}
 
     curmbox = WebmailNavigationParameters(request).get("mbox", "INBOX")
     if not request.is_ajax():

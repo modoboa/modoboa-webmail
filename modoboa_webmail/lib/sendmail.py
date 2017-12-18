@@ -28,7 +28,7 @@ def send_mail(request, form, posturl=None):
              "posturl": posturl},
             request
         )
-        return False, dict(status="ko", listing=listing, editor=editormode)
+        return False, {"status": "ko", "listing": listing, "editor": editormode}
 
     msg = form.to_msg(request)
     conf = dict(param_tools.get_global_parameters("modoboa_webmail"))

@@ -1,28 +1,36 @@
 language: python
-cache: pip
 python:
   - "2.7"
   - "3.4"
+  - "3.5"
   - "3.6"
 
 env:
-  - DB="POSTGRESQL"
+  global:
+    - PYTHONWARNINGS="default,ignore::PendingDeprecationWarning,ignore::ResourceWarning"
+  matrix:
+    - DB="POSTGRESQL"
+
+sudo: false
+
+cache: pip
 
 services:
   - postgres
 
 before_install:
   - pip install codecov
-  - if [[ $DB = 'POSTGRESQL' ]]; then pip install -q psycopg2; fi
+  - if [[ $DB = "POSTGRESQL" ]]; then pip install -q psycopg2; fi
   - pip install -e git+https://github.com/modoboa/modoboa#egg=modoboa
-  - pip install -q factory-boy testfixtures
 
 install:
-  - pip install -r requirements.txt
+  - pip install -q -r requirements.txt
+  - pip install -q -r test-requirements.txt
   - python setup.py -q develop
 
 before_script:
-  - if [[ $DB = 'POSTGRESQL' ]]; then psql -c 'create database modoboa_test;' -U postgres; fi
+  - if [[ $DB = "POSTGRESQL" ]]; then psql -c "CREATE DATABASE modoboa_test;" -U postgres; fi
+
 script:
   - cd test_project
   - coverage run --source ../modoboa_webmail manage.py test modoboa_webmail

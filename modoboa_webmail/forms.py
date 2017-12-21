@@ -317,7 +317,7 @@ class ParametersForm(param_forms.AdminParametersForm):
                  ("ssl", "SSL/TLS")],
         initial="none",
         help_text=_("Use a secured connection to access SMTP server"),
-        widget=form_utils.InlineRadioSelect
+        widget=form_utils.HorizontalRadioSelect()
     )
 
     smtp_port = forms.IntegerField(
@@ -343,7 +343,7 @@ class UserSettings(param_forms.UserParametersForm):
         label=_("Default message display mode"),
         choices=[("html", "html"), ("plain", "text")],
         help_text=_("The default mode used when displaying a message"),
-        widget=form_utils.InlineRadioSelect()
+        widget=form_utils.HorizontalRadioSelect()
     )
 
     enable_links = form_utils.YesNoField(
@@ -402,7 +402,7 @@ class UserSettings(param_forms.UserParametersForm):
         label=_("Default editor"),
         choices=[("html", "html"), ("plain", "text")],
         help_text=_("The default editor to use when composing a message"),
-        widget=form_utils.InlineRadioSelect()
+        widget=form_utils.HorizontalRadioSelect()
     )
 
     signature = forms.CharField(

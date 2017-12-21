@@ -3,7 +3,7 @@
 
 from django import template
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
@@ -251,9 +251,11 @@ def mboxes_menu():
          "url": reverse("modoboa_webmail:folder_compress")}
     ]
 
-    return render_to_string('common/menu.html', dict(
-        entries=entries, css="dropdown-menu"
-    ))
+    context = {
+        "entries": entries,
+        "css": "dropdown-menu",
+    }
+    return render_to_string('common/menu.html', context)
 
 
 @register.filter

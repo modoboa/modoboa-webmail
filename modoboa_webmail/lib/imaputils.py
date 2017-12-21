@@ -104,9 +104,14 @@ class BodyStructure(object):
 
         """
         pnum = "1" if pnum is None else pnum
-        params = dict(pnum=pnum, params=definition[2], cid=definition[3],
-                      description=definition[4], encoding=definition[5],
-                      size=definition[6])
+        params = {
+            "pnum": pnum,
+            "params": definition[2],
+            "cid": definition[3],
+            "description": definition[4],
+            "encoding": definition[5],
+            "size": definition[6]
+        }
         mtype = definition[0].lower()
         subtype = definition[1].lower()
         ftype = "%s/%s" % (definition[0].lower(), subtype)
@@ -321,7 +326,7 @@ class IMAPconnector(object):
                 criterions, '(%s "%s")' % (key, pattern))
         if six.PY3:
             criterions = bytearray(criterions, "utf-8")
-        elif isinstance(criterions, unicode):
+        elif isinstance(criterions, six.text_type):
             criterions = criterions.encode("utf-8")
         self.criterions = [criterions]
 
@@ -429,10 +434,10 @@ class IMAPconnector(object):
                     descr = mailboxes[idx]
                     break
             if not mdm_found:
-                descr = dict(name=name)
+                descr = {"name": name}
                 newmboxes += [descr]
 
-            if re.search("\%s" % delimiter, name):
+            if re.search(r"\%s" % delimiter, name):
                 parts = name.split(delimiter)
                 if "path" not in descr:
                     descr["path"] = parts[0]
@@ -479,7 +484,7 @@ class IMAPconnector(object):
                     descr = mailboxes[idx]
                     break
             if not mdm_found:
-                descr = dict(name=name)
+                descr = {"name": name}
                 newmboxes += [descr]
 
             if '\\Marked' in flags or '\\UnMarked' not in flags:

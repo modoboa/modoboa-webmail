@@ -12,7 +12,7 @@ import mock
 from six import BytesIO
 
 from django.core import mail
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from modoboa.admin import factories as admin_factories
 from modoboa.core import models as core_models
@@ -98,7 +98,7 @@ class WebmailTestCase(ModoTestCase):
     """Check webmail backend."""
 
     @classmethod
-    def setUpTestData(cls):
+    def setUpTestData(cls):  # noqa
         """Create some users."""
         super(WebmailTestCase, cls).setUpTestData()
         admin_factories.populate_database()

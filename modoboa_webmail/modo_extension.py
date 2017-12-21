@@ -1,7 +1,7 @@
 # coding: utf-8
 """Declare and register the webmail extension."""
 
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy
 
 from modoboa.core.extensions import ModoExtension, exts_pool
@@ -23,5 +23,6 @@ class Webmail(ModoExtension):
     def load(self):
         param_tools.registry.add("global", forms.ParametersForm, "Webmail")
         param_tools.registry.add("user", forms.UserSettings, "Webmail")
+
 
 exts_pool.register_extension(Webmail)

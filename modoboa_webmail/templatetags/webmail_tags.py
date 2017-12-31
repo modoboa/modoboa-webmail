@@ -165,12 +165,12 @@ def listmailbox_menu(selection, folder, user, **kwargs):
     entries[2]["menu"] += sort_actions
     if folder == user.parameters.get_value("trash_folder"):
         entries[0]["class"] += " disabled"
-        entries[2]["menu"] += [
-            {"name": "empty",
-             "label": _("Empty folder"),
-             "url": u"{0}?name={1}".format(
-                 reverse("modoboa_webmail:trash_empty"), folder)}
-        ]
+        entries[2]["menu"].insert(4, {
+            "name": "empty",
+            "label": _("Empty folder"),
+            "url": u"{0}?name={1}".format(
+                reverse("modoboa_webmail:trash_empty"), folder)
+        })
     elif folder == user.parameters.get_value("junk_folder"):
         entries[1] = {
             "name": "mark_as_not_junk_multi",

@@ -9,6 +9,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
 from ..lib import imapheader, separate_mailbox
+from .. import constants
 
 register = template.Library()
 
@@ -104,7 +105,7 @@ def compose_menu(selection, backurl, user, **kwargs):
 
 
 @register.simple_tag
-def listmailbox_menu(selection, folder, user):
+def listmailbox_menu(selection, folder, user, **kwargs):
     """The menu of the listmailbox action."""
     entries = [{
         "name": "totrash",
@@ -144,6 +145,24 @@ def listmailbox_menu(selection, folder, user):
                 reverse("modoboa_webmail:mail_mark", args=[folder]))
         }]
     }]
+    sort_actions = [{
+        "header": True,
+        "label": _("Sort by")
+    }]
+    current_order = kwargs.get("sort_order")
+    for order in constants.SORT_ORDERS:
+        entry = {
+            "name": "sort_by_{}".format(order[0]),
+            "label": order[1],
+            "url": order[0],
+            "class": "sort-order"
+        }
+        if current_order[1:] == order[0]:
+            css = "fa fa-arrow-{}".format(
+                "down" if current_order[0] == "-" else "up")
+            entry.update({"img": css})
+        sort_actions.append(entry)
+    entries[2]["menu"] += sort_actions
     if folder == user.parameters.get_value("trash_folder"):
         entries[0]["class"] += " disabled"
         entries[2]["menu"] += [
@@ -162,7 +181,6 @@ def listmailbox_menu(selection, folder, user):
         }
     return render_to_string('modoboa_webmail/main_action_bar.html', {
         'selection': selection, 'entries': entries, 'user': user, 'css': "nav",
-        'STATIC_URL': settings.STATIC_URL
     })
 
 

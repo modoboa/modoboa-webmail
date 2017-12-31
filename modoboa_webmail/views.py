@@ -393,9 +393,9 @@ def listmailbox(request, defmailbox="INBOX", update_session=True):
     mbc = get_imapconnector(request)
     mbc.parse_search_parameters(
         navparams.get("criteria"), navparams.get("pattern"))
-
+    sort_order = navparams.get("order")
     paginator = Paginator(
-        mbc.messages_count(folder=mbox, order=navparams.get("order")),
+        mbc.messages_count(folder=mbox, order=sort_order),
         request.user.parameters.get_value("messages_per_page")
     )
     page = paginator.getpage(page_id)
@@ -418,7 +418,10 @@ def listmailbox(request, defmailbox="INBOX", update_session=True):
         length = 0
         if previous_page_id is not None:
             navparams["page"] = previous_page_id
-    return {"listing": content, "length": length, "pages": [page_id]}
+    return {
+        "listing": content, "length": length, "pages": [page_id],
+        "menuargs": {"sort_order": sort_order}
+    }
 
 
 def render_compose(request, form, posturl, email=None, insert_signature=False):

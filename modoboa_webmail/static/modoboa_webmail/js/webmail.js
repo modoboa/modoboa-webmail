@@ -158,6 +158,7 @@ Webmail.prototype = {
                 $.proxy(this.attachments_init, this));
         }, this));
         $document.on('click', '.addcontact', $.proxy(this.addContact, this));
+        $document.on('click', '.sort-order', $.proxy(this.sortMessages, this));
     },
 
     /**
@@ -287,7 +288,7 @@ Webmail.prototype = {
      * @this Webmail
      */
     store_nav_params: function() {
-        var params = new Array("order", "pattern", "criteria");
+        var params = new Array("sort_order", "pattern", "criteria");
 
         this.navparams = {};
         for (var idx in params) {
@@ -1476,5 +1477,28 @@ Webmail.prototype = {
             }
             createContact();
         });
+    },
+
+    /**
+     * Sort message list.
+     *
+     */
+    sortMessages: function (evt) {
+        evt.preventDefault();
+
+        var $link = get_target(evt, 'a');
+        var newDirection = '-';
+        var newOrder = newDirection + $link.attr('href');
+        var currentOrder = this.navparams['sort_order'];
+
+        if (currentOrder) {
+            var direction = currentOrder.substr(0, 1);
+            if (currentOrder.substr(1) == newOrder.substr(1)) {
+                newDirection = (direction === '+') ? '-' : '+';
+                newOrder = newDirection + newOrder.substr(1);
+            }
+        }
+        this.navobject.setparam('sort_order', newOrder);
+        this.navobject.update(true);
     }
 };

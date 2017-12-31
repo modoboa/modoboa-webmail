@@ -237,6 +237,8 @@ class FetchResponseParser(object):
 
     def parse_chunk(self, chunk):
         """Parse chunk."""
+        if not chunk:
+            return
         chunk = self.__convert_to_str(chunk)
         if self.__next_literal_len:
             literal = chunk[:self.__next_literal_len]

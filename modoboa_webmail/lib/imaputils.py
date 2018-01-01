@@ -724,28 +724,31 @@ class IMAPconnector(object):
         else:
             submessages = [start]
             mrange = start
+        headers = "DATE FROM TO CC SUBJECT"
         query = (
-            "(FLAGS BODYSTRUCTURE BODY.PEEK[HEADER.FIELDS (DATE FROM TO CC "
-            "SUBJECT)])"
+            "(FLAGS BODYSTRUCTURE RFC822.SIZE BODY.PEEK[HEADER.FIELDS ({})])"
+            .format(headers)
         )
         data = self._cmd("FETCH", mrange, query)
         result = []
         for uid in submessages:
+            msg_data = data[int(uid)]
             msg = email.message_from_string(
-                data[int(uid)]['BODY[HEADER.FIELDS (DATE FROM TO CC SUBJECT)]']
+                msg_data["BODY[HEADER.FIELDS ({})]".format(headers)]
             )
-            msg['imapid'] = uid
-            if r'\Seen' not in data[int(uid)]['FLAGS']:
-                msg['style'] = 'unseen'
-            if r'\Answered' in data[int(uid)]['FLAGS']:
-                msg['answered'] = True
-            if r'$Forwarded' in data[int(uid)]['FLAGS']:
-                msg['forwarded'] = True
-            if r'\Flagged' in data[int(uid)]['FLAGS']:
-                msg['flagged'] = True
-            bstruct = BodyStructure(data[int(uid)]['BODYSTRUCTURE'])
+            msg["imapid"] = uid
+            msg["size"] = msg_data["RFC822.SIZE"]
+            if r"\Seen" not in msg_data["FLAGS"]:
+                msg["style"] = "unseen"
+            if r"\Answered" in msg_data["FLAGS"]:
+                msg["answered"] = True
+            if r"$Forwarded" in msg_data["FLAGS"]:
+                msg["forwarded"] = True
+            if r"\Flagged" in msg_data["FLAGS"]:
+                msg["flagged"] = True
+            bstruct = BodyStructure(msg_data["BODYSTRUCTURE"])
             if bstruct.has_attachments():
-                msg['attachments'] = True
+                msg["attachments"] = True
             result += [msg]
         return result
 

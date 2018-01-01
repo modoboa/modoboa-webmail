@@ -24,7 +24,9 @@ Webmail.prototype = {
         ro_mboxes: ["INBOX"],
         trash: "",
         hdelimiter: '.',
-        mboxes_col_width: 200
+        mboxes_col_width: 200,
+        contactListUrl: null,
+        contactAddUrl: null
     },
 
     initialize: function(options) {
@@ -1145,11 +1147,12 @@ Webmail.prototype = {
                 valueField: 'address',
                 searchField: 'address',
                 options: [],
-                create: function (input) {
+                create: $.proxy(function (input) {
+                    this.createContact(input, input);
                     return {
                         address: input
                     };
-                },
+                }, this),
                 load: function (query, callback) {
                     if (!query.length) {
                         callback();
@@ -1434,6 +1437,22 @@ Webmail.prototype = {
         });
     },
 
+    createContact: function (name, address) {
+        var data = {
+            'display_name': name,
+            emails: [{address: address, type: 'other'}]
+        };
+        $.ajax({
+            url: this.options.contactAddUrl,
+            data: JSON.stringify(data),
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json'
+        }).done(function (data) {
+            $("body").notify("success", gettext("Contact added!"), 2000);
+        });
+    },
+
     /**
      * Add a new contact to address book.
      */
@@ -1449,34 +1468,17 @@ Webmail.prototype = {
         } else {
             name = $span.html();
         }
-
-        var createContact = function () {
-            var data = {
-                'display_name': name,
-                emails: [{address: address, type: 'other'}]
-            };
-            $.ajax({
-                url: $link.attr('href'),
-                data: JSON.stringify(data),
-                type: 'POST',
-                dataType: 'json',
-                contentType: 'application/json'
-            }).done(function(data) {
-                $("body").notify("success", gettext("Contact added!"), 2000);
-            });
-        };
-
         $.ajax({
             url: '{0}?search={1}'.format(this.options.contactListUrl, address)
-        }).success(function (data) {
+        }).success($.proxy(function (data) {
             if (data.length) {
                 $('body').notify(
                     'warning', gettext('A contact with this address already exists'),
                     1500);
                 return;
             }
-            createContact();
-        });
+            this.createContact(name, address);
+        }, this));
     },
 
     /**

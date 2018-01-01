@@ -51,13 +51,12 @@ class ImapEmail(Email):
         """Insert 'add to address book' links."""
         result = []
         title = _("Add to contacts")
-        url = reverse("api:contact-list")
         link_tpl = (
-            " <a class='addcontact' href='{}' title='{}'>"
+            " <a class='addcontact' href='#' title='{}'>"
             "<span class='fa fa-vcard'></span></a>"
         )
         for address in addresses:
-            address += link_tpl.format(url, title)
+            address += link_tpl.format(title)
             result.append(address)
         return result
 

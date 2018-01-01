@@ -18,7 +18,7 @@
     </div>
     <div class="col-xs-3 col-sm-2 text-right">
       {{ email.date|parse_imap_header:"date" }}
-      <p>{% if email.answered %}<span class="fa fa-mail-reply"></span>{% endif %}{% if email.forwarded %} <span class="fa fa-mail-forward"></span>{% endif %}{% if email.attachments %} <span class="fa fa-paperclip"></span>{% endif %}</p>
+      <p>{% if email.answered %}<span class="fa fa-mail-reply"></span>{% endif %}{% if email.forwarded %} <span class="fa fa-mail-forward"></span>{% endif %}{% if email.attachments %} <span class="fa fa-paperclip"></span>{% endif %} <span class="text-muted">{{ email.size|filesizeformat }}</span></p>
     </div>
   </div>
   {% endfor %}

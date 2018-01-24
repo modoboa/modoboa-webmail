@@ -491,7 +491,7 @@ def new_compose_form(request, action, mbox, mailid):
     """
     form = ComposeMailForm(request.user)
     modclass = globals()["%sModifier" % action.capitalize()]
-    email = modclass(form, request, "%s:%s" % (mbox, mailid), links="1")
+    email = modclass(form, request, "%s:%s" % (mbox, mailid), links=True)
     url = "?action=%s&mbox=%s&mailid=%s" % (action, mbox, mailid)
     return render_compose(request, form, url, email)
 

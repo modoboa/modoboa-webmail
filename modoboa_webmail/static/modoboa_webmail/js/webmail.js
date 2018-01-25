@@ -1140,7 +1140,7 @@ Webmail.prototype = {
         this.page_update(resp);
         if (this.options.contactListUrl) {
             this.$select = $('.selectize-contact').selectize({
-                delimiter: ';',
+                delimiter: ',',
                 valueField: 'address',
                 searchField: 'address',
                 options: [],

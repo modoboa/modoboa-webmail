@@ -8,12 +8,11 @@ from django.core.validators import validate_email
 
 class EmailListValidator(object):
 
-    """Validate a semi-comma separated list of email."""
+    """Validate a list of email."""
 
     def __call__(self, value):
         value = force_text(value)
-        emails = [email.strip() for email in value.split(";")]
-        addresses = getaddresses(emails)
+        addresses = getaddresses([value])
         [validate_email(email) for name, email in addresses]
 
 

@@ -1,22 +1,38 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Antoine Nguyen <tonio@ngyn.org>, 2016-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Modoboa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-21 18:59+0200\n"
-"PO-Revision-Date: 2017-09-21 17:01+0000\n"
+"POT-Creation-Date: 2018-01-25 13:16+0100\n"
+"PO-Revision-Date: 2018-01-25 13:16+0100\n"
 "Last-Translator: Antoine Nguyen <tonio@ngyn.org>\n"
 "Language-Team: French (http://www.transifex.com/tonio/modoboa/language/fr/)\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: constants.py:7 lib/imapemail.py:327
+msgid "Date"
+msgstr "Date"
+
+#: constants.py:8
+msgid "Sender"
+msgstr "Emetteur"
+
+#: constants.py:9
+msgid "Size"
+msgstr "Taille"
+
+#: constants.py:10 forms.py:113 lib/imapemail.py:325
+msgid "Subject"
+msgstr "Sujet"
 
 #: exceptions.py:22
 msgid "Server response"
@@ -30,203 +46,199 @@ msgstr "Action inconnue"
 msgid "From"
 msgstr "De"
 
-#: forms.py:98 templates/modoboa_webmail/compose.html:10
+#: forms.py:98 templates/modoboa_webmail/compose.html:11
 msgid "To"
 msgstr "A"
 
-#: forms.py:100 templates/modoboa_webmail/compose.html:26
+#: forms.py:100 templates/modoboa_webmail/compose.html:28
 msgid "Cc"
 msgstr "Cc"
 
-#: forms.py:102 forms.py:108 templates/modoboa_webmail/compose.html:13
+#: forms.py:102 forms.py:108 templates/modoboa_webmail/compose.html:15
 msgid "Enter one or more addresses."
 msgstr "Entrer une ou plusieurs adresses"
 
-#: forms.py:106 templates/modoboa_webmail/compose.html:31
+#: forms.py:106 templates/modoboa_webmail/compose.html:33
 msgid "Bcc"
 msgstr "Cci"
 
-#: forms.py:113 lib/imapemail.py:314
-msgid "Subject"
-msgstr "Sujet"
-
-#: forms.py:268
+#: forms.py:270
 msgid "Select a file"
 msgstr "Sélectionner un fichier"
 
-#: forms.py:274
+#: forms.py:276
 msgid "General"
 msgstr "Général"
 
-#: forms.py:277
+#: forms.py:279
 msgid "Maximum attachment size"
 msgstr "Taille maximale d'une pièce jointe"
 
-#: forms.py:280
+#: forms.py:282
 msgid "Maximum attachment size in bytes (or KB, MB, GB if specified)"
 msgstr "Taille maximum d'une pièce jointe en octets (ou Ko, Mo, Go si précisé)"
 
-#: forms.py:283
+#: forms.py:285
 msgid "IMAP settings"
 msgstr "Paramètres IMAP"
 
-#: forms.py:286 forms.py:306
+#: forms.py:288 forms.py:308
 msgid "Server address"
 msgstr "Adresse du serveur"
 
-#: forms.py:288
+#: forms.py:290
 msgid "Address of your IMAP server"
 msgstr "Adresse de votre serveur IMAP"
 
-#: forms.py:292
+#: forms.py:294
 msgid "Use a secured connection"
 msgstr "Utiliser une connexion sécurisée"
 
-#: forms.py:294
+#: forms.py:296
 msgid "Use a secured connection to access IMAP server"
 msgstr "Utiliser une connexion sécurisée pour accéder au serveur IMAP"
 
-#: forms.py:298 forms.py:322
+#: forms.py:300 forms.py:324
 msgid "Server port"
 msgstr "Port utilisé par le serveur"
 
-#: forms.py:300
+#: forms.py:302
 msgid "Listening port of your IMAP server"
 msgstr "Port d'écoute de votre serveur IMAP"
 
-#: forms.py:303
+#: forms.py:305
 msgid "SMTP settings"
 msgstr "Paramètres SMTP"
 
-#: forms.py:308
+#: forms.py:310
 msgid "Address of your SMTP server"
 msgstr "Adresse de votre serveur SMTP"
 
-#: forms.py:312
+#: forms.py:314
 msgid "Secured connection mode"
 msgstr "Mode de connexion sécurisé"
 
-#: forms.py:313
+#: forms.py:315
 msgid "None"
 msgstr "Aucun"
 
-#: forms.py:317
+#: forms.py:319
 msgid "Use a secured connection to access SMTP server"
 msgstr "Utiliser une connexion sécurisée pour accéder au serveur SMTP"
 
-#: forms.py:324
+#: forms.py:326
 msgid "Listening port of your SMTP server"
 msgstr "Port d'écoute de votre serveur SMTP"
 
-#: forms.py:328
+#: forms.py:330
 msgid "Authentication required"
 msgstr "Authentification requise"
 
-#: forms.py:330
+#: forms.py:332
 msgid "Server needs authentication"
 msgstr "Le serveur nécessite une authentification"
 
-#: forms.py:337
+#: forms.py:339
 msgid "Display"
 msgstr "Afficher"
 
-#: forms.py:341
+#: forms.py:343
 msgid "Default message display mode"
 msgstr "Mode d'affichage par défaut d'un message"
 
-#: forms.py:343
+#: forms.py:345
 msgid "The default mode used when displaying a message"
 msgstr "Le mode utilisé par défaut pour afficher un message"
 
-#: forms.py:349
+#: forms.py:351
 msgid "Enable HTML links display"
 msgstr "Activer l'affichage des liens HTML"
 
-#: forms.py:350
+#: forms.py:352
 msgid "Enable/Disable HTML links display"
 msgstr "Activer/Désactiver l'affichage des liens HTML"
 
-#: forms.py:355
+#: forms.py:357
 msgid "Number of displayed emails per page"
 msgstr "Nombre d'emails affichés par page"
 
-#: forms.py:356
+#: forms.py:358
 msgid "Sets the maximum number of messages displayed in a page"
 msgstr "Définit le nombre maximal de messages affichés dans une page"
 
-#: forms.py:361
+#: forms.py:363
 msgid "Listing refresh rate"
 msgstr "Taux de rafraichissement de la liste"
 
-#: forms.py:362
+#: forms.py:364
 msgid "Automatic folder refresh rate (in seconds)"
 msgstr "Taux de rafraichissement automatique du dossier (en secondes)"
 
-#: forms.py:367
+#: forms.py:369
 msgid "Folder container's width"
 msgstr "Largeur de conteneur de dossier"
 
-#: forms.py:368
+#: forms.py:370
 msgid "The width of the folder list container"
 msgstr "La largeur du conteneur de la liste des dossiers"
 
-#: forms.py:371
+#: forms.py:373
 msgid "Folders"
 msgstr "Dossiers"
 
-#: forms.py:375
+#: forms.py:377
 msgid "Trash folder"
 msgstr "Dossier 'poubelle'"
 
-#: forms.py:376
+#: forms.py:378
 msgid "Folder where deleted messages go"
 msgstr "Dossier de destination des messages supprimés"
 
-#: forms.py:381
+#: forms.py:383
 msgid "Sent folder"
 msgstr "Dossier 'envoyé'"
 
-#: forms.py:382
+#: forms.py:384
 msgid "Folder where copies of sent messages go"
 msgstr "Dossier de destination des copies de messages envoyés"
 
-#: forms.py:387
+#: forms.py:389
 msgid "Drafts folder"
 msgstr "Dossier 'brouillons'"
 
-#: forms.py:388
+#: forms.py:390
 msgid "Folder where drafts go"
 msgstr "Dossier de destination des brouillons"
 
-#: forms.py:392
+#: forms.py:394
 msgid "Junk folder"
 msgstr "Dossier pourriel"
 
-#: forms.py:393
+#: forms.py:395
 msgid "Folder where junk messages should go"
 msgstr "Dossier dans lequel les pourriels vont"
 
-#: forms.py:396
+#: forms.py:398
 msgid "Composing messages"
 msgstr "Composer des messages"
 
-#: forms.py:400
+#: forms.py:402
 msgid "Default editor"
 msgstr "Editeur par défaut"
 
-#: forms.py:402
+#: forms.py:404
 msgid "The default editor to use when composing a message"
 msgstr "L'éditeur a utiliser par défaut pour écrire un message"
 
-#: forms.py:408
+#: forms.py:410
 msgid "Signature text"
 msgstr "Texte de signature"
 
-#: forms.py:409
+#: forms.py:411
 msgid "User defined email signature"
 msgstr "Signature personnalisée"
 
-#: forms.py:429
+#: forms.py:431
 msgid "Value must be a positive integer (> 0)"
 msgstr "La valeur doit être un entier positif (> 0)"
 
@@ -238,44 +250,40 @@ msgstr "Webmail"
 msgid "Add to contacts"
 msgstr "Ajouter aux contacts"
 
-#: lib/imapemail.py:261
+#: lib/imapemail.py:272
 msgid "wrote:"
 msgstr "a écrit :"
 
-#: lib/imapemail.py:316
-msgid "Date"
-msgstr "Date"
-
-#: lib/imapemail.py:328 lib/imapemail.py:331
+#: lib/imapemail.py:339 lib/imapemail.py:342
 msgid "Original message"
 msgstr "Message original"
 
-#: lib/imaputils.py:243
+#: lib/imaputils.py:246
 msgid "Failed to retrieve hierarchy delimiter"
 msgstr "Impossible de récuperer le séparateur de hiérarchie"
 
-#: lib/imaputils.py:281
+#: lib/imaputils.py:282
 #, python-format
 msgid "Connection to IMAP server failed: %s"
 msgstr "La connexion au serveur IMAP a échoué : %s"
 
-#: lib/imaputils.py:522
+#: lib/imaputils.py:523
 msgid "Inbox"
 msgstr "Boîte de réception"
 
-#: lib/imaputils.py:524
+#: lib/imaputils.py:525
 msgid "Drafts"
 msgstr "Brouillons"
 
-#: lib/imaputils.py:526
+#: lib/imaputils.py:527
 msgid "Junk"
 msgstr "Spam"
 
-#: lib/imaputils.py:528
+#: lib/imaputils.py:529
 msgid "Sent"
 msgstr "Messages envoyés"
 
-#: lib/imaputils.py:530
+#: lib/imaputils.py:531
 msgid "Trash"
 msgstr "Corbeille"
 
@@ -292,7 +300,7 @@ msgid "Uploading.."
 msgstr "Envoi..."
 
 #: templates/modoboa_webmail/compose_menubar.html:9
-#: templates/modoboa_webmail/headers.html:11 views.py:322
+#: templates/modoboa_webmail/headers.html:12 views.py:322
 msgid "Attachments"
 msgstr "Pièces jointes"
 
@@ -304,93 +312,97 @@ msgstr "Boite aux lettres parente"
 msgid "Compose"
 msgstr "Ecrire"
 
-#: templatetags/webmail_tags.py:24 templatetags/webmail_tags.py:92
+#: templatetags/webmail_tags.py:25 templatetags/webmail_tags.py:93
 msgid "Back"
 msgstr "Retour"
 
-#: templatetags/webmail_tags.py:30
+#: templatetags/webmail_tags.py:31
 msgid "Reply"
 msgstr "Répondre"
 
-#: templatetags/webmail_tags.py:35
+#: templatetags/webmail_tags.py:36
 msgid "Reply all"
 msgstr "Répondre à tous"
 
-#: templatetags/webmail_tags.py:40
+#: templatetags/webmail_tags.py:41
 msgid "Forward"
 msgstr "Transfert"
 
-#: templatetags/webmail_tags.py:48 templatetags/webmail_tags.py:111
+#: templatetags/webmail_tags.py:49 templatetags/webmail_tags.py:112
 msgid "Delete"
 msgstr "Supprimer"
 
-#: templatetags/webmail_tags.py:55 templatetags/webmail_tags.py:120
+#: templatetags/webmail_tags.py:56 templatetags/webmail_tags.py:121
 msgid "Mark as spam"
 msgstr "Marquer comme spam"
 
-#: templatetags/webmail_tags.py:58
+#: templatetags/webmail_tags.py:59
 msgid "Display options"
 msgstr "Afficher les options"
 
-#: templatetags/webmail_tags.py:62
+#: templatetags/webmail_tags.py:63
 msgid "Activate links"
 msgstr "Activer les liens"
 
-#: templatetags/webmail_tags.py:65
+#: templatetags/webmail_tags.py:66
 msgid "Disable links"
 msgstr "Désactiver les liens"
 
-#: templatetags/webmail_tags.py:76 templatetags/webmail_tags.py:161
+#: templatetags/webmail_tags.py:77 templatetags/webmail_tags.py:180
 msgid "Mark as not spam"
 msgstr "Marquer comme non spam"
 
-#: templatetags/webmail_tags.py:97
+#: templatetags/webmail_tags.py:98
 msgid "Send"
 msgstr "Envoyer"
 
-#: templatetags/webmail_tags.py:123
+#: templatetags/webmail_tags.py:124
 msgid "Actions"
 msgstr "Actions"
 
-#: templatetags/webmail_tags.py:127
+#: templatetags/webmail_tags.py:128
 msgid "Mark as read"
 msgstr "Marquer comme lu"
 
-#: templatetags/webmail_tags.py:132
+#: templatetags/webmail_tags.py:133
 msgid "Mark as unread"
 msgstr "Marquer comme non lu"
 
-#: templatetags/webmail_tags.py:137
+#: templatetags/webmail_tags.py:138
 msgid "Mark as flagged"
 msgstr "Marquer comme suivi"
 
-#: templatetags/webmail_tags.py:142
+#: templatetags/webmail_tags.py:143
 msgid "Mark as unflagged"
 msgstr "Marquer comme non suivi"
 
-#: templatetags/webmail_tags.py:151 views.py:167
+#: templatetags/webmail_tags.py:150
+msgid "Sort by"
+msgstr "Trier par"
+
+#: templatetags/webmail_tags.py:170 views.py:167
 msgid "Empty folder"
 msgstr "Vider ce dossier"
 
-#: templatetags/webmail_tags.py:232 views.py:204
+#: templatetags/webmail_tags.py:250 views.py:204
 msgid "Create a new folder"
 msgstr "Créer un nouveau dossier"
 
-#: templatetags/webmail_tags.py:240
+#: templatetags/webmail_tags.py:258
 msgid "Edit the selected folder"
 msgstr "Éditer le dossier sélectionné"
 
-#: templatetags/webmail_tags.py:245
+#: templatetags/webmail_tags.py:263
 msgid "Remove the selected folder"
 msgstr "Supprimer le dossier sélectionné"
 
-#: templatetags/webmail_tags.py:249
+#: templatetags/webmail_tags.py:267
 msgid "Compress folder"
 msgstr "Compresser ce dossier"
 
 #: views.py:61 views.py:79 views.py:93 views.py:111 views.py:129 views.py:165
-#: views.py:179 views.py:257 views.py:280 views.py:483 views.py:531
-#: views.py:546 views.py:585 views.py:625
+#: views.py:179 views.py:257 views.py:280 views.py:486 views.py:534
+#: views.py:549 views.py:588 views.py:628
 msgid "Invalid request"
 msgstr "Requête invalide"
 

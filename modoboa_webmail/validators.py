@@ -13,7 +13,7 @@ class EmailListValidator(object):
     def __call__(self, value):
         value = force_text(value)
         addresses = getaddresses([value])
-        [validate_email(email) for name, email in addresses]
+        [validate_email(email) for name, email in addresses if email]
 
 
 validate_email_list = EmailListValidator()

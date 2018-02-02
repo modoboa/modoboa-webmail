@@ -35,6 +35,7 @@ DATETIME_FORMATS = {
     "it": {'SHORT': 'l, H:i', 'LONG': 'd. N Y H:i'},
     "ja_JP": {'SHORT': 'l, P', 'LONG': 'N j, Y P'},
     "nl": {'SHORT': 'l, H:i', 'LONG': 'd. N Y H:i'},
+    "pl_PL": {'SHORT': 'l, H:i', 'LONG': 'd. N Y H:i'},
     "pt_PT": {'SHORT': 'l, H:i', 'LONG': 'd. N Y H:i'},
     "pt_BR": {'SHORT': 'l, H:i', 'LONG': 'd. N Y H:i'},
     "ru": {'SHORT': 'l, H:i', 'LONG': 'd. N Y H:i'},
@@ -116,8 +117,13 @@ def parse_date(value, **kwargs):
         ndate = tz.localize(datetime.datetime.fromtimestamp(ndate))
     current_language = get_request().user.language
     if datetime.datetime.now() - ndate > datetime.timedelta(7):
-        return date_format(ndate, DATETIME_FORMATS[current_language]['LONG'])
-    return date_format(ndate, DATETIME_FORMATS[current_language]['SHORT'])
+        fmt = "LONG"
+    else:
+        fmt = "SHORT"
+    return date_format(
+        ndate,
+        DATETIME_FORMATS.get(current_language, DATETIME_FORMATS.get("en"))[fmt]
+    )
 
 
 def parse_message_id(value, **kwargs):

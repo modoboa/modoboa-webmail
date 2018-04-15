@@ -53,8 +53,8 @@ class ImapEmail(Email):
         title = _("Add to contacts")
         url = reverse("api:contact-list")
         link_tpl = (
-            " <a class='addcontact' href='{}' title='{}'>"
-            "<span class='fa fa-vcard'></span></a>"
+            u" <a class='addcontact' href='{}' title='{}'>"
+            u"<span class='fa fa-vcard'></span></a>"
         )
         for address in addresses:
             address += link_tpl.format(url, title)

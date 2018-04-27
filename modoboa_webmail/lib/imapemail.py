@@ -164,6 +164,7 @@ class ImapEmail(Email):
                             content = content.decode(result["encoding"])
                 bodyc += content
             self._fetch_inlines()
+            bodyc = getattr(self, "_post_process_%s" % self.mformat)(bodyc)
             self._body = getattr(self, "viewmail_%s" % self.mformat)(
                 bodyc, links=self.links
             )
@@ -222,7 +223,7 @@ class ImapEmail(Email):
             default_storage.save(
                 path, ContentFile(decode_payload(params["encoding"], content)))
 
-    def map_cid(self, url):
+    def _map_cid(self, url):
         m = re.match(".*cid:(.+)", url)
         if m:
             if m.group(1) in self.bs.inlines:

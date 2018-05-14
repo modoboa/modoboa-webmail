@@ -1,3 +1,3 @@
-modoboa>=1.10.1
+modoboa>=1.10.5
 chardet
 lxml

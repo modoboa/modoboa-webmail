@@ -11,6 +11,6 @@ try:
     __version__ = get_distribution(__name__).version
 except DistributionNotFound:
     # package is not installed
-    pass
+    __version__ = '9.9.9'
 
 default_app_config = "modoboa_webmail.apps.WebmailConfig"

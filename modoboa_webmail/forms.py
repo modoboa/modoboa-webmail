@@ -267,7 +267,7 @@ class FolderForm(forms.Form):
 
 
 class AttachmentForm(forms.Form):
-    attachment = forms.FileField(label=_("Select a file"))
+    attachment = forms.FileField(label=_("Select a file"), allow_empty_file=True)
 
 
 class ParametersForm(param_forms.AdminParametersForm):

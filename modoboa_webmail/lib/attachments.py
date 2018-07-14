@@ -93,7 +93,11 @@ def create_mail_attachment(attdef, payload=None):
     encoders.encode_base64(res)
     if isinstance(attdef["fname"], six.binary_type):
         attdef["fname"] = attdef["fname"].decode("utf-8")
-    res["Content-Disposition"] = build_header(attdef["fname"])
+    content_disposition = build_header(attdef["fname"])
+    if isinstance(content_disposition, six.binary_type):
+        res["Content-Disposition"] = content_disposition.decode("utf-8")
+    else:
+        res["Content-Disposition"] = content_disposition
     return res
 
 

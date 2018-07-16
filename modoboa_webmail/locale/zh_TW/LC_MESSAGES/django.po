@@ -1,0 +1,464 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# akong <akong@aspa.idv.tw>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: Modoboa\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-25 13:16+0100\n"
+"PO-Revision-Date: 2018-06-28 08:43+0000\n"
+"Last-Translator: akong <akong@aspa.idv.tw>\n"
+"Language-Team: Chinese (Taiwan) (http://www.transifex.com/tonio/modoboa/language/zh_TW/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_TW\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: constants.py:7 lib/imapemail.py:327
+msgid "Date"
+msgstr "日期"
+
+#: constants.py:8
+msgid "Sender"
+msgstr "寄件者"
+
+#: constants.py:9
+msgid "Size"
+msgstr "大小"
+
+#: constants.py:10 forms.py:113 lib/imapemail.py:325
+msgid "Subject"
+msgstr "主旨"
+
+#: exceptions.py:22
+msgid "Server response"
+msgstr "伺服器回應"
+
+#: exceptions.py:37
+msgid "Unknown action"
+msgstr "未知動作"
+
+#: forms.py:94
+msgid "From"
+msgstr "從"
+
+#: forms.py:98 templates/modoboa_webmail/compose.html:11
+msgid "To"
+msgstr "到"
+
+#: forms.py:100 templates/modoboa_webmail/compose.html:28
+msgid "Cc"
+msgstr "副本"
+
+#: forms.py:102 forms.py:108 templates/modoboa_webmail/compose.html:15
+msgid "Enter one or more addresses."
+msgstr "輸入一個或多個位址"
+
+#: forms.py:106 templates/modoboa_webmail/compose.html:33
+msgid "Bcc"
+msgstr "密件副本"
+
+#: forms.py:270
+msgid "Select a file"
+msgstr "選擇檔案"
+
+#: forms.py:276
+msgid "General"
+msgstr "一般"
+
+#: forms.py:279
+msgid "Maximum attachment size"
+msgstr "最大附件大小"
+
+#: forms.py:282
+msgid "Maximum attachment size in bytes (or KB, MB, GB if specified)"
+msgstr "最大附件大小的位元組 (假如有指定可以是 KB, MB, GB)"
+
+#: forms.py:285
+msgid "IMAP settings"
+msgstr "IMAP 設定"
+
+#: forms.py:288 forms.py:308
+msgid "Server address"
+msgstr "伺服器位址"
+
+#: forms.py:290
+msgid "Address of your IMAP server"
+msgstr "您的 IMAP 伺服器位址"
+
+#: forms.py:294
+msgid "Use a secured connection"
+msgstr "使用安全的連線"
+
+#: forms.py:296
+msgid "Use a secured connection to access IMAP server"
+msgstr "使用安全的連線來存取 IMAP 伺服器"
+
+#: forms.py:300 forms.py:324
+msgid "Server port"
+msgstr "伺服器連接埠"
+
+#: forms.py:302
+msgid "Listening port of your IMAP server"
+msgstr "您的 IMAP 伺服器的連接埠"
+
+#: forms.py:305
+msgid "SMTP settings"
+msgstr "SMTP 設定"
+
+#: forms.py:310
+msgid "Address of your SMTP server"
+msgstr "您的 SMTP 伺服器位址"
+
+#: forms.py:314
+msgid "Secured connection mode"
+msgstr "安全連線模式"
+
+#: forms.py:315
+msgid "None"
+msgstr "沒有"
+
+#: forms.py:319
+msgid "Use a secured connection to access SMTP server"
+msgstr "使用安全的連線來存取 SMTP 伺服器"
+
+#: forms.py:326
+msgid "Listening port of your SMTP server"
+msgstr "您的 SMTP 伺服器的連接埠"
+
+#: forms.py:330
+msgid "Authentication required"
+msgstr "必須驗證"
+
+#: forms.py:332
+msgid "Server needs authentication"
+msgstr "伺服器需要驗證"
+
+#: forms.py:339
+msgid "Display"
+msgstr "顯示"
+
+#: forms.py:343
+msgid "Default message display mode"
+msgstr "預設訊息顯示模式"
+
+#: forms.py:345
+msgid "The default mode used when displaying a message"
+msgstr "當正在顯示訊息時會使用預設模式"
+
+#: forms.py:351
+msgid "Enable HTML links display"
+msgstr "啟用 HTMK 顯示連結"
+
+#: forms.py:352
+msgid "Enable/Disable HTML links display"
+msgstr "啟用/停用 HTMK 顯示連結"
+
+#: forms.py:357
+msgid "Number of displayed emails per page"
+msgstr "每一頁顯示郵件數量"
+
+#: forms.py:358
+msgid "Sets the maximum number of messages displayed in a page"
+msgstr "設定最大每一頁顯示郵件數量"
+
+#: forms.py:363
+msgid "Listing refresh rate"
+msgstr "列出重整頻率"
+
+#: forms.py:364
+msgid "Automatic folder refresh rate (in seconds)"
+msgstr "資料夾自動重整頻率 (在幾秒)"
+
+#: forms.py:369
+msgid "Folder container's width"
+msgstr "資料夾寬度"
+
+#: forms.py:370
+msgid "The width of the folder list container"
+msgstr "資料夾列表寬度"
+
+#: forms.py:373
+msgid "Folders"
+msgstr "資料夾"
+
+#: forms.py:377
+msgid "Trash folder"
+msgstr "垃圾筒"
+
+#: forms.py:378
+msgid "Folder where deleted messages go"
+msgstr "已刪除郵件的資料夾"
+
+#: forms.py:383
+msgid "Sent folder"
+msgstr "寄件夾"
+
+#: forms.py:384
+msgid "Folder where copies of sent messages go"
+msgstr "已寄出郵件的資料夾"
+
+#: forms.py:389
+msgid "Drafts folder"
+msgstr "草稿"
+
+#: forms.py:390
+msgid "Folder where drafts go"
+msgstr "草稿郵件的資料夾"
+
+#: forms.py:394
+msgid "Junk folder"
+msgstr "垃圾信資料夾"
+
+#: forms.py:395
+msgid "Folder where junk messages should go"
+msgstr "垃圾郵件的資料夾"
+
+#: forms.py:398
+msgid "Composing messages"
+msgstr "編寫郵件"
+
+#: forms.py:402
+msgid "Default editor"
+msgstr "預設編輯器"
+
+#: forms.py:404
+msgid "The default editor to use when composing a message"
+msgstr "當編寫郵件時會使用預設編輯器"
+
+#: forms.py:410
+msgid "Signature text"
+msgstr "簽名文字"
+
+#: forms.py:411
+msgid "User defined email signature"
+msgstr "使用者定義郵件簽名"
+
+#: forms.py:431
+msgid "Value must be a positive integer (> 0)"
+msgstr "值必須是一個正的整數 (> 0)"
+
+#: handlers.py:20
+msgid "Webmail"
+msgstr "網頁郵件"
+
+#: lib/imapemail.py:53
+msgid "Add to contacts"
+msgstr "新增到通訊錄"
+
+#: lib/imapemail.py:272
+msgid "wrote:"
+msgstr "寫:"
+
+#: lib/imapemail.py:339 lib/imapemail.py:342
+msgid "Original message"
+msgstr "原始訊息"
+
+#: lib/imaputils.py:246
+msgid "Failed to retrieve hierarchy delimiter"
+msgstr "無法檢查層次分隔"
+
+#: lib/imaputils.py:282
+#, python-format
+msgid "Connection to IMAP server failed: %s"
+msgstr "連線到 IMAP 伺服器失敗: %s"
+
+#: lib/imaputils.py:523
+msgid "Inbox"
+msgstr "收件夾"
+
+#: lib/imaputils.py:525
+msgid "Drafts"
+msgstr "草稿"
+
+#: lib/imaputils.py:527
+msgid "Junk"
+msgstr "垃圾信"
+
+#: lib/imaputils.py:529
+msgid "Sent"
+msgstr "寄件夾"
+
+#: lib/imaputils.py:531
+msgid "Trash"
+msgstr "垃圾筒"
+
+#: modo_extension.py:18
+msgid "Simple IMAP webmail"
+msgstr "簡單 IMAP 網頁郵件"
+
+#: templates/modoboa_webmail/attachments.html:8
+msgid "Attach"
+msgstr "附件"
+
+#: templates/modoboa_webmail/attachments.html:12
+msgid "Uploading.."
+msgstr "上傳中.."
+
+#: templates/modoboa_webmail/compose_menubar.html:9
+#: templates/modoboa_webmail/headers.html:12 views.py:322
+msgid "Attachments"
+msgstr "附件"
+
+#: templates/modoboa_webmail/folder.html:6
+msgid "Parent mailbox"
+msgstr "主信箱"
+
+#: templates/modoboa_webmail/index.html:44
+msgid "Compose"
+msgstr "編寫"
+
+#: templatetags/webmail_tags.py:25 templatetags/webmail_tags.py:93
+msgid "Back"
+msgstr "上一步"
+
+#: templatetags/webmail_tags.py:31
+msgid "Reply"
+msgstr "回覆"
+
+#: templatetags/webmail_tags.py:36
+msgid "Reply all"
+msgstr "全部回覆"
+
+#: templatetags/webmail_tags.py:41
+msgid "Forward"
+msgstr "轉寄"
+
+#: templatetags/webmail_tags.py:49 templatetags/webmail_tags.py:112
+msgid "Delete"
+msgstr "刪除"
+
+#: templatetags/webmail_tags.py:56 templatetags/webmail_tags.py:121
+msgid "Mark as spam"
+msgstr "標記為垃圾信"
+
+#: templatetags/webmail_tags.py:59
+msgid "Display options"
+msgstr "顯示選項"
+
+#: templatetags/webmail_tags.py:63
+msgid "Activate links"
+msgstr "啟用連結"
+
+#: templatetags/webmail_tags.py:66
+msgid "Disable links"
+msgstr "停用連結"
+
+#: templatetags/webmail_tags.py:77 templatetags/webmail_tags.py:180
+msgid "Mark as not spam"
+msgstr "標記為正常信"
+
+#: templatetags/webmail_tags.py:98
+msgid "Send"
+msgstr "寄送"
+
+#: templatetags/webmail_tags.py:124
+msgid "Actions"
+msgstr "動作"
+
+#: templatetags/webmail_tags.py:128
+msgid "Mark as read"
+msgstr "標記為已讀取"
+
+#: templatetags/webmail_tags.py:133
+msgid "Mark as unread"
+msgstr "標記為未讀取"
+
+#: templatetags/webmail_tags.py:138
+msgid "Mark as flagged"
+msgstr "標記標籤"
+
+#: templatetags/webmail_tags.py:143
+msgid "Mark as unflagged"
+msgstr "取消標記標籤"
+
+#: templatetags/webmail_tags.py:150
+msgid "Sort by"
+msgstr "排序"
+
+#: templatetags/webmail_tags.py:170 views.py:167
+msgid "Empty folder"
+msgstr "空資料夾"
+
+#: templatetags/webmail_tags.py:250 views.py:204
+msgid "Create a new folder"
+msgstr "建立新的資料夾"
+
+#: templatetags/webmail_tags.py:258
+msgid "Edit the selected folder"
+msgstr "編輯已選擇的資料夾"
+
+#: templatetags/webmail_tags.py:263
+msgid "Remove the selected folder"
+msgstr "移除已選擇的資料夾"
+
+#: templatetags/webmail_tags.py:267
+msgid "Compress folder"
+msgstr "壓縮資料夾"
+
+#: views.py:61 views.py:79 views.py:93 views.py:111 views.py:129 views.py:165
+#: views.py:179 views.py:257 views.py:280 views.py:486 views.py:534
+#: views.py:549 views.py:588 views.py:628
+msgid "Invalid request"
+msgstr "無效請求"
+
+#: views.py:99
+#, python-format
+msgid "%(count)d message deleted"
+msgid_plural "%(count)d messages deleted"
+msgstr[0] "%(count)d 郵件已刪除"
+
+#: views.py:142 views.py:153
+#, python-format
+msgid "%(count)d message marked"
+msgid_plural "%(count)d messages marked"
+msgstr[0] "%(count)d 郵件已標記"
+
+#: views.py:197
+msgid "Folder created"
+msgstr "資料夾已建立"
+
+#: views.py:207
+msgid "Create"
+msgstr "建立"
+
+#: views.py:223 views.py:259
+msgid "Edit folder"
+msgstr "編輯資料夾"
+
+#: views.py:226 views.py:262
+msgid "Update"
+msgstr "更新"
+
+#: views.py:239
+msgid "Folder updated"
+msgstr "資料夾已更新"
+
+#: views.py:312
+msgid "Failed to save attachment: "
+msgstr "儲存附件失敗:"
+
+#: views.py:316
+#, python-format
+msgid "Attachment is too big (limit: %s)"
+msgstr "附件太大 (限制: %s)"
+
+#: views.py:339
+msgid "Bad query"
+msgstr "錯誤佇列"
+
+#: views.py:351
+msgid "Failed to remove attachment: "
+msgstr "移除附件失敗:"
+
+#: views.py:356
+msgid "Unknown attachment"
+msgstr "未知附件"
+
+#: views.py:416
+msgid "Empty mailbox"
+msgstr "空的信箱"

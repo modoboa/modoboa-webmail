@@ -1,0 +1,51 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Andrei-Ilie Olteanu <andrei@flashsoft.ro>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: Modoboa\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-05-19 10:28+0200\n"
+"PO-Revision-Date: 2018-06-12 14:31+0000\n"
+"Last-Translator: Andrei-Ilie Olteanu <andrei@flashsoft.ro>\n"
+"Language-Team: Romanian (Romania) (http://www.transifex.com/tonio/modoboa/language/ro_RO/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ro_RO\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+
+#: static/modoboa_webmail/js/webmail.js:207
+msgid "No more message in this folder."
+msgstr "Nu mai există mesaje în acest folder."
+
+#: static/modoboa_webmail/js/webmail.js:703
+msgid "Remove the selected folder?"
+msgstr "Șterge folderul selectat?"
+
+#: static/modoboa_webmail/js/webmail.js:716
+msgid "Folder removed"
+msgstr "Folder Șters"
+
+#: static/modoboa_webmail/js/webmail.js:1029
+msgid "Message sent"
+msgstr "Mesaj trimis"
+
+#: static/modoboa_webmail/js/webmail.js:1362
+#, javascript-format
+msgid "Moving %s message"
+msgid_plural "Moving %s messages"
+msgstr[0] "Mutare %s mesaj"
+msgstr[1] "Mutare %smesaj"
+msgstr[2] "Mutare %s mesaje"
+
+#: static/modoboa_webmail/js/webmail.js:1434
+msgid "Contact added!"
+msgstr "Contact adăugat"
+
+#: static/modoboa_webmail/js/webmail.js:1443
+msgid "A contact with this address already exists"
+msgstr "Un contact cu această adresă deja există"

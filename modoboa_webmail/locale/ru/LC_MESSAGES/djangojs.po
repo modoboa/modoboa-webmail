@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Modoboa\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-19 10:28+0200\n"
-"PO-Revision-Date: 2013-12-03 09:35+0000\n"
+"PO-Revision-Date: 2018-04-15 16:01+0300\n"
 "Last-Translator: Antoine Nguyen <tonio@ngyn.org>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/modoboa/language/"
 "ru/)\n"
@@ -18,22 +18,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: static/modoboa_webmail/js/webmail.js:207
 msgid "No more message in this folder."
-msgstr ""
+msgstr "В этой папке нет больше сообщений."
 
 #: static/modoboa_webmail/js/webmail.js:703
-#, fuzzy
-#| msgid "Remove the selected mailbox?"
 msgid "Remove the selected folder?"
-msgstr "Удалить выбранные почтовые ящики?"
+msgstr "Удалить выбранные папки?"
 
 #: static/modoboa_webmail/js/webmail.js:716
-#, fuzzy
-#| msgid "Mailbox removed"
 msgid "Folder removed"
-msgstr "Почтовый ящик удален"
+msgstr "Папка удалена"
 
 #: static/modoboa_webmail/js/webmail.js:1029
 msgid "Message sent"
@@ -49,8 +46,8 @@ msgstr[2] "Перемещается %s сообщений"
 
 #: static/modoboa_webmail/js/webmail.js:1434
 msgid "Contact added!"
-msgstr ""
+msgstr "Контакт добавлен!"
 
 #: static/modoboa_webmail/js/webmail.js:1443
 msgid "A contact with this address already exists"
-msgstr ""
+msgstr "Контакт с этим адресом уже существует"

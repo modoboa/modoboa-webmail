@@ -1,8 +1,9 @@
 # coding: utf-8
 """Custom template tags."""
 
+from six.moves.urllib.parse import urlencode
+
 from django import template
-from django.conf import settings
 from django.urls import reverse
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
@@ -289,3 +290,17 @@ def parse_imap_header(value, header):
     elif header == "subject":
         safe = False
     return value if not safe else mark_safe(value)
+
+
+@register.simple_tag
+def attachment_url(mbox, mail_id, fname, key):
+    """Return full download url of an attachment."""
+    url = reverse("modoboa_webmail:attachment_get")
+    params = {
+        "mbox": mbox,
+        "mailid": mail_id,
+        "fname": fname,
+        "partnumber": key
+    }
+    url = "{}?{}".format(url, urlencode(params))
+    return url

@@ -1,37 +1,35 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# Miroslav Abrahám <miris@kunago.com>, 2013-2015
+# Peter Sveter, 2016
+# Jarda Tesar <intossh@gmail.com>, 2017-2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Modoboa\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-21 09:34+0200\n"
-"PO-Revision-Date: 2015-01-06 10:05+0000\n"
-"Last-Translator: Miroslav Abrahám <miris@kunago.com>\n"
-"Language-Team: Czech (Czech Republic) (http://www.transifex.com/projects/p/"
-"modoboa/language/cs_CZ/)\n"
-"Language: cs_CZ\n"
+"PO-Revision-Date: 2018-08-21 08:33+0000\n"
+"Last-Translator: Antoine Nguyen <tonio@ngyn.org>\n"
+"Language-Team: Czech (Czech Republic) (http://www.transifex.com/tonio/modoboa/language/cs_CZ/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Language: cs_CZ\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
 #: constants.py:7 lib/imapemail.py:329
 msgid "Date"
 msgstr "Datum"
 
 #: constants.py:8
-#, fuzzy
-#| msgid "Send"
 msgid "Sender"
-msgstr "Odeslat"
+msgstr "Odesílatel"
 
 #: constants.py:9
 msgid "Size"
-msgstr ""
+msgstr "Velikost"
 
 #: constants.py:10 forms.py:113 lib/imapemail.py:327
 msgid "Subject"
@@ -47,7 +45,7 @@ msgstr "Neznámá akce"
 
 #: forms.py:94
 msgid "From"
-msgstr ""
+msgstr "Od"
 
 #: forms.py:98 templates/modoboa_webmail/compose.html:11
 msgid "To"
@@ -59,11 +57,11 @@ msgstr "Kopie"
 
 #: forms.py:102 forms.py:108 templates/modoboa_webmail/compose.html:15
 msgid "Enter one or more addresses."
-msgstr ""
+msgstr "Zadejte jednu nebo více adres."
 
 #: forms.py:106 templates/modoboa_webmail/compose.html:33
 msgid "Bcc"
-msgstr ""
+msgstr "Skrytá kopie"
 
 #: forms.py:270
 msgid "Select a file"
@@ -79,8 +77,7 @@ msgstr "Maximální velikost přílohy"
 
 #: forms.py:282
 msgid "Maximum attachment size in bytes (or KB, MB, GB if specified)"
-msgstr ""
-"Maximální velikost přílohy v Bajtech (nebo KB, MB, GB, pokud je uvedeno)"
+msgstr "Maximální velikost přílohy v Bajtech (nebo KB, MB, GB, pokud je uvedeno)"
 
 #: forms.py:285
 msgid "IMAP settings"
@@ -179,20 +176,16 @@ msgid "Automatic folder refresh rate (in seconds)"
 msgstr "Automatické načítání obsahu složky (v sekundách)"
 
 #: forms.py:369
-#, fuzzy
-#| msgid "Mailboxes container's width"
 msgid "Folder container's width"
-msgstr "Šířka sloupce schránek"
+msgstr "Šířka kontejneru složky"
 
 #: forms.py:370
-#, fuzzy
-#| msgid "The width of the mailbox list container"
 msgid "The width of the folder list container"
-msgstr "Šířka sloupce schránek"
+msgstr "Šířka kontejneru seznamu složek"
 
 #: forms.py:373
 msgid "Folders"
-msgstr ""
+msgstr "Složky"
 
 #: forms.py:377
 msgid "Trash folder"
@@ -219,16 +212,12 @@ msgid "Folder where drafts go"
 msgstr "Složka pro koncepty zpráv"
 
 #: forms.py:394
-#, fuzzy
-#| msgid "Sent folder"
 msgid "Junk folder"
-msgstr "Složka odeslané pošty"
+msgstr "Složka pro spam"
 
 #: forms.py:395
-#, fuzzy
-#| msgid "Folder where deleted messages go"
 msgid "Folder where junk messages should go"
-msgstr "Složka pro smazané zprávy"
+msgstr "Složka, kam by měly být přesunuty spamové zprávy"
 
 #: forms.py:398
 msgid "Composing messages"
@@ -260,7 +249,7 @@ msgstr "Webmail"
 
 #: lib/imapemail.py:53
 msgid "Add to contacts"
-msgstr ""
+msgstr "Přidat do kontaktů"
 
 #: lib/imapemail.py:274
 msgid "wrote:"
@@ -281,23 +270,23 @@ msgstr "Spojení se serverem IMAP selhalo: %s"
 
 #: lib/imaputils.py:523
 msgid "Inbox"
-msgstr ""
+msgstr "Doručená pošta"
 
 #: lib/imaputils.py:525
 msgid "Drafts"
-msgstr "Složka konceptů"
+msgstr "Koncepty"
 
 #: lib/imaputils.py:527
 msgid "Junk"
-msgstr ""
+msgstr "Nevyžádaná pošta"
 
 #: lib/imaputils.py:529
 msgid "Sent"
-msgstr ""
+msgstr "Odeslaná pošta"
 
 #: lib/imaputils.py:531
 msgid "Trash"
-msgstr ""
+msgstr "Koš"
 
 #: modo_extension.py:18
 msgid "Simple IMAP webmail"
@@ -345,10 +334,8 @@ msgid "Delete"
 msgstr "Smazat"
 
 #: templatetags/webmail_tags.py:57 templatetags/webmail_tags.py:127
-#, fuzzy
-#| msgid "Mark as read"
 msgid "Mark as spam"
-msgstr "Označit jako přečtené"
+msgstr "Označit jako spam"
 
 #: templatetags/webmail_tags.py:60
 msgid "Display options"
@@ -356,7 +343,7 @@ msgstr "Možnosti zobrazení"
 
 #: templatetags/webmail_tags.py:64
 msgid "Activate links"
-msgstr "Povolit odkazy"
+msgstr "Aktivovat odkazy"
 
 #: templatetags/webmail_tags.py:67
 msgid "Disable links"
@@ -367,10 +354,8 @@ msgid "Show source"
 msgstr ""
 
 #: templatetags/webmail_tags.py:83 templatetags/webmail_tags.py:186
-#, fuzzy
-#| msgid "Mark as read"
 msgid "Mark as not spam"
-msgstr "Označit jako přečtené"
+msgstr "Označit jako 'není spam'"
 
 #: templatetags/webmail_tags.py:104
 msgid "Send"
@@ -389,42 +374,32 @@ msgid "Mark as unread"
 msgstr "Označit jako nepřečtené"
 
 #: templatetags/webmail_tags.py:144
-#, fuzzy
-#| msgid "Mark as read"
 msgid "Mark as flagged"
-msgstr "Označit jako přečtené"
+msgstr "Označit vlaječkou"
 
 #: templatetags/webmail_tags.py:149
-#, fuzzy
-#| msgid "Mark as unread"
 msgid "Mark as unflagged"
-msgstr "Označit jako nepřečtené"
+msgstr "Odebrat vlaječku"
 
 #: templatetags/webmail_tags.py:156
 msgid "Sort by"
-msgstr ""
+msgstr "Setřídit podle"
 
 #: templatetags/webmail_tags.py:176 views.py:167
 msgid "Empty folder"
 msgstr "Vyprázdnit složku"
 
 #: templatetags/webmail_tags.py:256 views.py:204
-#, fuzzy
-#| msgid "Create a new mailbox"
 msgid "Create a new folder"
-msgstr "Vytvořit novou schránku"
+msgstr "Vytvořit novou složku"
 
 #: templatetags/webmail_tags.py:264
-#, fuzzy
-#| msgid "Edit the selected mailbox"
 msgid "Edit the selected folder"
-msgstr "Upravit vybranou schránku"
+msgstr "Upravit označenou složku"
 
 #: templatetags/webmail_tags.py:269
-#, fuzzy
-#| msgid "Remove the selected mailbox"
 msgid "Remove the selected folder"
-msgstr "Odstranit označené schránky"
+msgstr "Odebrat označenou složku"
 
 #: templatetags/webmail_tags.py:273
 msgid "Compress folder"
@@ -443,42 +418,36 @@ msgid_plural "%(count)d messages deleted"
 msgstr[0] "%(count)d zpráva smazána"
 msgstr[1] "%(count)d zprávy smazány"
 msgstr[2] "%(count)d zpráv smazáno"
+msgstr[3] "%(count)d zpráv smazáno"
 
 #: views.py:142 views.py:153
-#, fuzzy, python-format
-#| msgid "%(count)d message deleted"
-#| msgid_plural "%(count)d messages deleted"
+#, python-format
 msgid "%(count)d message marked"
 msgid_plural "%(count)d messages marked"
-msgstr[0] "%(count)d zpráva smazána"
-msgstr[1] "%(count)d zprávy smazány"
-msgstr[2] "%(count)d zpráv smazáno"
+msgstr[0] "%(count)d zpráva označena"
+msgstr[1] "%(count)dzprávy označeny"
+msgstr[2] "%(count)d zpráv označeno"
+msgstr[3] "%(count)d zpráv označeno"
 
 #: views.py:197
-#, fuzzy
-#| msgid "Mailbox created"
 msgid "Folder created"
-msgstr "Schránka vytvořena"
+msgstr "Složka vytvořena"
 
 #: views.py:207
 msgid "Create"
 msgstr "Vytvořit"
 
 #: views.py:223 views.py:259
-#, fuzzy
-#| msgid "Empty folder"
 msgid "Edit folder"
-msgstr "Vyprázdnit složku"
+msgstr "Upravit složku"
 
 #: views.py:226 views.py:262
 msgid "Update"
 msgstr "Aktualizovat"
 
 #: views.py:239
-#, fuzzy
-#| msgid "Mailbox updated"
 msgid "Folder updated"
-msgstr "Schránka aktualizována"
+msgstr "Složka upravena"
 
 #: views.py:312
 msgid "Failed to save attachment: "
@@ -508,17 +477,3 @@ msgstr "Vyprázdnit schránku"
 #: views.py:559
 msgid "Message source"
 msgstr ""
-
-#~ msgid "Mailboxes"
-#~ msgstr "Schránky"
-
-#~ msgid "Edit mailbox"
-#~ msgstr "Upravit schránku"
-
-#, fuzzy
-#~| msgid "The default mode used when displaying a message"
-#~ msgid "Show full email addresses when displaying a message"
-#~ msgstr "Výchozí režim, který se použije pro zobrazení zprávy"
-
-#~ msgid "Cci"
-#~ msgstr "BCC"

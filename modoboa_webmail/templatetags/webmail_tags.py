@@ -65,6 +65,11 @@ def viewmail_menu(selection, folder, user, mail_id=None):
         }, {
             "name": "disable_links",
             "label": _("Disable links")
+        }, {
+            "name": "show_source",
+            "label": _("Show source"),
+            "url": u"{}?mbox={}&mailid={}".format(
+                reverse("modoboa_webmail:mailsource_get"), folder, mail_id)
         }]
     }]
     if folder == user.parameters.get_value("junk_folder"):

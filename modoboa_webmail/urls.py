@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^$', views.index, name="index"),
     url(r'^submailboxes', views.submailboxes, name="submailboxes_get"),
     url(r'^getmailcontent', views.getmailcontent, name="mailcontent_get"),
+    url(r'^getmailsource', views.getmailsource, name="mailsource_get"),
     url(r'^unseenmsgs', views.check_unseen_messages,
         name="unseen_messages_check"),
 

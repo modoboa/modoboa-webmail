@@ -752,7 +752,7 @@ class IMAPconnector(object):
             result += [msg]
         return result
 
-    def fetchmail(self, mbox, mailid, readonly=True, headers=None):
+    def fetchmail(self, mbox, mailid, readonly=True, what="bodystructure"):
         """Retrieve information about a specific message
 
         Issue a FETCH command to retrieve a message's content from the
@@ -767,12 +767,14 @@ class IMAPconnector(object):
         :param headers:
         """
         self.select_mailbox(mbox, readonly)
-        if headers is None:
+        if what == "bodystructure":
             to_fetch = "(BODYSTRUCTURE)"
+        elif what == "source":
+            to_fetch = "(BODY[])"
         else:
             bcmd = "BODY.PEEK" if readonly else "BODY"
             to_fetch = "(BODYSTRUCTURE {}[HEADER.FIELDS ({})])".format(
-                bcmd, " ".join(headers))
+                bcmd, what)
         data = self._cmd("FETCH", mailid, to_fetch)
         return data[int(mailid)]
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Modoboa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-25 13:16+0100\n"
+"POT-Creation-Date: 2018-08-21 09:34+0200\n"
 "PO-Revision-Date: 2017-10-12 19:29+0000\n"
 "Last-Translator: Kostas Moumouris <moumouriskostas@gmail.com>\n"
 "Language-Team: Greek (Greece) (http://www.transifex.com/tonio/modoboa/"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: constants.py:7 lib/imapemail.py:327
+#: constants.py:7 lib/imapemail.py:329
 msgid "Date"
 msgstr "Ημερομηνία"
 
@@ -34,7 +34,7 @@ msgstr "Αποστολή"
 msgid "Size"
 msgstr ""
 
-#: constants.py:10 forms.py:113 lib/imapemail.py:325
+#: constants.py:10 forms.py:113 lib/imapemail.py:327
 msgid "Subject"
 msgstr "Τίτλος"
 
@@ -256,11 +256,11 @@ msgstr "Webmail"
 msgid "Add to contacts"
 msgstr "Προσθήκη στις επαφές"
 
-#: lib/imapemail.py:272
+#: lib/imapemail.py:274
 msgid "wrote:"
 msgstr "έγγραψε:"
 
-#: lib/imapemail.py:339 lib/imapemail.py:342
+#: lib/imapemail.py:341 lib/imapemail.py:344
 msgid "Original message"
 msgstr "Αρχικό μήνυμα"
 
@@ -318,97 +318,101 @@ msgstr "Γονικό γραμματοκιβώτιο"
 msgid "Compose"
 msgstr "Δημιουργία"
 
-#: templatetags/webmail_tags.py:25 templatetags/webmail_tags.py:93
+#: templatetags/webmail_tags.py:26 templatetags/webmail_tags.py:99
 msgid "Back"
 msgstr "Πίσω"
 
-#: templatetags/webmail_tags.py:31
+#: templatetags/webmail_tags.py:32
 msgid "Reply"
 msgstr "Απάντηση"
 
-#: templatetags/webmail_tags.py:36
+#: templatetags/webmail_tags.py:37
 msgid "Reply all"
 msgstr "Απάντηση σε όλους"
 
-#: templatetags/webmail_tags.py:41
+#: templatetags/webmail_tags.py:42
 msgid "Forward"
 msgstr "Προώθηση"
 
-#: templatetags/webmail_tags.py:49 templatetags/webmail_tags.py:112
+#: templatetags/webmail_tags.py:50 templatetags/webmail_tags.py:118
 msgid "Delete"
 msgstr "Διαγραφή"
 
-#: templatetags/webmail_tags.py:56 templatetags/webmail_tags.py:121
+#: templatetags/webmail_tags.py:57 templatetags/webmail_tags.py:127
 msgid "Mark as spam"
 msgstr "Χαρακτηρισμός ως ανεπιθύμητο "
 
-#: templatetags/webmail_tags.py:59
+#: templatetags/webmail_tags.py:60
 msgid "Display options"
 msgstr "Ρυθμίσεις εμφάνισης"
 
-#: templatetags/webmail_tags.py:63
+#: templatetags/webmail_tags.py:64
 msgid "Activate links"
 msgstr "Ενεργοί σύνδεσμοι"
 
-#: templatetags/webmail_tags.py:66
+#: templatetags/webmail_tags.py:67
 msgid "Disable links"
 msgstr "Απενεργοποιημένοι σύνδεσμοι"
 
-#: templatetags/webmail_tags.py:77 templatetags/webmail_tags.py:180
+#: templatetags/webmail_tags.py:70
+msgid "Show source"
+msgstr ""
+
+#: templatetags/webmail_tags.py:83 templatetags/webmail_tags.py:186
 msgid "Mark as not spam"
 msgstr "Αποχαρακτηρισμός ως ανεπιθύμητο"
 
-#: templatetags/webmail_tags.py:98
+#: templatetags/webmail_tags.py:104
 msgid "Send"
 msgstr "Αποστολή"
 
-#: templatetags/webmail_tags.py:124
+#: templatetags/webmail_tags.py:130
 msgid "Actions"
 msgstr "Ενέργειες"
 
-#: templatetags/webmail_tags.py:128
+#: templatetags/webmail_tags.py:134
 msgid "Mark as read"
 msgstr "Χαρακτηρισμός ως διαβασμένο"
 
-#: templatetags/webmail_tags.py:133
+#: templatetags/webmail_tags.py:139
 msgid "Mark as unread"
 msgstr "Χαρακτηρισμός ως νέο"
 
-#: templatetags/webmail_tags.py:138
+#: templatetags/webmail_tags.py:144
 msgid "Mark as flagged"
 msgstr "Χαρακτηρισμός ως επισημασμένο"
 
-#: templatetags/webmail_tags.py:143
+#: templatetags/webmail_tags.py:149
 msgid "Mark as unflagged"
 msgstr "Αποχαρακτηρισμός ως επισημασμένο"
 
-#: templatetags/webmail_tags.py:150
+#: templatetags/webmail_tags.py:156
 msgid "Sort by"
 msgstr ""
 
-#: templatetags/webmail_tags.py:170 views.py:167
+#: templatetags/webmail_tags.py:176 views.py:167
 msgid "Empty folder"
 msgstr "Άδειασμα φακέλου "
 
-#: templatetags/webmail_tags.py:250 views.py:204
+#: templatetags/webmail_tags.py:256 views.py:204
 msgid "Create a new folder"
 msgstr "Δημιουργία νέου φακέλου"
 
-#: templatetags/webmail_tags.py:258
+#: templatetags/webmail_tags.py:264
 msgid "Edit the selected folder"
 msgstr "Επεξεργασία επιλεγμένου φακέλου"
 
-#: templatetags/webmail_tags.py:263
+#: templatetags/webmail_tags.py:269
 msgid "Remove the selected folder"
 msgstr "Κατάργηση επιλεγμένου φακέλου"
 
-#: templatetags/webmail_tags.py:267
+#: templatetags/webmail_tags.py:273
 msgid "Compress folder"
 msgstr "Συμπίεση φακέλου"
 
 #: views.py:61 views.py:79 views.py:93 views.py:111 views.py:129 views.py:165
 #: views.py:179 views.py:257 views.py:280 views.py:486 views.py:534
-#: views.py:549 views.py:588 views.py:628
+#: views.py:552 views.py:568 views.py:607 views.py:647
 msgid "Invalid request"
 msgstr "Λάθος αίτημα"
 
@@ -470,3 +474,7 @@ msgstr "Άγνωστο συνημμένο"
 #: views.py:416
 msgid "Empty mailbox"
 msgstr "Άδειασμα γραμματοκιβωτίου"
+
+#: views.py:559
+msgid "Message source"
+msgstr ""

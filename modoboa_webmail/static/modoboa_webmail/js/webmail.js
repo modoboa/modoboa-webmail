@@ -157,6 +157,9 @@ Webmail.prototype = {
             modalbox(e, undefined, $("a[name=attachments]").attr("href"),
                 $.proxy(this.attachments_init, this));
         }, this));
+        $document.on('click', 'a[name=show_source]', function(e) {
+            modalbox(e, undefined, $(this).attr('href'));
+        });
         $document.on('click', '.addcontact', $.proxy(this.addContact, this));
         $document.on('click', '.sort-order', $.proxy(this.sortMessages, this));
     },

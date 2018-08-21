@@ -89,6 +89,8 @@ class IMAP4Mock(object):
                     data = tests_data.BODYSTRUCTURE_EMPTY_MAIL
                 else:
                     data = tests_data.EMPTY_BODY
+            elif uid == 133872:
+                data = tests_data.COMPLETE_MAIL
             return "OK", data
         elif command == "STORE":
             return "OK", []
@@ -323,3 +325,10 @@ class WebmailTestCase(ModoTestCase):
             reverse("modoboa_webmail:mailcontent_get"))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
+
+    def test_getmailsource(self):
+        """Try to display a message's source."""
+        url = "{}?mbox=INBOX&mailid=133872".format(
+            reverse("modoboa_webmail:mailsource_get"))
+        response = self.client.get(url)
+        self.assertContains(response, "Message-ID")

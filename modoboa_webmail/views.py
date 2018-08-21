@@ -542,6 +542,25 @@ def getmailcontent(request):
     })
 
 
+@login_required
+@needs_mailbox()
+def getmailsource(request):
+    """Retrieve message source."""
+    mbox = request.GET.get("mbox", None)
+    mailid = request.GET.get("mailid", None)
+    if mbox is None or mailid is None:
+        raise BadRequest(_("Invalid request"))
+    email = ImapEmail(
+        request,
+        "%s:%s" % (mbox, mailid), dformat="DISPLAYMODE",
+        links=request.GET.get("links", "0") == "1"
+    )
+    return render(request, "modoboa_webmail/mail_source.html", {
+        "title": _("Message source"),
+        "source": email.source
+    })
+
+
 def viewmail(request):
     mbox = request.GET.get("mbox", None)
     mailid = request.GET.get("mailid", None)

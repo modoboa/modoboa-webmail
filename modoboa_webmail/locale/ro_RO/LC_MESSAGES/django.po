@@ -1,24 +1,26 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Andrei-Ilie Olteanu <andrei@flashsoft.ro>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Modoboa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-25 13:16+0100\n"
+"POT-Creation-Date: 2018-08-21 09:34+0200\n"
 "PO-Revision-Date: 2018-06-13 10:35+0000\n"
 "Last-Translator: Andrei-Ilie Olteanu <andrei@flashsoft.ro>\n"
-"Language-Team: Romanian (Romania) (http://www.transifex.com/tonio/modoboa/language/ro_RO/)\n"
+"Language-Team: Romanian (Romania) (http://www.transifex.com/tonio/modoboa/"
+"language/ro_RO/)\n"
+"Language: ro_RO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ro_RO\n"
-"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
+"2:1));\n"
 
-#: constants.py:7 lib/imapemail.py:327
+#: constants.py:7 lib/imapemail.py:329
 msgid "Date"
 msgstr "Dată"
 
@@ -30,7 +32,7 @@ msgstr "Expeditor"
 msgid "Size"
 msgstr "Mărime"
 
-#: constants.py:10 forms.py:113 lib/imapemail.py:325
+#: constants.py:10 forms.py:113 lib/imapemail.py:327
 msgid "Subject"
 msgstr "Subiect"
 
@@ -76,7 +78,9 @@ msgstr "Marimea maximă pentru atașare"
 
 #: forms.py:282
 msgid "Maximum attachment size in bytes (or KB, MB, GB if specified)"
-msgstr "Marimea maximă pentru atașare exprimată în octeți (sau în KB, MB, GB în cazul specificării) "
+msgstr ""
+"Marimea maximă pentru atașare exprimată în octeți (sau în KB, MB, GB în "
+"cazul specificării) "
 
 #: forms.py:285
 msgid "IMAP settings"
@@ -250,11 +254,11 @@ msgstr "Webmail"
 msgid "Add to contacts"
 msgstr "Adaugă la contacte"
 
-#: lib/imapemail.py:272
+#: lib/imapemail.py:274
 msgid "wrote:"
 msgstr "a scris:"
 
-#: lib/imapemail.py:339 lib/imapemail.py:342
+#: lib/imapemail.py:341 lib/imapemail.py:344
 msgid "Original message"
 msgstr "Mesaj original"
 
@@ -312,97 +316,101 @@ msgstr "Căsuța poștală principală"
 msgid "Compose"
 msgstr "Compune"
 
-#: templatetags/webmail_tags.py:25 templatetags/webmail_tags.py:93
+#: templatetags/webmail_tags.py:26 templatetags/webmail_tags.py:99
 msgid "Back"
 msgstr "Înapoi"
 
-#: templatetags/webmail_tags.py:31
+#: templatetags/webmail_tags.py:32
 msgid "Reply"
 msgstr "Răspunde"
 
-#: templatetags/webmail_tags.py:36
+#: templatetags/webmail_tags.py:37
 msgid "Reply all"
 msgstr "Răspunde la toți"
 
-#: templatetags/webmail_tags.py:41
+#: templatetags/webmail_tags.py:42
 msgid "Forward"
 msgstr "Redirecționează"
 
-#: templatetags/webmail_tags.py:49 templatetags/webmail_tags.py:112
+#: templatetags/webmail_tags.py:50 templatetags/webmail_tags.py:118
 msgid "Delete"
 msgstr "Sterge"
 
-#: templatetags/webmail_tags.py:56 templatetags/webmail_tags.py:121
+#: templatetags/webmail_tags.py:57 templatetags/webmail_tags.py:127
 msgid "Mark as spam"
 msgstr "Marchează ca spam "
 
-#: templatetags/webmail_tags.py:59
+#: templatetags/webmail_tags.py:60
 msgid "Display options"
 msgstr "Opțiuni de afișare"
 
-#: templatetags/webmail_tags.py:63
+#: templatetags/webmail_tags.py:64
 msgid "Activate links"
 msgstr "Activează linkurile"
 
-#: templatetags/webmail_tags.py:66
+#: templatetags/webmail_tags.py:67
 msgid "Disable links"
 msgstr "Dezactivează linkurile"
 
-#: templatetags/webmail_tags.py:77 templatetags/webmail_tags.py:180
+#: templatetags/webmail_tags.py:70
+msgid "Show source"
+msgstr ""
+
+#: templatetags/webmail_tags.py:83 templatetags/webmail_tags.py:186
 msgid "Mark as not spam"
 msgstr "Marchează ca nefiind spam "
 
-#: templatetags/webmail_tags.py:98
+#: templatetags/webmail_tags.py:104
 msgid "Send"
 msgstr "Trimite"
 
-#: templatetags/webmail_tags.py:124
+#: templatetags/webmail_tags.py:130
 msgid "Actions"
 msgstr "Acțiuni"
 
-#: templatetags/webmail_tags.py:128
+#: templatetags/webmail_tags.py:134
 msgid "Mark as read"
 msgstr "Marchează ca citit"
 
-#: templatetags/webmail_tags.py:133
+#: templatetags/webmail_tags.py:139
 msgid "Mark as unread"
 msgstr "Marchează ca necitit"
 
-#: templatetags/webmail_tags.py:138
+#: templatetags/webmail_tags.py:144
 msgid "Mark as flagged"
 msgstr "Marchează ca raportare"
 
-#: templatetags/webmail_tags.py:143
+#: templatetags/webmail_tags.py:149
 msgid "Mark as unflagged"
 msgstr "Marchează ca neraportat"
 
-#: templatetags/webmail_tags.py:150
+#: templatetags/webmail_tags.py:156
 msgid "Sort by"
 msgstr "Sortează după"
 
-#: templatetags/webmail_tags.py:170 views.py:167
+#: templatetags/webmail_tags.py:176 views.py:167
 msgid "Empty folder"
 msgstr "Folder gol"
 
-#: templatetags/webmail_tags.py:250 views.py:204
+#: templatetags/webmail_tags.py:256 views.py:204
 msgid "Create a new folder"
 msgstr "Creează un nou folder"
 
-#: templatetags/webmail_tags.py:258
+#: templatetags/webmail_tags.py:264
 msgid "Edit the selected folder"
 msgstr "Editează folderul selectat"
 
-#: templatetags/webmail_tags.py:263
+#: templatetags/webmail_tags.py:269
 msgid "Remove the selected folder"
 msgstr "Sterge folderul selectat"
 
-#: templatetags/webmail_tags.py:267
+#: templatetags/webmail_tags.py:273
 msgid "Compress folder"
 msgstr "Comprimare folder"
 
 #: views.py:61 views.py:79 views.py:93 views.py:111 views.py:129 views.py:165
 #: views.py:179 views.py:257 views.py:280 views.py:486 views.py:534
-#: views.py:549 views.py:588 views.py:628
+#: views.py:552 views.py:568 views.py:607 views.py:647
 msgid "Invalid request"
 msgstr "Cerere invalidă"
 
@@ -466,3 +474,7 @@ msgstr "Atașament necunoscut"
 #: views.py:416
 msgid "Empty mailbox"
 msgstr "Căsuță de mail goală"
+
+#: views.py:559
+msgid "Message source"
+msgstr ""

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Modoboa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-25 13:16+0100\n"
+"POT-Creation-Date: 2018-08-21 09:34+0200\n"
 "PO-Revision-Date: 2015-10-11 11:49+0000\n"
 "Last-Translator: Rocco <mors10@hotmail.com>\n"
 "Language-Team: Italian (http://www.transifex.com/tonio/modoboa/language/"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: constants.py:7 lib/imapemail.py:327
+#: constants.py:7 lib/imapemail.py:329
 msgid "Date"
 msgstr "Data"
 
@@ -34,7 +34,7 @@ msgstr "Invia"
 msgid "Size"
 msgstr ""
 
-#: constants.py:10 forms.py:113 lib/imapemail.py:325
+#: constants.py:10 forms.py:113 lib/imapemail.py:327
 msgid "Subject"
 msgstr "Oggetto"
 
@@ -264,11 +264,11 @@ msgstr "Webmail"
 msgid "Add to contacts"
 msgstr ""
 
-#: lib/imapemail.py:272
+#: lib/imapemail.py:274
 msgid "wrote:"
 msgstr "scritto:"
 
-#: lib/imapemail.py:339 lib/imapemail.py:342
+#: lib/imapemail.py:341 lib/imapemail.py:344
 msgid "Original message"
 msgstr "Messaggio originale"
 
@@ -326,111 +326,115 @@ msgstr "Casella di posta principale"
 msgid "Compose"
 msgstr "Componi"
 
-#: templatetags/webmail_tags.py:25 templatetags/webmail_tags.py:93
+#: templatetags/webmail_tags.py:26 templatetags/webmail_tags.py:99
 msgid "Back"
 msgstr "Indietro"
 
-#: templatetags/webmail_tags.py:31
+#: templatetags/webmail_tags.py:32
 msgid "Reply"
 msgstr "Rispondi"
 
-#: templatetags/webmail_tags.py:36
+#: templatetags/webmail_tags.py:37
 msgid "Reply all"
 msgstr "Rispondi a tutti"
 
-#: templatetags/webmail_tags.py:41
+#: templatetags/webmail_tags.py:42
 msgid "Forward"
 msgstr "Inoltra"
 
-#: templatetags/webmail_tags.py:49 templatetags/webmail_tags.py:112
+#: templatetags/webmail_tags.py:50 templatetags/webmail_tags.py:118
 msgid "Delete"
 msgstr "Elimina"
 
-#: templatetags/webmail_tags.py:56 templatetags/webmail_tags.py:121
+#: templatetags/webmail_tags.py:57 templatetags/webmail_tags.py:127
 #, fuzzy
 #| msgid "Mark as read"
 msgid "Mark as spam"
 msgstr "Segna come letto"
 
-#: templatetags/webmail_tags.py:59
+#: templatetags/webmail_tags.py:60
 msgid "Display options"
 msgstr "Mostra le opzioni"
 
-#: templatetags/webmail_tags.py:63
+#: templatetags/webmail_tags.py:64
 msgid "Activate links"
 msgstr "Attiva i collegamenti"
 
-#: templatetags/webmail_tags.py:66
+#: templatetags/webmail_tags.py:67
 msgid "Disable links"
 msgstr "Disabilita i collegamenti"
 
-#: templatetags/webmail_tags.py:77 templatetags/webmail_tags.py:180
+#: templatetags/webmail_tags.py:70
+msgid "Show source"
+msgstr ""
+
+#: templatetags/webmail_tags.py:83 templatetags/webmail_tags.py:186
 #, fuzzy
 #| msgid "Mark as read"
 msgid "Mark as not spam"
 msgstr "Segna come letto"
 
-#: templatetags/webmail_tags.py:98
+#: templatetags/webmail_tags.py:104
 msgid "Send"
 msgstr "Invia"
 
-#: templatetags/webmail_tags.py:124
+#: templatetags/webmail_tags.py:130
 msgid "Actions"
 msgstr "Azioni"
 
-#: templatetags/webmail_tags.py:128
+#: templatetags/webmail_tags.py:134
 msgid "Mark as read"
 msgstr "Segna come letto"
 
-#: templatetags/webmail_tags.py:133
+#: templatetags/webmail_tags.py:139
 msgid "Mark as unread"
 msgstr "Segna come non letto"
 
-#: templatetags/webmail_tags.py:138
+#: templatetags/webmail_tags.py:144
 #, fuzzy
 #| msgid "Mark as read"
 msgid "Mark as flagged"
 msgstr "Segna come letto"
 
-#: templatetags/webmail_tags.py:143
+#: templatetags/webmail_tags.py:149
 #, fuzzy
 #| msgid "Mark as unread"
 msgid "Mark as unflagged"
 msgstr "Segna come non letto"
 
-#: templatetags/webmail_tags.py:150
+#: templatetags/webmail_tags.py:156
 msgid "Sort by"
 msgstr ""
 
-#: templatetags/webmail_tags.py:170 views.py:167
+#: templatetags/webmail_tags.py:176 views.py:167
 msgid "Empty folder"
 msgstr "Svuota cartella"
 
-#: templatetags/webmail_tags.py:250 views.py:204
+#: templatetags/webmail_tags.py:256 views.py:204
 #, fuzzy
 #| msgid "Create a new mailbox"
 msgid "Create a new folder"
 msgstr "Crea una nuova casella di posta"
 
-#: templatetags/webmail_tags.py:258
+#: templatetags/webmail_tags.py:264
 #, fuzzy
 #| msgid "Edit the selected mailbox"
 msgid "Edit the selected folder"
 msgstr "Modifica la casella di posta selezionata"
 
-#: templatetags/webmail_tags.py:263
+#: templatetags/webmail_tags.py:269
 #, fuzzy
 #| msgid "Remove the selected mailbox"
 msgid "Remove the selected folder"
 msgstr "Elimina la cartella di posta selezionata"
 
-#: templatetags/webmail_tags.py:267
+#: templatetags/webmail_tags.py:273
 msgid "Compress folder"
 msgstr "Comprimi cartella"
 
 #: views.py:61 views.py:79 views.py:93 views.py:111 views.py:129 views.py:165
 #: views.py:179 views.py:257 views.py:280 views.py:486 views.py:534
-#: views.py:549 views.py:588 views.py:628
+#: views.py:552 views.py:568 views.py:607 views.py:647
 msgid "Invalid request"
 msgstr "Richiesta non valida"
 
@@ -500,6 +504,10 @@ msgstr "Allegato sconosciuto"
 #: views.py:416
 msgid "Empty mailbox"
 msgstr "Casella di posta vuota"
+
+#: views.py:559
+msgid "Message source"
+msgstr ""
 
 #~ msgid "Mailboxes"
 #~ msgstr "Caselle di posta"

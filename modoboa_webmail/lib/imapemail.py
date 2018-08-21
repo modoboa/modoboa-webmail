@@ -13,7 +13,7 @@ from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.urls import reverse
-from django.utils.html import escape
+from django.utils.html import conditional_escape
 from django.utils.translation import ugettext as _
 
 from modoboa.core.extensions import exts_pool
@@ -65,7 +65,7 @@ class ImapEmail(Email):
         """Fetch message headers from server."""
         msg = self.imapc.fetchmail(
             self.mbox, self.mailid, readonly=False,
-            headers=self.headers_as_list
+            what=" ".join(self.headers_as_list)
         )
         headers = msg["BODY[HEADER.FIELDS ({})]".format(self.headers_as_text)]
         self.fetch_body_structure(msg)
@@ -128,11 +128,6 @@ class ImapEmail(Email):
     def headers_as_text(self):
         return " ".join(self.headers_as_list)
 
-    def viewmail_plain(self, content, **kwargs):
-        """Return the plain/text version of the email."""
-        content = escape(content)
-        return super(ImapEmail, self).viewmail_plain(content, **kwargs)
-
     @property
     def body(self):
         """Load email's body.
@@ -173,6 +168,12 @@ class ImapEmail(Email):
     @body.setter
     def body(self, value):
         self._body = value
+
+    @property
+    def source(self):
+        """Retrieve email source."""
+        return self.imapc.fetchmail(
+            self.mbox, self.mailid, what="source")['BODY[]']
 
     def _find_content_charset(self, part):
         for pos, elem in enumerate(part["params"]):
@@ -346,7 +347,7 @@ class ForwardModifier(Modifier):
         return u"%s: %s\n" % (key, value)
 
     def _header_line_html(self, key, value):
-        return u"<p>%s: %s</p>" % (key, escape(value))
+        return u"<p>%s: %s</p>" % (key, conditional_escape(value))
 
     def _header_end_plain(self):
         return u"\n"

@@ -467,26 +467,29 @@ Webmail.prototype = {
     /*
      * Injects a single mailbox somewhere in the tree
      */
-    inject_mailbox: function($parent, mailbox, linkname, unseen) {
+    inject_mailbox: function($parent, linkname, mailbox) {
         var $li = $("<li />", {
-            name: mailbox,
+            name: mailbox.name,
             'class': "droppable"
         });
         var $link = $("<a />", {
             name: linkname,
-            href: mailbox
+            href: mailbox.name
         });
-        var parts = mailbox.split(this.options.hdelimiter);
+        var parts = mailbox.name.split(this.options.hdelimiter);
         var linkcontent = "<span class='fa fa-folder'></span> ";
         var displayname = linkcontent + parts[parts.length - 1];
 
+        if (mailbox.removed) {
+            $li.addClass('disabled');
+        }
         $li.append($link);
         $parent.append($li);
 
-        if (unseen !== undefined) {
+        if (mailbox.unseen !== undefined) {
             $link.addClass("unseen");
-            $link.html(displayname + " (" + unseen + ")");
-            this.unseen_counters[$link.attr("href")] = unseen;
+            $link.html(displayname + " (" + mailbox.unseen + ")");
+            this.unseen_counters[$link.attr("href")] = mailbox.unseen;
         } else {
             $link.html(displayname);
         }
@@ -515,9 +518,7 @@ Webmail.prototype = {
             if ($parent.find('li[name="' + mboxes[i].name + '"]').length) {
                 continue;
             }
-            this.inject_mailbox(
-                $ul, mboxes[i].name, $plink.attr("name"), mboxes[i].unseen
-            );
+            this.inject_mailbox($ul, $plink.attr("name"), mboxes[i]);
             if (mboxes[i].sub !== undefined) {
                 this.inject_clickbox($('li[name="' + mboxes[i].name + '"]'));
             }
@@ -765,8 +766,8 @@ Webmail.prototype = {
             mailbox = $parent.attr("name") + this.options.hdelimiter + mailbox;
         } else {
             $parent = $("#folders > ul");
-        }
-        var $li = this.inject_mailbox($parent, mailbox, "loadfolder");
+            }
+        var $li = this.inject_mailbox($parent, "loadfolder", { name: mailbox });
         this.init_droppables($li);
     },
 

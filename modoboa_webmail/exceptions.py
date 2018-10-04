@@ -39,6 +39,8 @@ class UnknownAction(ModoboaException):
 
 class ImapError(ModoboaException):
 
+    http_code = 500
+
     def __init__(self, reason):
         self.reason = reason
 

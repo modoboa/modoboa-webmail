@@ -8,7 +8,10 @@ import os
 import shutil
 import tempfile
 
-import mock
+try:
+    import mock
+except ImportError:
+    from unittest import mock
 from six import BytesIO
 
 from django.core import mail
@@ -54,6 +57,8 @@ class IMAP4Mock(object):
             self.untagged_responses["CAPABILITY"] = [b""]
         elif name == "LIST":
             self.untagged_responses["LIST"] = [b"() \".\" \"INBOX\""]
+        elif name == "NAMESPACE":
+            self.untagged_responses["NAMESPACE"] = [b'(("" "/")) NIL NIL']
         return "OK", None
 
     def append(self, *args, **kwargs):

@@ -440,7 +440,10 @@ Webmail.prototype = {
         var res = [];
 
         $("#folders").find("ul:visible").children("li.droppable").each(function() {
-            res.push(encodeURIComponent($(this).attr("name")));
+            var $this = $(this);
+            if (!$this.hasClass('disabled')) {
+                res.push(encodeURIComponent($(this).attr("name")));
+            }
         });
         return "mboxes=" + res.join(",");
     },

@@ -238,18 +238,11 @@ class IMAPconnector(object):
     def hdelimiter(self):
         """Return the default hierachy delimiter.
 
-        This is a simple way to retrieve the default delimiter (see
-        http://www.imapwiki.org/ClientImplementation/MailboxList).
-
         :return: a string
         """
         if self.__hdelimiter is None:
-            data = self._cmd("LIST", '""', '""')
-            m = self.list_response_pattern.match(data[0].decode())
-            if m is None:
-                raise InternalError(
-                    _("Failed to retrieve hierarchy delimiter"))
-            self.__hdelimiter = m.group('delimiter')
+            raise InternalError(
+                _("Failed to retrieve hierarchy delimiter"))
         return self.__hdelimiter
 
     def refresh(self, user, password):

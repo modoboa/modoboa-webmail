@@ -168,6 +168,9 @@ class IMAPconnector(object):
 
     """The IMAPv4 connector."""
 
+    namespaces_pattern = re.compile(r'(\(\([^)]+\)\)|NIL)')
+    namespace_pattern = re.compile(
+        r'\(\("(?P<prefix>.*)" "(?P<delimiter>.+)"\)\)')
     list_base_pattern = (
         r'\((?P<flags>.*?)\) "(?P<delimiter>.*)" "?(?P<name>[^"]*)"?'
     )
@@ -180,12 +183,14 @@ class IMAPconnector(object):
 
     def __init__(self, user=None, password=None):
         self.__hdelimiter = None
+        self.__ns_prefixes = {}
         self.quota_usage = -1
         self.criterions = []
         self.conf = dict(param_tools.get_global_parameters("modoboa_webmail"))
         self.address = self.conf["imap_server"]
         self.port = self.conf["imap_port"]
         self.login(user, password)
+        self.load_namespaces()
 
     def _cmd(self, name, *args, **kwargs):
         """IMAP command wrapper
@@ -233,18 +238,11 @@ class IMAPconnector(object):
     def hdelimiter(self):
         """Return the default hierachy delimiter.
 
-        This is a simple way to retrieve the default delimiter (see
-        http://www.imapwiki.org/ClientImplementation/MailboxList).
-
         :return: a string
         """
         if self.__hdelimiter is None:
-            data = self._cmd("LIST", '""', '""')
-            m = self.list_response_pattern.match(data[0].decode())
-            if m is None:
-                raise InternalError(
-                    _("Failed to retrieve hierarchy delimiter"))
-            self.__hdelimiter = m.group('delimiter')
+            raise InternalError(
+                _("Failed to retrieve hierarchy delimiter"))
         return self.__hdelimiter
 
     def refresh(self, user, password):
@@ -303,6 +301,18 @@ class IMAPconnector(object):
         self.m = None
         if hasattr(self, "current_mailbox"):
             del self.current_mailbox
+
+    def load_namespaces(self):
+        """Load available namespaces."""
+        data = self._cmd("NAMESPACE")
+        ns = self.namespaces_pattern.findall(data[0].decode())
+        for pos, item in enumerate(["personal", "others", "public"]):
+            if ns[pos] == "NIL":
+                continue
+            m = self.namespace_pattern.match(ns[pos])
+            if self.__hdelimiter is None:
+                self.__hdelimiter = m.group("delimiter")
+            self.__ns_prefixes[item] = m.group("prefix")
 
     def parse_search_parameters(self, criterion, pattern):
         """Parse search information and apply them."""
@@ -666,10 +676,14 @@ class IMAPconnector(object):
 
         We also compute the current usage.
         """
-        if "QUOTA" not in self.capabilities:
+        condition = (
+            "QUOTA" not in self.capabilities or
+            ("others" in self.__ns_prefixes and
+             mailbox.startswith(self.__ns_prefixes["others"]))
+        )
+        if condition:
             self.quota_limit = self.quota_current = None
             return
-
         data = self._cmd("GETQUOTAROOT", self._encode_mbox_name(mailbox),
                          responses=["QUOTAROOT", "QUOTA"])
         if data is None:

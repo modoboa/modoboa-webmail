@@ -120,6 +120,7 @@ class WebmailTestCase(ModoTestCase):
         self.set_global_parameter("imap_port", 1435)
         self.workdir = tempfile.mkdtemp()
         os.mkdir("{}/webmail".format(self.workdir))
+        self.set_global_parameter("update_scheme", False, app="core")
         url = reverse("core:login")
         data = {
             "username": self.user.username, "password": "toto"

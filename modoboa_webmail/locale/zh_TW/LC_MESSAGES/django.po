@@ -1,22 +1,23 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # akong <akong@aspa.idv.tw>, 2018
+# akong <akong@aspa.idv.tw>, 2018
+# freedom lee <a74218@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Modoboa\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-21 09:34+0200\n"
-"PO-Revision-Date: 2018-06-28 08:43+0000\n"
-"Last-Translator: akong <akong@aspa.idv.tw>\n"
-"Language-Team: Chinese (Taiwan) (http://www.transifex.com/tonio/modoboa/"
-"language/zh_TW/)\n"
-"Language: zh_TW\n"
+"PO-Revision-Date: 2018-10-13 13:37+0000\n"
+"Last-Translator: freedom lee <a74218@gmail.com>\n"
+"Language-Team: Chinese (Taiwan) (http://www.transifex.com/tonio/modoboa/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: constants.py:7 lib/imapemail.py:329
@@ -351,7 +352,7 @@ msgstr "停用連結"
 
 #: templatetags/webmail_tags.py:70
 msgid "Show source"
-msgstr ""
+msgstr "顯示來源"
 
 #: templatetags/webmail_tags.py:83 templatetags/webmail_tags.py:186
 msgid "Mark as not spam"
@@ -470,4 +471,4 @@ msgstr "空的信箱"
 
 #: views.py:559
 msgid "Message source"
-msgstr ""
+msgstr "消息來源"

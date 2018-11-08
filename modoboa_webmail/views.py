@@ -424,7 +424,7 @@ def listmailbox(request, defmailbox="INBOX", update_session=True):
     }
 
 
-def render_compose(request, form, posturl, email=None, insert_signature=False):
+def render_compose(request, form, posturl, email=None, **kwargs):
     """Render the compose form."""
     resp = {}
     if email is None:
@@ -433,17 +433,27 @@ def render_compose(request, form, posturl, email=None, insert_signature=False):
     else:
         body = email.body
         textheader = email.textheader
-    if insert_signature:
+    if kwargs.get("insert_signature"):
         signature = EmailSignature(request.user)
         body = "{}{}".format(body, signature)
     randid = None
-    if "id" not in request.GET:
-        if "compose_mail" in request.session:
-            clean_attachments(request.session["compose_mail"]["attachments"])
+    condition = (
+        "id" not in request.GET or
+        "compose_mail" not in request.session or
+        request.session["compose_mail"]["id"] != request.GET["id"]
+    )
+    if condition:
         randid = set_compose_session(request)
-    elif "compose_mail" not in request.session \
-            or request.session["compose_mail"]["id"] != request.GET["id"]:
-        randid = set_compose_session(request)
+        if kwargs.get("load_email_attachments"):
+            for pnum, fname in email.attachments.items():
+                partdef, payload = email.fetch_attachment(pnum)
+                request.session["compose_mail"]["attachments"].append({
+                    "fname": fname,
+                    "content-type": partdef["Content-Type"],
+                    "size": partdef["size"],
+                    "tmpname": save_attachment(payload)
+                })
+            request.session.modified = True
 
     attachment_list = request.session["compose_mail"]["attachments"]
     if attachment_list:
@@ -487,7 +497,7 @@ def get_mail_info(request):
     return mbox, mailid
 
 
-def new_compose_form(request, action, mbox, mailid):
+def new_compose_form(request, action, mbox, mailid, **kwargs):
     """Return a new composition form.
 
     Valid for reply and forward actions only.
@@ -496,7 +506,7 @@ def new_compose_form(request, action, mbox, mailid):
     modclass = globals()["%sModifier" % action.capitalize()]
     email = modclass(form, request, "%s:%s" % (mbox, mailid), links=True)
     url = "?action=%s&mbox=%s&mailid=%s" % (action, mbox, mailid)
-    return render_compose(request, form, url, email)
+    return render_compose(request, form, url, email, **kwargs)
 
 
 def reply(request):
@@ -522,7 +532,8 @@ def forward(request):
         if status:
             get_imapconnector(request).msg_forwarded(mbox, mailid)
         return resp
-    return new_compose_form(request, "forward", mbox, mailid)
+    return new_compose_form(
+        request, "forward", mbox, mailid, load_email_attachments=True)
 
 
 @login_required

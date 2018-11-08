@@ -9,6 +9,7 @@ import six
 
 from django.conf import settings
 from django.core.files.uploadhandler import FileUploadHandler, SkipFile
+from django.utils.encoding import smart_bytes
 
 from modoboa.lib.exceptions import InternalError
 from modoboa.lib.web_utils import size2integer
@@ -38,7 +39,7 @@ def save_attachment(f):
     filesystem. To avoid conflicts, a random name is generated and
     used instead.
 
-    :param f: an uploaded file object (see Django's documentation)
+    :param f: an uploaded file object (see Django's documentation) or bytes
     :return: the new random name
     """
     from tempfile import NamedTemporaryFile
@@ -48,8 +49,11 @@ def save_attachment(f):
         fp = NamedTemporaryFile(dir=dstdir, delete=False)
     except Exception as e:
         raise InternalError(str(e))
-    for chunk in f.chunks():
-        fp.write(chunk)
+    if isinstance(f, six.string_types):
+        fp.write(smart_bytes(f))
+    else:
+        for chunk in f.chunks():
+            fp.write(chunk)
     fp.close()
     return fp.name
 

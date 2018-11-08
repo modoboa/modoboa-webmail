@@ -89,6 +89,13 @@ class IMAP4Mock(object):
                     data = tests_data.BODYSTRUCTURE_SAMPLE_4
                 else:
                     data = tests_data.BODY_PLAIN_4
+            elif uid == 46932:
+                if args[1] == "(BODYSTRUCTURE)":
+                    data = tests_data.BODYSTRUCTURE_ONLY_5
+                elif "HEADER.FIELDS" in args[1]:
+                    data = tests_data.BODYSTRUCTURE_SAMPLE_9
+                else:
+                    data = tests_data.BODYSTRUCTURE_SAMPLE_10
             elif uid == 33:
                 if args[1] == "(BODYSTRUCTURE)":
                     data = tests_data.BODYSTRUCTURE_EMPTY_MAIL
@@ -325,6 +332,26 @@ class WebmailTestCase(ModoTestCase):
         self.assertEqual(
             mail.outbox[0].from_email, "user@test.com")
         self.assertIn("References", mail.outbox[0].extra_headers)
+
+    def test_forward_email(self):
+        """Test forward form."""
+        url = "{}?action=forward&mbox=INBOX&mailid=46932".format(
+            reverse("modoboa_webmail:index"))
+        session = self.client.session
+        session["lastaction"] = "compose"
+        session.save()
+        response = self.ajax_get(url)
+        self.assertIn('id="id_origmsgid"', response["listing"])
+        self.assertEqual(
+            len(self.client.session["compose_mail"]["attachments"]), 1)
+        response = self.client.post(
+            url, {
+                "from_": self.user.email, "to": "test@example.test",
+                "subject": "test", "body": "Test",
+                "origmsgid": "<id@localhost>"
+            }
+        )
+        self.assertEqual(len(mail.outbox), 1)
 
     def test_getmailcontent_empty_mail(self):
         """Try to display an empty email."""

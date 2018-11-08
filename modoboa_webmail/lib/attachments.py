@@ -49,7 +49,7 @@ def save_attachment(f):
         fp = NamedTemporaryFile(dir=dstdir, delete=False)
     except Exception as e:
         raise InternalError(str(e))
-    if isinstance(f, six.string_types):
+    if isinstance(f, (six.binary_type, six.text_type)):
         fp.write(smart_bytes(f))
     else:
         for chunk in f.chunks():

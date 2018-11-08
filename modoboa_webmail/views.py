@@ -4,6 +4,7 @@
 
 from __future__ import unicode_literals
 
+import base64
 import os
 
 from rfc6266 import build_header
@@ -451,7 +452,7 @@ def render_compose(request, form, posturl, email=None, **kwargs):
                     "fname": fname,
                     "content-type": partdef["Content-Type"],
                     "size": partdef["size"],
-                    "tmpname": save_attachment(payload)
+                    "tmpname": save_attachment(base64.b64decode(payload))
                 })
             request.session.modified = True
 

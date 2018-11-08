@@ -164,6 +164,7 @@ class WebmailTestCase(ModoTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
+        self.set_global_parameters({"max_attachment_size": "10"})
         with self.settings(MEDIA_ROOT=self.workdir):
             response = self.client.post(url, {"attachment": get_gif()})
         self.assertContains(response, "Attachment is too big")

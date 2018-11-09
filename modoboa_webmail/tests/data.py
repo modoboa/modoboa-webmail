@@ -32,6 +32,9 @@ BODYSTRUCTURE_SAMPLE_4 = [
 BODYSTRUCTURE_ONLY_4 = [
     (b'855 (UID 46931 ' + BODYSTRUCTURE_4), ')']
 
+BODYSTRUCTURE_ONLY_5 = [
+    (b'855 (UID 46932 ' + BODYSTRUCTURE_4), ')']
+
 BODY_PLAIN_4 = [
     (b'855 (UID 46931 BODY[1.1] {25}', b'This is a test message.\r\n'), b')']
 
@@ -55,6 +58,19 @@ BODYSTRUCTURE_SAMPLE_7 = [
 BODYSTRUCTURE_SAMPLE_8 = [
     (b'1 (UID 947 BODYSTRUCTURE ("text" "html" ("charset" "utf-8") NIL NIL "8bit" 889 34 NIL NIL NIL NIL) BODY[HEADER.FIELDS (FROM TO CC DATE SUBJECT)] {80}', 'From: Antoine Nguyen <tonio@ngyn.org>\r\nDate: Sat, 26 Mar 2016 11:45:49 +0100\r\n\r\n'),
     b')'
+]
+
+BODYSTRUCTURE_SAMPLE_9 = [
+    (b'855 (UID 46932 ' + BODYSTRUCTURE_4 + b' BODY[HEADER.FIELDS (FROM TO CC DATE SUBJECT)] {235}', b'From: <Service.client10@maaf.fr>\r\nTo: <TONIO@NGYN.ORG>\r\nCc: \r\nSubject: Notre contact du 28/12/2011 - 192175092\r\nDate: Wed, 28 Dec 2011 13:29:17 +0100\r\nMessage-ID: <CABY0dkJspTaFn7v-1OG1nc9M0Qxn+VUTpcXzxyGNBnSnZtqMrw@mail.gmail.com>\r\n\r\n'),
+    b')'
+]
+
+BODYSTRUCTURE_SAMPLE_10 = [
+    (b'855 (UID 46932 ' + BODYSTRUCTURE_4 + b' BODY[1.1] {10})',
+     b'XXXXXXXX\r\n',
+     b'BODY[2] {10}',
+     b'XXXXXXXX\r\n',
+     b')',)
 ]
 
 BODYSTRUCTURE_EMPTY_MAIL = [

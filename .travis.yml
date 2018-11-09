@@ -31,6 +31,7 @@ install:
 
 script:
   - cd test_project
+  - mkdir -p media/webmail
   - coverage run --source ../modoboa_webmail manage.py test modoboa_webmail
 
 after_success:

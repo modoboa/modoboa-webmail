@@ -52,8 +52,8 @@ msgstr[1] "Moviendo %s mensajes"
 
 #: static/modoboa_webmail/js/webmail.js:1434
 msgid "Contact added!"
-msgstr ""
+msgstr "¡Contacto añadido!"
 
 #: static/modoboa_webmail/js/webmail.js:1443
 msgid "A contact with this address already exists"
-msgstr ""
+msgstr "Ya existe un contacto con esta dirección"

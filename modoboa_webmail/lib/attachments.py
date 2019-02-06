@@ -65,7 +65,8 @@ def clean_attachments(attlist):
                     following information : (random name, real name).
     """
     for att in attlist:
-        fullpath = os.path.join(settings.MEDIA_ROOT, "webmail", att["tmpname"])
+        fullpath = os.path.join(
+            settings.MEDIA_ROOT, "modoboa_webmail", att["tmpname"])
         try:
             os.remove(fullpath)
         except OSError:
@@ -89,7 +90,7 @@ def create_mail_attachment(attdef, payload=None):
     res = MIMEBase(maintype, subtype)
     if payload is None:
         with open(os.path.join(
-                settings.MEDIA_ROOT, "webmail", attdef["tmpname"]),
+                settings.MEDIA_ROOT, "modoboa_webmail", attdef["tmpname"]),
                   "rb") as fp:
             res.set_payload(fp.read())
     else:

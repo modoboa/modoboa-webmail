@@ -168,9 +168,9 @@ class IMAPconnector(object):
 
     """The IMAPv4 connector."""
 
-    namespaces_pattern = re.compile(r'(\(\([^)]+\)\)|NIL)')
+    namespaces_pattern = re.compile(r'(\(\(.+?\)\)|NIL)')
     namespace_pattern = re.compile(
-        r'\(\("(?P<prefix>.*)" "(?P<delimiter>.+)"\)\)')
+        r'\("(?P<prefix>.*?)" "(?P<delimiter>.+?)"\)')
     list_base_pattern = (
         r'\((?P<flags>.*?)\) "(?P<delimiter>.*)" "?(?P<name>[^"]*)"?'
     )
@@ -305,14 +305,17 @@ class IMAPconnector(object):
     def load_namespaces(self):
         """Load available namespaces."""
         data = self._cmd("NAMESPACE")
-        ns = self.namespaces_pattern.findall(data[0].decode())
+        nslist = self.namespaces_pattern.findall(data[0].decode())
         for pos, item in enumerate(["personal", "others", "public"]):
-            if ns[pos] == "NIL":
+            if nslist[pos] == "NIL":
                 continue
-            m = self.namespace_pattern.match(ns[pos])
-            if self.__hdelimiter is None:
-                self.__hdelimiter = m.group("delimiter")
-            self.__ns_prefixes[item] = m.group("prefix")
+            ns = nslist[pos][1:-1]
+            for m in self.namespace_pattern.finditer(ns):
+                if self.__hdelimiter is None:
+                    self.__hdelimiter = m.group("delimiter")
+                if item not in self.__ns_prefixes:
+                    self.__ns_prefixes[item] = []
+                self.__ns_prefixes[item].append(m.group("prefix"))
 
     def parse_search_parameters(self, criterion, pattern):
         """Parse search information and apply them."""
@@ -499,9 +502,9 @@ class IMAPconnector(object):
 
             if '\\Marked' in flags or '\\UnMarked' not in flags:
                 descr["send_status"] = True
+            if r'\NonExistent' in flags:
+                descr["removed"] = True
             if '\\HasChildren' in flags:
-                if r'\NonExistent' in flags:
-                    descr["removed"] = True
                 descr["path"] = name
                 descr["sub"] = []
                 if until_mailbox and until_mailbox.startswith(name):
@@ -628,7 +631,7 @@ class IMAPconnector(object):
     def push_mail(self, folder, msg):
         now = imaplib.Time2Internaldate(time.time())
         msg = bytes(msg) if six.PY3 else str(msg)
-        self.m.append(
+        return self.m.append(
             self._encode_mbox_name(folder), r'(\Seen)', now, msg)
 
     def empty(self, mbox):
@@ -676,19 +679,18 @@ class IMAPconnector(object):
 
         We also compute the current usage.
         """
-        condition = (
-            "QUOTA" not in self.capabilities or
-            ("others" in self.__ns_prefixes and
-             mailbox.startswith(self.__ns_prefixes["others"]))
-        )
-        if condition:
+        if "QUOTA" not in self.capabilities:
             self.quota_limit = self.quota_current = None
             return
-        data = self._cmd("GETQUOTAROOT", self._encode_mbox_name(mailbox),
-                         responses=["QUOTAROOT", "QUOTA"])
-        if data is None:
-            self.quota_limit = self.quota_current = None
-            return
+        try:
+            data = self._cmd("GETQUOTAROOT", self._encode_mbox_name(mailbox),
+                             responses=["QUOTAROOT", "QUOTA"])
+        except ImapError:
+            data = None
+        finally:
+            if data is None:
+                self.quota_limit = self.quota_current = None
+                return
 
         quotadef = data[1][0].decode()
         m = re.search(r"\(STORAGE (\d+) (\d+)\)", quotadef)

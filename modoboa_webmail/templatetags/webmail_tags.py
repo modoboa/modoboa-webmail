@@ -6,6 +6,7 @@ from six.moves.urllib.parse import urlencode
 from django import template
 from django.urls import reverse
 from django.template.loader import render_to_string
+from django.utils.encoding import smart_str
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
@@ -102,6 +103,13 @@ def compose_menu(selection, backurl, user, **kwargs):
          "img": "fa fa-send",
          "class": "btn-default btn-primary",
          "label": _("Send")},
+        {"name": "other_actions",
+         "img": "fa fa-cog",
+         "menu": [{
+             "name": "save_as_draft",
+             "label": _("Save message as draft"),
+             "url": reverse("modoboa_webmail:message_save")
+         }]}
     ]
     context = {
         "selection": selection, "entries": entries, "user": user
@@ -304,7 +312,7 @@ def attachment_url(mbox, mail_id, fname, key):
     params = {
         "mbox": mbox,
         "mailid": mail_id,
-        "fname": fname,
+        "fname": smart_str(fname),
         "partnumber": key
     }
     url = "{}?{}".format(url, urlencode(params))

@@ -13,6 +13,7 @@ from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.urls import reverse
+from django.utils.encoding import smart_text
 from django.utils.html import conditional_escape
 from django.utils.translation import ugettext as _
 
@@ -206,7 +207,7 @@ class ImapEmail(Email):
                             att["disposition"][1][pos + 1]
                         ).strip("\r\t\n")
                     break
-            self.attachments[att["pnum"]] = attname
+            self.attachments[att["pnum"]] = smart_text(attname)
 
     def _fetch_inlines(self):
         """Store inline images on filesystem to display them."""

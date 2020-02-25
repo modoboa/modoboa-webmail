@@ -1,39 +1,32 @@
 # coding: utf-8
-from django.conf.urls import url
+from django.urls import path
 
 from . import views
 
+app_name = 'modoboa_webmail'
+
 urlpatterns = [
-    url(r'^$', views.index, name="index"),
-    url(r'^submailboxes', views.submailboxes, name="submailboxes_get"),
-    url(r'^getmailcontent', views.getmailcontent, name="mailcontent_get"),
-    url(r'^getmailsource', views.getmailsource, name="mailsource_get"),
-    url(r'^unseenmsgs', views.check_unseen_messages,
-        name="unseen_messages_check"),
+    path('', views.index, name="index"),
+    path('submailboxes', views.submailboxes, name="submailboxes_get"),
+    path('getmailcontent', views.getmailcontent, name="mailcontent_get"),
+    path('getmailsource', views.getmailsource, name="mailsource_get"),
+    path('unseenmsgs', views.check_unseen_messages,
+         name="unseen_messages_check"),
 
-    url(r'^delete/$', views.delete,
-        name="mail_delete"),
-    url(r'^move/$', views.move,
-        name="mail_move"),
-    url(r'^mark/(?P<name>.+)/$', views.mark,
-        name="mail_mark"),
-    url(r'^mark_as_junk/$', views.mark_as_junk,
-        name="mail_mark_as_junk"),
-    url(r'^mark_as_not_junk/$', views.mark_as_not_junk,
-        name="mail_mark_as_not_junk"),
+    path('delete/', views.delete, name="mail_delete"),
+    path('move/', views.move, name="mail_move"),
+    path('mark/<path:name>/', views.mark, name="mail_mark"),
+    path('mark_as_junk/', views.mark_as_junk, name="mail_mark_as_junk"),
+    path('mark_as_not_junk/', views.mark_as_not_junk,
+         name="mail_mark_as_not_junk"),
 
-    url(r'^newfolder/$', views.newfolder,
-        name="folder_add"),
-    url(r'^editfolder/$', views.editfolder,
-        name="folder_change"),
-    url(r'^delfolder/$', views.delfolder,
-        name="folder_delete"),
-    url(r'^compressfolder/$', views.folder_compress,
-        name="folder_compress"),
-    url(r'^emptytrash/$', views.empty,
-        name="trash_empty"),
+    path('newfolder/', views.newfolder, name="folder_add"),
+    path('editfolder/', views.editfolder, name="folder_change"),
+    path('delfolder/', views.delfolder, name="folder_delete"),
+    path('compressfolder/', views.folder_compress, name="folder_compress"),
+    path('emptytrash/', views.empty, name="trash_empty"),
 
-    url(r'^attachments/$', views.attachments, name="attachment_list"),
-    url(r'^delattachment/$', views.delattachment, name="attachment_delete"),
-    url(r'^getattachment/$', views.getattachment, name="attachment_get"),
+    path('attachments/', views.attachments, name="attachment_list"),
+    path('delattachment/', views.delattachment, name="attachment_delete"),
+    path('getattachment/', views.getattachment, name="attachment_get"),
 ]

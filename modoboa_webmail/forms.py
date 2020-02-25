@@ -2,8 +2,6 @@
 
 """Webmail forms."""
 
-from __future__ import unicode_literals
-
 from email.header import Header
 from email.mime.image import MIMEImage
 import os

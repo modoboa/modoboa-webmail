@@ -103,13 +103,6 @@ def compose_menu(selection, backurl, user, **kwargs):
          "img": "fa fa-send",
          "class": "btn-default btn-primary",
          "label": _("Send")},
-        {"name": "other_actions",
-         "img": "fa fa-cog",
-         "menu": [{
-             "name": "save_as_draft",
-             "label": _("Save message as draft"),
-             "url": reverse("modoboa_webmail:message_save")
-         }]}
     ]
     context = {
         "selection": selection, "entries": entries, "user": user

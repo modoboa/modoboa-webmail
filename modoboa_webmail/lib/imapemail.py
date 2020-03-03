@@ -6,7 +6,6 @@ import re
 import email
 
 import chardet
-from rfc6266 import parse_headers
 import six
 
 from django.conf import settings
@@ -189,23 +188,23 @@ class ImapEmail(Email):
         we failed, a generic name will be used (ie. part_1, part_2, ...).
         """
         for att in self.bs.attachments:
-            attname = "part_%s" % att["pnum"]
+            attname = "part_{}".format(att["pnum"])
             if "params" in att and att["params"] != "NIL":
-                attname = u2u_decode.u2u_decode(att["params"][1]) \
-                    .strip("\r\t\n")
+                for pos, value in enumerate(att["params"]):
+                    if not value.startswith("name"):
+                        continue
+                    attname = (
+                        u2u_decode.u2u_decode(att["params"][pos + 1])
+                        .strip("\r\t\n")
+                    )
+                    break
             elif "disposition" in att and len(att["disposition"]) > 1:
                 for pos, value in enumerate(att["disposition"][1]):
                     if not value.startswith("filename"):
                         continue
-                    header = "%s; %s=%s" \
-                        % (att['disposition'][0],
-                           value,
-                           att["disposition"][1][pos + 1].strip("\r\t\n"))
-                    attname = parse_headers(header).filename_unsafe
-                    if attname is None:
-                        attname = u2u_decode.u2u_decode(
-                            att["disposition"][1][pos + 1]
-                        ).strip("\r\t\n")
+                    attname = u2u_decode.u2u_decode(
+                        att["disposition"][1][pos + 1]
+                    ).strip("\r\t\n")
                     break
             self.attachments[att["pnum"]] = smart_text(attname)
 

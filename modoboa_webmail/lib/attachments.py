@@ -1,10 +1,7 @@
-from __future__ import unicode_literals
-
 from email import encoders
 from email.mime.base import MIMEBase
 import os
 
-from rfc6266 import build_header
 import six
 
 from django.conf import settings
@@ -14,6 +11,8 @@ from django.utils.encoding import smart_bytes
 from modoboa.lib.exceptions import InternalError
 from modoboa.lib.web_utils import size2integer
 from modoboa.parameters import tools as param_tools
+
+from .rfc6266 import build_header
 
 
 def set_compose_session(request):

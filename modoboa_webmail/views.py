@@ -5,8 +5,6 @@
 import base64
 import os
 
-from rfc6266 import build_header
-
 from django.conf import settings
 from django.urls import reverse
 from django.http import HttpResponse
@@ -36,7 +34,7 @@ from .lib import (
     save_attachment, EmailSignature,
     clean_attachments, set_compose_session, send_mail,
     ImapEmail, WebmailNavigationParameters, ReplyModifier, ForwardModifier,
-    get_imapconnector, IMAPconnector, separate_mailbox
+    get_imapconnector, IMAPconnector, separate_mailbox, rfc6266
 )
 from .templatetags import webmail_tags
 
@@ -64,7 +62,7 @@ def getattachment(request):
     resp = HttpResponse(decode_payload(partdef["encoding"], payload))
     resp["Content-Type"] = partdef["Content-Type"]
     resp["Content-Transfer-Encoding"] = partdef["encoding"]
-    resp["Content-Disposition"] = build_header(fname)
+    resp["Content-Disposition"] = rfc6266.build_header(fname)
     if int(partdef["size"]) < 200:
         resp["Content-Length"] = partdef["size"]
     return resp

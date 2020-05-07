@@ -8,8 +8,6 @@ See:
 https://packaging.python.org/en/latest/distributing.html
 """
 
-from __future__ import unicode_literals
-
 import io
 from os import path
 try:
@@ -25,12 +23,16 @@ def get_requirements(requirements_file):
     requirements = []
     if path.isfile(requirements_file):
         for req in parse_requirements(requirements_file, session="hack"):
-            # check markers, such as
-            #
-            #     rope_py3k    ; python_version >= '3.0'
-            #
-            if req.match_markers():
-                requirements.append(str(req.req))
+            try:
+                # check markers, such as
+                #
+                #     rope_py3k    ; python_version >= '3.0'
+                #
+                if req.match_markers():
+                    requirements.append(str(req.req))
+            except AttributeError:
+                # pip >= 20.0.2
+                requirements.append(req.requirement)
     return requirements
 
 
@@ -52,16 +54,14 @@ if __name__ == "__main__":
         classifiers=[
             "Development Status :: 5 - Production/Stable",
             "Environment :: Web Environment",
-            "Framework :: Django :: 1.11",
+            "Framework :: Django :: 2.2",
             "Intended Audience :: System Administrators",
             "License :: OSI Approved :: MIT License",
             "Operating System :: OS Independent",
-            "Programming Language :: Python :: 2",
-            "Programming Language :: Python :: 2.7",
             "Programming Language :: Python :: 3",
-            "Programming Language :: Python :: 3.4",
             "Programming Language :: Python :: 3.5",
             "Programming Language :: Python :: 3.6",
+            "Programming Language :: Python :: 3.7",
             "Topic :: Communications :: Email",
             "Topic :: Internet :: WWW/HTTP",
         ],

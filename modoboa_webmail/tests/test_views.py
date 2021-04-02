@@ -340,9 +340,9 @@ class WebmailTestCase(ModoTestCase):
         session = self.client.session
         session["lastaction"] = "compose"
         session.save()
-        # response = self.ajax_get(url)
-        response = self.client.get(url, HTTP_X_REQUESTED_WITH="XMLHttpRequest")
-        print(response.content)
+        with self.settings(MEDIA_ROOT=self.workdir):
+            response = self.client.get(
+                url, HTTP_X_REQUESTED_WITH="XMLHttpRequest")
         response = response.json()
         self.assertIn('id="id_origmsgid"', response["listing"])
         self.assertEqual(

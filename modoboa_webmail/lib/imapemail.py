@@ -20,7 +20,6 @@ from modoboa.core.extensions import exts_pool
 from modoboa.lib import u2u_decode
 from modoboa.lib.email_utils import Email, EmailAddress
 
-from .. import constants
 from . import imapheader
 from .attachments import get_storage_path
 from .imaputils import (
@@ -96,7 +95,11 @@ class ImapEmail(Email):
 
         We also try to decode the default value.
         """
-        hdrvalue = super(ImapEmail, self).get_header(msg, hdrname)
+        hdrvalue = super().get_header(msg, hdrname)
+        if hdrname in ["From", "Reply-To"]:
+            # Store a raw copy for further use
+            setattr(self, "original_{}".format(hdrname.replace("-", "")),
+                    hdrvalue)
         if not hdrvalue:
             return ""
         try:
@@ -275,7 +278,7 @@ class ReplyModifier(Modifier):
     ]
 
     def __init__(self, *args, **kwargs):
-        super(ReplyModifier, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.textheader = u"%s %s" % (self.From, _("wrote:"))
         if self.dformat == "html":
@@ -283,9 +286,9 @@ class ReplyModifier(Modifier):
         if hasattr(self, "Message_ID"):
             self.form.fields["origmsgid"].initial = self.Message_ID
         if not hasattr(self, "Reply_To"):
-            self.form.fields["to"].initial = self.From
+            self.form.fields["to"].initial = self.original_From
         else:
-            self.form.fields["to"].initial = self.Reply_To
+            self.form.fields["to"].initial = self.original_ReplyTo
         if self.request.GET.get("all", "0") == "1":  # reply-all
             self.form.fields["cc"].initial = ""
             toparse = self.To.split(",")

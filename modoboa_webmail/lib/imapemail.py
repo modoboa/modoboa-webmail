@@ -20,6 +20,7 @@ from modoboa.core.extensions import exts_pool
 from modoboa.lib import u2u_decode
 from modoboa.lib.email_utils import Email, EmailAddress
 
+from .. import constants
 from . import imapheader
 from .imaputils import (
     get_imapconnector, BodyStructure
@@ -213,9 +214,13 @@ class ImapEmail(Email):
         for cid, params in list(self.bs.inlines.items()):
             if re.search(r"\.\.", cid):
                 continue
-            fname = "modoboa_webmail/%s_%s" % (self.mailid, cid)
-            path = os.path.join(settings.MEDIA_ROOT, fname)
-            params["fname"] = os.path.join(settings.MEDIA_URL, fname)
+            fname = "{}_{}".format(self.mailid, cid)
+            path = os.path.join(constants.WEBMAIL_STORAGE_DIR, fname)
+            params["fname"] = os.path.join(
+                settings.MEDIA_URL,
+                os.path.basename(constants.WEBMAIL_STORAGE_DIR),
+                fname
+            )
             if default_storage.exists(path):
                 continue
             pdef, content = self.imapc.fetchpart(

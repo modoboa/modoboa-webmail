@@ -1,10 +1,10 @@
 from email import encoders
 from email.mime.base import MIMEBase
 import os
+import uuid
 
 import six
 
-from django.conf import settings
 from django.core.files.uploadhandler import FileUploadHandler, SkipFile
 from django.utils.encoding import smart_bytes
 
@@ -12,6 +12,7 @@ from modoboa.lib.exceptions import InternalError
 from modoboa.lib.web_utils import size2integer
 from modoboa.parameters import tools as param_tools
 
+from .. import constants
 from .rfc6266 import build_header
 
 
@@ -25,7 +26,6 @@ def set_compose_session(request):
     :param request: a Request object.
     :return: the new unique ID.
     """
-    import uuid
     randid = str(uuid.uuid4()).replace("-", "")
     request.session["compose_mail"] = {"id": randid, "attachments": []}
     return randid
@@ -43,9 +43,9 @@ def save_attachment(f):
     """
     from tempfile import NamedTemporaryFile
 
-    dstdir = os.path.join(settings.MEDIA_ROOT, "webmail")
     try:
-        fp = NamedTemporaryFile(dir=dstdir, delete=False)
+        fp = NamedTemporaryFile(
+            dir=constants.WEBMAIL_STORAGE_DIR, delete=False)
     except Exception as e:
         raise InternalError(str(e))
     if isinstance(f, (six.binary_type, six.text_type)):
@@ -64,8 +64,7 @@ def clean_attachments(attlist):
                     following information : (random name, real name).
     """
     for att in attlist:
-        fullpath = os.path.join(
-            settings.MEDIA_ROOT, "modoboa_webmail", att["tmpname"])
+        fullpath = os.path.join(constants.WEBMAIL_STORAGE_DIR, att["tmpname"])
         try:
             os.remove(fullpath)
         except OSError:
@@ -88,9 +87,8 @@ def create_mail_attachment(attdef, payload=None):
         return None
     res = MIMEBase(maintype, subtype)
     if payload is None:
-        with open(os.path.join(
-                settings.MEDIA_ROOT, "modoboa_webmail", attdef["tmpname"]),
-                  "rb") as fp:
+        path = os.path.join(constants.WEBMAIL_STORAGE_DIR, attdef["tmpname"])
+        with open(path, "rb") as fp:
             res.set_payload(fp.read())
     else:
         res.set_payload(payload)

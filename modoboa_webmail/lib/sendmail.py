@@ -1,10 +1,11 @@
+import smtplib
+
 from django.core import mail
 from django.template.loader import render_to_string
 
 from modoboa.lib.cryptutils import get_password
 from modoboa.parameters import tools as param_tools
 
-from ..exceptions import WebmailInternalError
 from . import get_imapconnector, clean_attachments
 
 
@@ -48,8 +49,12 @@ def send_mail(request, form, posturl=None):
         with mail.get_connection(**options) as connection:
             msg.connection = connection
             msg.send()
-    except Exception as inst:
-        raise WebmailInternalError(str(inst))
+    except smtplib.SMTPResponseException as inst:
+        return False, {"status": "ko", "error": inst.smtp_error}
+    except smtplib.SMTPRecipientsRefused as inst:
+        error = ", ".join(["{}: {}".format(rcpt, error)
+                           for rcpt, error in inst.recipients.items()])
+        return False, {"status": "ko", "error": error}
 
     # Copy message to sent folder
     sentfolder = request.user.parameters.get_value("sent_folder")

@@ -340,7 +340,10 @@ class WebmailTestCase(ModoTestCase):
         session = self.client.session
         session["lastaction"] = "compose"
         session.save()
-        response = self.ajax_get(url)
+        # response = self.ajax_get(url)
+        response = self.client.get(url, HTTP_X_REQUESTED_WITH="XMLHttpRequest")
+        print(response.content)
+        response = response.json()
         self.assertIn('id="id_origmsgid"', response["listing"])
         self.assertEqual(
             len(self.client.session["compose_mail"]["attachments"]), 1)

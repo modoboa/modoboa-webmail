@@ -85,7 +85,7 @@ jobs:
         if: ${{ matrix.python-version == '3.8' && matrix.database == 'postgres' }}
         run: |
           cd test_project
-          coverage run --source ../modoboa_imap_migration manage.py test modoboa_webmail
+          coverage run --source ../modoboa_webmail manage.py test modoboa_webmail
         env:
           # use localhost for the host here because we are running the job on the VM.
           # If we were running the job on in a container this would be postgres

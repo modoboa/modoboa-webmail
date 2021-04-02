@@ -5,6 +5,7 @@ import uuid
 
 import six
 
+from django.conf import settings
 from django.core.files.uploadhandler import FileUploadHandler, SkipFile
 from django.utils.encoding import smart_bytes
 
@@ -12,8 +13,15 @@ from modoboa.lib.exceptions import InternalError
 from modoboa.lib.web_utils import size2integer
 from modoboa.parameters import tools as param_tools
 
-from .. import constants
 from .rfc6266 import build_header
+
+
+def get_storage_path(filename):
+    """Return a path to store a file."""
+    storage_dir = os.path.join(settings.MEDIA_ROOT, "webmail")
+    if not filename:
+        return storage_dir
+    return os.path.join(storage_dir, filename)
 
 
 def set_compose_session(request):
@@ -44,8 +52,7 @@ def save_attachment(f):
     from tempfile import NamedTemporaryFile
 
     try:
-        fp = NamedTemporaryFile(
-            dir=constants.WEBMAIL_STORAGE_DIR, delete=False)
+        fp = NamedTemporaryFile(dir=get_storage_path(""), delete=False)
     except Exception as e:
         raise InternalError(str(e))
     if isinstance(f, (six.binary_type, six.text_type)):
@@ -64,7 +71,7 @@ def clean_attachments(attlist):
                     following information : (random name, real name).
     """
     for att in attlist:
-        fullpath = os.path.join(constants.WEBMAIL_STORAGE_DIR, att["tmpname"])
+        fullpath = get_storage_path(att["tmpname"])
         try:
             os.remove(fullpath)
         except OSError:
@@ -87,7 +94,7 @@ def create_mail_attachment(attdef, payload=None):
         return None
     res = MIMEBase(maintype, subtype)
     if payload is None:
-        path = os.path.join(constants.WEBMAIL_STORAGE_DIR, attdef["tmpname"])
+        path = get_storage_path(attdef["tmpname"])
         with open(path, "rb") as fp:
             res.set_payload(fp.read())
     else:

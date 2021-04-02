@@ -22,6 +22,7 @@ from modoboa.lib.email_utils import Email, EmailAddress
 
 from .. import constants
 from . import imapheader
+from .attachments import get_storage_path
 from .imaputils import (
     get_imapconnector, BodyStructure
 )
@@ -215,10 +216,10 @@ class ImapEmail(Email):
             if re.search(r"\.\.", cid):
                 continue
             fname = "{}_{}".format(self.mailid, cid)
-            path = os.path.join(constants.WEBMAIL_STORAGE_DIR, fname)
+            path = get_storage_path(fname)
             params["fname"] = os.path.join(
                 settings.MEDIA_URL,
-                os.path.basename(constants.WEBMAIL_STORAGE_DIR),
+                os.path.basename(get_storage_path("")),
                 fname
             )
             if default_storage.exists(path):

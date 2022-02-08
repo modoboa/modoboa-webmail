@@ -4,19 +4,7 @@
   {% for hdr in headers %}
     <tr>
       <th>{{ hdr.name|localize_header_name }}</th>
-      <td>
-      {% if hdr.safe %}
-           {% if hdr.value|length > 100 %}
-              {{ hdr.value|safe|truncatechars_html:100 }}
-           {% else %}
-              {{ hdr.value|safe }}
-           {% endif %}
-      {% elif hdr.value|length > 100 %}
-          {{ hdr.value|truncatechars_html:100}}
-      {% else %}
-          {{ hdr.value}}
-      {% endif %}
-      </td>
+      <td>{% if hdr.safe %}{{ hdr.value|safe }}{% else %}{{ hdr.value }}{% endif %}</td>
     </tr>
   {% endfor %}
   {% if attachments %}

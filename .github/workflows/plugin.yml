@@ -40,7 +40,7 @@ jobs:
     strategy:
       matrix:
         database: ['postgres', 'mysql']
-        python-version: [3.6, 3.7, 3.8]
+        python-version: [3.7, 3.8, 3.9]
       fail-fast: false
 
     steps:
@@ -69,7 +69,7 @@ jobs:
           pip install 'mysqlclient<2.0.4'
           echo "DB=mysql" >> $GITHUB_ENV
       - name: Test with pytest
-        if: ${{ matrix.python-version != '3.8' || matrix.database != 'postgres' }}
+        if: ${{ matrix.python-version != '3.9' || matrix.database != 'postgres' }}
         run: |
           cd test_project
           python3 manage.py test modoboa_webmail
@@ -82,7 +82,7 @@ jobs:
           MYSQL_USER: root
 
       - name: Test with pytest and coverage
-        if: ${{ matrix.python-version == '3.8' && matrix.database == 'postgres' }}
+        if: ${{ matrix.python-version == '3.9' && matrix.database == 'postgres' }}
         run: |
           cd test_project
           coverage run --source ../modoboa_webmail manage.py test modoboa_webmail
@@ -94,7 +94,7 @@ jobs:
           MYSQL_PORT: ${{ job.services.mysql.ports[3306] }} # get randomly assigned published port
           MYSQL_USER: root
       - name: Upload coverage result
-        if: ${{ matrix.python-version == '3.8' }}
+        if: ${{ matrix.python-version == '3.9' }}
         uses: actions/upload-artifact@v2
         with:
           name: coverage-results
@@ -105,10 +105,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python 3.8
+      - name: Set up Python 3.9
         uses: actions/setup-python@v2
         with:
-          python-version: '3.8'
+          python-version: '3.9'
       - name: Install dependencies
         run: |
           pip install codecov
@@ -128,10 +128,10 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Set up Python 3.8
+      - name: Set up Python 3.9
         uses: actions/setup-python@v2
         with:
-          python-version: '3.8'
+          python-version: '3.9'
       - name: Build packages
         run: |
           sudo apt-get install librrd-dev rrdtool libssl-dev gettext

@@ -11,7 +11,7 @@
       <span class="flag fa fa-lg {% if email.flagged %}fa-star{% else %}fa-star-o{% endif %}"></span>
     </div>
     <div class="col-xs-9 col-sm-9 openable">
-      {{ email.subject|parse_imap_header:"subject" }}
+      {{ email.subject|parse_imap_header:"subject"|truncatechars:60 }}
       <p class="text-muted">
         {{ email.from|parse_imap_header:"from" }}
       </p>

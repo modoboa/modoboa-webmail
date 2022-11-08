@@ -1,4 +1,4 @@
 factory-boy<3.3.0
-testfixtures==6.18.5
+testfixtures==7.0.3
 psycopg2>=2.5.4
 mysqlclient<2.1.1

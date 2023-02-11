@@ -1141,7 +1141,7 @@ Webmail.prototype = {
                     item.display_name,
                     escape('<{0}>'.format(item.address)));
             }
-            return '<div>{0}</div>'.format(item.address);
+            return '<div>{0}</div>'.format(htmlEncode(item.address));
         };
         var apiUrl = this.options.contactListUrl;
 

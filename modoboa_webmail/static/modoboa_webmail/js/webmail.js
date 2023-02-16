@@ -1138,7 +1138,7 @@ Webmail.prototype = {
         var renderFunc = function (item, escape) {
             if (item.display_name) {
                 return '<div>{0} {1}</div>'.format(
-                    item.display_name,
+                    htmlEncode(item.display_name),
                     escape('<{0}>'.format(item.address)));
             }
             return '<div>{0}</div>'.format(htmlEncode(item.address));

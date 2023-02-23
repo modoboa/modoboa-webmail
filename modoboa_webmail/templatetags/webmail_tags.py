@@ -7,6 +7,7 @@ from django import template
 from django.urls import reverse
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
+from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
@@ -236,7 +237,7 @@ def print_mailboxes(
 
         iclass = mbox["class"] if "class" in mbox \
             else "fa fa-folder"
-        result += "<span class='%s'></span> %s</a>" % (iclass, label)
+        result += "<span class='%s'></span> %s</a>" % (iclass, escape(label))
 
         if "sub" in mbox and mbox["sub"]:
             result += "<ul name='%s' class='nav nav-pills nav-stacked %s'>" % (

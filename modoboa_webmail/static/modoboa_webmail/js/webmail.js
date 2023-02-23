@@ -481,7 +481,7 @@ Webmail.prototype = {
         });
         var parts = mailbox.name.split(this.options.hdelimiter);
         var linkcontent = "<span class='fa fa-folder'></span> ";
-        var displayname = linkcontent + parts[parts.length - 1];
+        var displayname = linkcontent + htmlEncode(parts[parts.length - 1]);
 
         if (mailbox.removed) {
             $li.addClass('disabled');
@@ -769,7 +769,7 @@ Webmail.prototype = {
             mailbox = $parent.attr("name") + this.options.hdelimiter + mailbox;
         } else {
             $parent = $("#folders > ul");
-            }
+        }
         var $li = this.inject_mailbox($parent, "loadfolder", { name: mailbox });
         this.init_droppables($li);
     },
@@ -786,7 +786,7 @@ Webmail.prototype = {
         if (oldname != newname) {
             var $span = $link.children("span");
 
-            $link.html(" " + newname);
+            $link.html(" " + htmlEncode(newname));
             $link.parent("li").attr("name", newpattern);
             $link.prepend($span);
             $link.attr("href", newpattern);

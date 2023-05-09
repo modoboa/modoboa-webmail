@@ -55,12 +55,12 @@ jobs:
           sudo apt-get update -y \
           && sudo apt-get update -y && sudo apt-get install -y librrd-dev rrdtool
           python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -r test-requirements.txt
           git clone https://github.com/modoboa/modoboa.git
           cd modoboa
           python setup.py develop
           cd ..
-          pip install -r requirements.txt
-          pip install -r test-requirements.txt
           python setup.py develop
       - name: Install postgres requirements
         if: ${{ matrix.database == 'postgres' }}
@@ -72,6 +72,7 @@ jobs:
         run: |
           echo "DB=mysql" >> $GITHUB_ENV
       - name: Test with pytest
+        if: ${{ matrix.python-version != '3.10' || matrix.database != 'postgres' }}
         run: |
           cd test_project
           python3 manage.py test modoboa_webmail
@@ -84,7 +85,7 @@ jobs:
           MYSQL_USER: root
 
       - name: Test with pytest and coverage
-        if: ${{ matrix.python-version == '3.9' && matrix.database == 'postgres' }}
+        if: ${{ matrix.python-version == '3.10' && matrix.database == 'postgres' }}
         run: |
           cd test_project
           coverage run --source ../modoboa_webmail manage.py test modoboa_webmail

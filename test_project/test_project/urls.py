@@ -1,5 +1,6 @@
-from django.conf.urls import include, url
+from django.conf.urls import include
+from django.urls import re_path
 
 urlpatterns = [
-    url(r"", include("modoboa.urls")),
+    re_path(r'', include('modoboa.urls')),
 ]

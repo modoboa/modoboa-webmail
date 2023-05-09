@@ -39,6 +39,10 @@ from .lib import (
 from .templatetags import webmail_tags
 
 
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
+
 @login_required
 @needs_mailbox()
 @gzip_page
@@ -651,12 +655,12 @@ def index(request):
             raise UnknownAction
         response = globals()[action](request)
     else:
-        if request.is_ajax():
+        if is_ajax(request):
             raise BadRequest(_("Invalid request"))
         response = {"selection": "webmail"}
 
     curmbox = WebmailNavigationParameters(request).get("mbox", "INBOX")
-    if not request.is_ajax():
+    if not is_ajax(request):
         request.session["lastaction"] = None
         imapc = get_imapconnector(request)
         imapc.getquota(curmbox)

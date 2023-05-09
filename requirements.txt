@@ -1,3 +1,2 @@
-modoboa>=2.2.0
 chardet
 lxml

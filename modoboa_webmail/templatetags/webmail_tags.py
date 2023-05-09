@@ -9,7 +9,7 @@ from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 from ..lib import imapheader, separate_mailbox
 from .. import constants

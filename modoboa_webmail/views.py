@@ -10,7 +10,7 @@ from django.urls import reverse
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext as _, ungettext
+from django.utils.translation import gettext as _, ngettext
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.gzip import gzip_page
 
@@ -93,7 +93,7 @@ def delete(request):
     mbc.move(",".join(selection), mbox,
              request.user.parameters.get_value("trash_folder"))
     count = len(selection)
-    message = ungettext("%(count)d message deleted",
+    message = ngettext("%(count)d message deleted",
                         "%(count)d messages deleted",
                         count) % {"count": count}
     return render_to_json_response(message)
@@ -136,7 +136,7 @@ def mark_as_junk(request):
     """Mark a message as SPAM."""
     count = _move_selection_to_folder(
         request, request.user.parameters.get_value("junk_folder"))
-    message = ungettext("%(count)d message marked",
+    message = ngettext("%(count)d message marked",
                         "%(count)d messages marked",
                         count) % {"count": count}
     return render_to_json_response(message)
@@ -147,7 +147,7 @@ def mark_as_junk(request):
 def mark_as_not_junk(request):
     """Mark a message as not SPAM."""
     count = _move_selection_to_folder(request, "INBOX")
-    message = ungettext("%(count)d message marked",
+    message = ngettext("%(count)d message marked",
                         "%(count)d messages marked",
                         count) % {"count": count}
     return render_to_json_response(message)

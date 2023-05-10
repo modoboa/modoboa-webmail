@@ -117,8 +117,8 @@ jobs:
           name: coverage-results
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
-            with:
-                files: ./coverage.xml
+        with:
+          files: ./coverage.xml
 
   release:
     needs: coverage

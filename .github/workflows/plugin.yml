@@ -90,7 +90,6 @@ jobs:
         run: |
           cd test_project
           coverage run --source ../modoboa_webmail manage.py test modoboa_webmail
-          coverage combine
           coverage xml
           coverage report
         env:

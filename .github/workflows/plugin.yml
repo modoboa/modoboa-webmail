@@ -89,6 +89,9 @@ jobs:
         run: |
           cd test_project
           coverage run --source ../modoboa_webmail manage.py test modoboa_webmail
+          coverage combine
+          coverage xml
+          coverage report
         env:
           # use localhost for the host here because we are running the job on the VM.
           # If we were running the job on in a container this would be postgres
@@ -97,32 +100,25 @@ jobs:
           MYSQL_PORT: ${{ job.services.mysql.ports[3306] }} # get randomly assigned published port
           MYSQL_USER: root
       - name: Upload coverage result
-        if: ${{ matrix.python-version == '3.9' }}
-        uses: actions/upload-artifact@v2
+        if: ${{ matrix.python-version == '3.10' && matrix.database == 'postgres' }}
+        uses: actions/upload-artifact@v3
         with:
           name: coverage-results
-          path: test_project/.coverage
+          path: test_project/coverage.xml
 
   coverage:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.9'
-      - name: Install dependencies
-        run: |
-          pip install codecov
+      - uses: actions/checkout@v3
       - name: Download coverage results
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: coverage-results
-      - name: Report coverage
-        run: |
-          coverage report
-          codecov
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+            with:
+                files: ./coverage.xml
 
   release:
     needs: coverage

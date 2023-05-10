@@ -57,10 +57,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install -r test-requirements.txt
+          cd ..
           git clone https://github.com/modoboa/modoboa.git
           cd modoboa
           python setup.py develop
-          cd ..
+          cd ../modoboa-webmail
           python setup.py develop
       - name: Install postgres requirements
         if: ${{ matrix.database == 'postgres' }}

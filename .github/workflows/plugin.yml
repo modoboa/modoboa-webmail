@@ -121,22 +121,27 @@ jobs:
           files: ./coverage.xml
 
   release:
+    if: github.event_name != 'pull_request'
     needs: coverage
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.10'
       - name: Build packages
         run: |
           sudo apt-get install librrd-dev rrdtool libssl-dev gettext
           python -m pip install --upgrade pip setuptools wheel
           pip install -r requirements.txt
-          cd modoboa_webmail
+          cd ..
+          git clone https://github.com/modoboa/modoboa.git
+          cd modoboa
+          python setup.py develop
+          cd modoboa-webmail/modoboa_webmail
           django-admin compilemessages
           cd ..
           python setup.py sdist bdist_wheel

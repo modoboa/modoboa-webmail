@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:11
+        image: postgres:12
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -41,36 +41,39 @@ jobs:
     strategy:
       matrix:
         database: ['postgres', 'mysql']
-        python-version: [3.7, 3.8, 3.9]
+        python-version: [3.8, 3.9, '3.10']
       fail-fast: false
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          sudo apt-get update -y && sudo apt-get install -y librrd-dev rrdtool 
+          sudo apt-get update -y \
+          && sudo apt-get update -y && sudo apt-get install -y librrd-dev rrdtool
           python -m pip install --upgrade pip
-          pip install -e git+https://github.com/modoboa/modoboa.git#egg=modoboa
           pip install -r requirements.txt
           pip install -r test-requirements.txt
+          cd ..
+          git clone https://github.com/modoboa/modoboa.git
+          cd modoboa
+          python setup.py develop
+          cd ../modoboa-webmail
           python setup.py develop
       - name: Install postgres requirements
         if: ${{ matrix.database == 'postgres' }}
         run: |
-          pip install psycopg2-binary>=2.7.4
           pip install coverage
           echo "DB=postgres" >> $GITHUB_ENV
       - name: Install mysql requirements
         if: ${{ matrix.database == 'mysql' }}
         run: |
-          pip install 'mysqlclient<2.0.4'
           echo "DB=mysql" >> $GITHUB_ENV
       - name: Test with pytest
-        if: ${{ matrix.python-version != '3.9' || matrix.database != 'postgres' }}
+        if: ${{ matrix.python-version != '3.10' || matrix.database != 'postgres' }}
         run: |
           cd test_project
           python3 manage.py test modoboa_webmail
@@ -83,10 +86,12 @@ jobs:
           MYSQL_USER: root
 
       - name: Test with pytest and coverage
-        if: ${{ matrix.python-version == '3.9' && matrix.database == 'postgres' }}
+        if: ${{ matrix.python-version == '3.10' && matrix.database == 'postgres' }}
         run: |
           cd test_project
           coverage run --source ../modoboa_webmail manage.py test modoboa_webmail
+          coverage xml
+          coverage report
         env:
           # use localhost for the host here because we are running the job on the VM.
           # If we were running the job on in a container this would be postgres
@@ -95,50 +100,48 @@ jobs:
           MYSQL_PORT: ${{ job.services.mysql.ports[3306] }} # get randomly assigned published port
           MYSQL_USER: root
       - name: Upload coverage result
-        if: ${{ matrix.python-version == '3.9' }}
-        uses: actions/upload-artifact@v2
+        if: ${{ matrix.python-version == '3.10' && matrix.database == 'postgres' }}
+        uses: actions/upload-artifact@v3
         with:
           name: coverage-results
-          path: test_project/.coverage
+          path: test_project/coverage.xml
 
   coverage:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.9'
-      - name: Install dependencies
-        run: |
-          pip install codecov
+      - uses: actions/checkout@v3
       - name: Download coverage results
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: coverage-results
-      - name: Report coverage
-        run: |
-          coverage report
-          codecov
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage.xml
 
   release:
+    if: github.event_name != 'pull_request'
     needs: coverage
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.10'
       - name: Build packages
         run: |
           sudo apt-get install librrd-dev rrdtool libssl-dev gettext
           python -m pip install --upgrade pip setuptools wheel
           pip install -r requirements.txt
-          cd modoboa_webmail
+          cd ..
+          git clone https://github.com/modoboa/modoboa.git
+          cd modoboa
+          python setup.py develop
+          cd modoboa-webmail/modoboa_webmail
           django-admin compilemessages
           cd ..
           python setup.py sdist bdist_wheel

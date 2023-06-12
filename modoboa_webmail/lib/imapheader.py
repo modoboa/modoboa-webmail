@@ -114,7 +114,7 @@ def parse_date(value, **kwargs):
     ndate = datetime.datetime.fromtimestamp(email.utils.mktime_tz(tmp))
     if ndate.tzinfo is not None:
         tz = timezone.get_current_timezone()
-        ndate = tz.localize(datetime.datetime.fromtimestamp(ndate))
+        ndate = datetime.datetime.fromtimestamp(ndate).replace(tzinfo=tz)
     current_language = get_request().user.language
     if datetime.datetime.now() - ndate > datetime.timedelta(7):
         fmt = "LONG"

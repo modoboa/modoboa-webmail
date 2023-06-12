@@ -10,7 +10,7 @@ from django.urls import reverse
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext as _, ungettext
+from django.utils.translation import gettext as _, ngettext
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.gzip import gzip_page
 
@@ -37,6 +37,10 @@ from .lib import (
     get_imapconnector, IMAPconnector, separate_mailbox, rfc6266
 )
 from .templatetags import webmail_tags
+
+
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 
 @login_required
@@ -93,7 +97,7 @@ def delete(request):
     mbc.move(",".join(selection), mbox,
              request.user.parameters.get_value("trash_folder"))
     count = len(selection)
-    message = ungettext("%(count)d message deleted",
+    message = ngettext("%(count)d message deleted",
                         "%(count)d messages deleted",
                         count) % {"count": count}
     return render_to_json_response(message)
@@ -136,7 +140,7 @@ def mark_as_junk(request):
     """Mark a message as SPAM."""
     count = _move_selection_to_folder(
         request, request.user.parameters.get_value("junk_folder"))
-    message = ungettext("%(count)d message marked",
+    message = ngettext("%(count)d message marked",
                         "%(count)d messages marked",
                         count) % {"count": count}
     return render_to_json_response(message)
@@ -147,7 +151,7 @@ def mark_as_junk(request):
 def mark_as_not_junk(request):
     """Mark a message as not SPAM."""
     count = _move_selection_to_folder(request, "INBOX")
-    message = ungettext("%(count)d message marked",
+    message = ngettext("%(count)d message marked",
                         "%(count)d messages marked",
                         count) % {"count": count}
     return render_to_json_response(message)
@@ -651,12 +655,12 @@ def index(request):
             raise UnknownAction
         response = globals()[action](request)
     else:
-        if request.is_ajax():
+        if is_ajax(request):
             raise BadRequest(_("Invalid request"))
         response = {"selection": "webmail"}
 
     curmbox = WebmailNavigationParameters(request).get("mbox", "INBOX")
-    if not request.is_ajax():
+    if not is_ajax(request):
         request.session["lastaction"] = None
         imapc = get_imapconnector(request)
         imapc.getquota(curmbox)

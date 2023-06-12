@@ -41,6 +41,8 @@ SITE_ID = 1
 # Security settings
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
 
 # Application definition
 
@@ -56,9 +58,11 @@ INSTALLED_APPS = (
     'ckeditor_uploader',
     'rest_framework',
     'rest_framework.authtoken',
+    'drf_spectacular',
     'django_otp',
     'django_otp.plugins.otp_totp',
     'django_otp.plugins.otp_static',
+    'django_rename_app',
 )
 
 # A dedicated place to register Modoboa applications
@@ -69,10 +73,16 @@ MODOBOA_APPS = (
     'modoboa.core',
     'modoboa.lib',
     'modoboa.admin',
-    'modoboa.limits',
     'modoboa.transport',
     'modoboa.relaydomains',
+    'modoboa.limits',
     'modoboa.parameters',
+    'modoboa.dnstools',
+    'modoboa.policyd',
+    'modoboa.maillog',
+    'modoboa.pdfcredentials',
+    'modoboa.dmarc',
+    'modoboa.imap_migration',
     # Modoboa extensions here.
     'modoboa_webmail',
 )
@@ -82,15 +92,15 @@ INSTALLED_APPS += MODOBOA_APPS
 AUTH_USER_MODEL = 'core.User'
 
 MIDDLEWARE = (
-    'x_forwarded_for.middleware.XForwardedForMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'x_forwarded_for.middleware.XForwardedForMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django_otp.middleware.OTPMiddleware',
     'modoboa.core.middleware.TwoFAMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'modoboa.core.middleware.LocalConfigMiddleware',
     'modoboa.lib.middleware.AjaxLoginRedirect',
@@ -102,6 +112,7 @@ AUTHENTICATION_BACKENDS = (
     # 'modoboa.lib.authbackends.LDAPBackend',
     # 'modoboa.lib.authbackends.SMTPBackend',
     'django.contrib.auth.backends.ModelBackend',
+    'modoboa.imap_migration.auth_backends.IMAPBackend',
 )
 
 # SMTP authentication
@@ -170,10 +181,22 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Rest framework settings
 
 REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_RATES': {
+        'user': '1000/minute',
+        'ddos': '200/second',
+        'ddos_lesser': '1000/minute',
+        'login': '100/minute',
+        'password_recovery_request': '11/hour',
+        'password_recovery_totp_check': '25/hour',
+        'password_recovery_apply': '25/hour'
+    },
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'modoboa.core.drf_authentication.JWTAuthenticationWith2FA',
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
 }
 
 # Modoboa settings

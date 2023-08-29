@@ -141,7 +141,7 @@ jobs:
           git clone https://github.com/modoboa/modoboa.git
           cd modoboa
           python setup.py develop
-          cd modoboa_webmail
+          cd ../modoboa-webmail/modoboa_webmail
           django-admin compilemessages
           cd ..
           python setup.py sdist bdist_wheel

@@ -164,10 +164,11 @@ class ImapEmail(Email):
                             content = content.decode(result["encoding"])
                 bodyc += content
             self._fetch_inlines()
-            bodyc = getattr(self, "_post_process_%s" % self.mformat)(bodyc)
-            self._body = getattr(self, "viewmail_%s" % self.mformat)(
-                bodyc, links=self.links
-            )
+            if len(bodyc) != 0:
+                bodyc = getattr(self, "_post_process_%s" % self.mformat)(bodyc)
+                self._body = getattr(self, "viewmail_%s" % self.mformat)(
+                    bodyc, links=self.links
+                )
         return self._body
 
     @body.setter

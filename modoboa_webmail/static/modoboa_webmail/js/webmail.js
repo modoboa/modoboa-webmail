@@ -162,6 +162,7 @@ Webmail.prototype = {
         });
         $document.on('click', '.addcontact', $.proxy(this.addContact, this));
         $document.on('click', '.sort-order', $.proxy(this.sortMessages, this));
+        $document.on('change', '#selectAll', $.proxy(this.toggleSelection, this));
     },
 
     /**
@@ -1507,5 +1508,14 @@ Webmail.prototype = {
         }
         this.navobject.setparam('sort_order', newOrder);
         this.navobject.update(true);
+    },
+
+    /**
+     * Toggle selection state of all emails.
+     */
+    toggleSelection: function(evt) {
+        evt.preventDefault();
+        const value = evt.target.checked;
+        this.htmltable.toggleSelectAll(value);
     }
 };

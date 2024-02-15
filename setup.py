@@ -1,22 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""
-A setuptools based setup module.
-
-See:
-https://packaging.python.org/en/latest/distributing.html
-"""
-
-import io
 from os import path
+from setuptools import setup, find_packages
+
 try:
     from pip.req import parse_requirements
 except ImportError:
     # pip >= 10
     from pip._internal.req import parse_requirements
-from setuptools import setup, find_packages
 
+import io
 
 def get_requirements(requirements_file):
     """Use pip to parse requirements file."""
@@ -34,7 +28,6 @@ def get_requirements(requirements_file):
                 # pip >= 20.0.2
                 requirements.append(req.requirement)
     return requirements
-
 
 if __name__ == "__main__":
     HERE = path.abspath(path.dirname(__file__))
@@ -78,3 +71,4 @@ if __name__ == "__main__":
         use_scm_version={"local_scheme": local_scheme},
         setup_requires=["setuptools_scm"],
     )
+

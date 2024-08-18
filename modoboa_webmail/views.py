@@ -746,12 +746,12 @@ def get_plain_password(request, tplname="modoboa_webmail/ask_password.html"):
                     form.cleaned_data["password"]
                 ))
                 return redirect("modoboa_webmail:index")
-        return render_to_json_response({"form_errors": form.errors}, status=400)
+        form.add_error("password", _("Wrong password"))
+        return render(request, 'modoboa_webmail/ask_password.html', {'form': form})
     if get_password(request) is not None:
         return redirect("modoboa_webmail:index")
     form = AskPassword()
     context = {
         'form': form,
     }
-
     return render(request, 'modoboa_webmail/ask_password.html', context)

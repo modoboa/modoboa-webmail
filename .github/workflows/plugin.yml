@@ -150,11 +150,7 @@ jobs:
           sudo apt-get install librrd-dev rrdtool libssl-dev gettext
           python -m pip install --upgrade pip setuptools wheel
           pip install -r requirements.txt
-          cd ..
-          git clone https://github.com/modoboa/modoboa.git
-          cd modoboa
-          python setup.py develop
-          cd ../modoboa-webmail/modoboa_webmail
+          cd modoboa_webmail
           django-admin compilemessages
           cd ..
           python setup.py sdist bdist_wheel

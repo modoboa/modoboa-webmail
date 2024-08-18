@@ -66,11 +66,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install -r test-requirements.txt
-          cd ..
-          git clone https://github.com/modoboa/modoboa.git
-          cd modoboa
-          python setup.py develop
-          cd ../modoboa-webmail
           python setup.py develop
           echo "Testing redis connection"
           redis-cli -h $REDIS_HOST -p $REDIS_PORT ping

@@ -429,3 +429,11 @@ class UserSettings(param_forms.UserParametersForm):
                 _('Value must be a positive integer (> 0)')
             )
         return self.cleaned_data['mboxes_col_width']
+
+class AskPassword(forms.Form):
+    """Form to ask user password for the IMAP connection."""
+
+    password = forms.CharField(
+        label=_("password"), required=True,
+        widget=forms.PasswordInput(attrs={"class": "form-control"})
+    )

@@ -133,6 +133,9 @@ class WebmailTestCase(ModoTestCase):
             "username": self.user.username, "password": "toto"
         }
         self.client.post(url, data)
+        url = reverse("modoboa_webmail:get_plain_password")
+        data = { "password": "toto" }
+        self.client.post(url, data)
 
     def tearDown(self):
         """Cleanup."""

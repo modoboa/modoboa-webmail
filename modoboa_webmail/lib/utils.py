@@ -1,6 +1,10 @@
 """Misc. utilities."""
+from functools import wraps
+
+from django.shortcuts import redirect
 
 from modoboa.lib.web_utils import NavigationParameters
+from modoboa.lib.cryptutils import get_password
 
 
 def decode_payload(encoding, payload):
@@ -40,3 +44,17 @@ class WebmailNavigationParameters(NavigationParameters):
             page = self.request.GET.get("page", None)
             if page is not None:
                 self["page"] = int(page)
+
+
+def need_password(*args, **kwargs):
+    """Check if the session holds the user password for the IMAP connection.
+    """
+    def decorator(f):
+        @wraps(f)
+        def wrapped_f(request, *args, **kwargs):
+            if get_password(request) is None:
+                return redirect("modoboa_webmail:get_plain_password")
+            return f(request, *args, **kwargs)
+        return wrapped_f
+    return decorator
+

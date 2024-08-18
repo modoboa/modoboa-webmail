@@ -29,4 +29,5 @@ urlpatterns = [
     path('attachments/', views.attachments, name="attachment_list"),
     path('delattachment/', views.delattachment, name="attachment_delete"),
     path('getattachment/', views.getattachment, name="attachment_get"),
+    path('password/', views.get_plain_password, name="get_plain_password")
 ]

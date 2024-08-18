@@ -10,14 +10,18 @@ from django.urls import reverse
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
+from django.utils.encoding import force_str
 from django.utils.translation import gettext as _, ngettext
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.gzip import gzip_page
+from django.shortcuts import redirect
 
 from django.contrib.auth.decorators import login_required
 
 from modoboa.admin.lib import needs_mailbox
 from modoboa.core.extensions import exts_pool
+from django.contrib.auth.hashers import check_password
+from modoboa.lib.cryptutils import encrypt, get_password
 from modoboa.lib.exceptions import ModoboaException, BadRequest
 from modoboa.lib.paginator import Paginator
 from modoboa.lib.web_utils import (
@@ -27,7 +31,8 @@ from modoboa.parameters import tools as param_tools
 
 from .exceptions import UnknownAction
 from .forms import (
-    FolderForm, AttachmentForm, ComposeMailForm, ForwardMailForm
+    FolderForm, AttachmentForm, ComposeMailForm, ForwardMailForm,
+    AskPassword
 )
 from .lib import (
     decode_payload, AttachmentUploadHandler,
@@ -36,6 +41,7 @@ from .lib import (
     ImapEmail, WebmailNavigationParameters, ReplyModifier, ForwardModifier,
     get_imapconnector, IMAPconnector, separate_mailbox, rfc6266
 )
+from .lib.utils import need_password
 from .templatetags import webmail_tags
 
 
@@ -46,6 +52,7 @@ def is_ajax(request):
 @login_required
 @needs_mailbox()
 @gzip_page
+@need_password()
 def getattachment(request):
     """Fetch a message attachment
 
@@ -74,6 +81,7 @@ def getattachment(request):
 
 @login_required
 @needs_mailbox()
+@need_password()
 def move(request):
     for arg in ["msgset", "to"]:
         if arg not in request.GET:
@@ -87,6 +95,7 @@ def move(request):
 
 @login_required
 @needs_mailbox()
+@need_password()
 def delete(request):
     mbox = request.GET.get("mbox", None)
     selection = request.GET.getlist("selection[]", None)
@@ -105,6 +114,7 @@ def delete(request):
 
 @login_required
 @needs_mailbox()
+@need_password()
 def mark(request, name):
     status = request.GET.get("status", None)
     ids = request.GET.get("ids", None)
@@ -136,6 +146,7 @@ def _move_selection_to_folder(request, folder):
 
 @login_required
 @needs_mailbox()
+@need_password()
 def mark_as_junk(request):
     """Mark a message as SPAM."""
     count = _move_selection_to_folder(
@@ -148,6 +159,7 @@ def mark_as_junk(request):
 
 @login_required
 @needs_mailbox()
+@need_password()
 def mark_as_not_junk(request):
     """Mark a message as not SPAM."""
     count = _move_selection_to_folder(request, "INBOX")
@@ -159,6 +171,7 @@ def mark_as_not_junk(request):
 
 @login_required
 @needs_mailbox()
+@need_password()
 def empty(request):
     """Empty the trash folder."""
     name = request.GET.get("name", None)
@@ -173,6 +186,7 @@ def empty(request):
 
 @login_required
 @needs_mailbox()
+@need_password()
 def folder_compress(request):
     """Compress a mailbox."""
     name = request.GET.get("name", None)
@@ -185,6 +199,7 @@ def folder_compress(request):
 
 @login_required
 @needs_mailbox()
+@need_password()
 def newfolder(request, tplname="modoboa_webmail/folder.html"):
     mbc = IMAPconnector(user=request.user.username,
                         password=request.session["password"])
@@ -218,6 +233,7 @@ def newfolder(request, tplname="modoboa_webmail/folder.html"):
 
 @login_required
 @needs_mailbox()
+@need_password()
 def editfolder(request, tplname="modoboa_webmail/folder.html"):
     mbc = IMAPconnector(user=request.user.username,
                         password=request.session["password"])
@@ -275,6 +291,7 @@ def editfolder(request, tplname="modoboa_webmail/folder.html"):
 
 @login_required
 @needs_mailbox()
+@need_password()
 def delfolder(request):
     name = request.GET.get("name", None)
     if name is None:
@@ -289,6 +306,7 @@ def delfolder(request):
 @login_required
 @csrf_exempt
 @needs_mailbox()
+@need_password()
 def attachments(request, tplname="modoboa_webmail/attachments.html"):
     if request.method == "POST":
         csuploader = AttachmentUploadHandler()
@@ -333,6 +351,7 @@ def attachments(request, tplname="modoboa_webmail/attachments.html"):
 
 @login_required
 @needs_mailbox()
+@need_password()
 def delattachment(request):
     """Delete an attachment."""
     name = request.GET.get("name")
@@ -539,6 +558,7 @@ def forward(request):
 
 @login_required
 @needs_mailbox()
+@need_password()
 def getmailcontent(request):
     mbox = request.GET.get("mbox", None)
     mailid = request.GET.get("mailid", None)
@@ -556,6 +576,7 @@ def getmailcontent(request):
 
 @login_required
 @needs_mailbox()
+@need_password()
 def getmailsource(request):
     """Retrieve message source."""
     mbox = request.GET.get("mbox", None)
@@ -572,7 +593,7 @@ def getmailsource(request):
         "source": email.source
     })
 
-
+@need_password()
 def viewmail(request):
     mbox = request.GET.get("mbox", None)
     mailid = request.GET.get("mailid", None)
@@ -602,6 +623,7 @@ def viewmail(request):
 
 @login_required
 @needs_mailbox()
+@need_password()
 def submailboxes(request):
     """Retrieve the sub mailboxes of a mailbox."""
     topmailbox = request.GET.get('topmailbox', '')
@@ -613,6 +635,7 @@ def submailboxes(request):
 
 @login_required
 @needs_mailbox()
+@need_password()
 def check_unseen_messages(request):
     mboxes = request.GET.get("mboxes", None)
     if not mboxes:
@@ -627,6 +650,7 @@ def check_unseen_messages(request):
 
 @login_required
 @needs_mailbox()
+@need_password()
 def index(request):
     """Webmail actions handler
 
@@ -704,3 +728,30 @@ def index(request):
         del response['status']
         http_status = 400
     return render_to_json_response(response, status=http_status)
+
+
+@login_required
+@needs_mailbox()
+def get_plain_password(request, tplname="modoboa_webmail/ask_password.html"):
+    """Get the plain password for the IMAP connection."""
+    # TODO : REMOVE THIS and use oauth2.
+
+    if request.method == "POST":
+        form = AskPassword(
+            request.POST,
+        )
+        if form.is_valid():
+            if request.user.check_password(form.cleaned_data["password"]):
+                request.session["password"] = force_str(encrypt(
+                    form.cleaned_data["password"]
+                ))
+                return redirect("modoboa_webmail:index")
+        return render_to_json_response({"form_errors": form.errors}, status=400)
+    if get_password(request) is not None:
+        return redirect("modoboa_webmail:index")
+    form = AskPassword()
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'modoboa_webmail/ask_password.html', context)

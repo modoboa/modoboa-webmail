@@ -220,7 +220,7 @@ class ImapEmail(Email):
             if re.search(r"\.\.", cid):
                 continue
             fname = "{}_{}".format(self.mailid, cid)
-            path = get_storage_path(fname)
+            path = os.path.relpath(get_storage_path(fname), settings.MEDIA_ROOT)
             params["fname"] = os.path.join(
                 settings.MEDIA_URL,
                 os.path.basename(get_storage_path("")),
